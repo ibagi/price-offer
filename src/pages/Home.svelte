@@ -4,13 +4,11 @@
   import CardLayout from '../layouts/CardLayout.svelte';
   import { t } from '../lib/i18n';
   import {
+    offer,
     offerItems,
     hasItem,
     netto,
     brutto,
-    partners,
-    selectedPartner,
-    selectedProject,
     addItem,
     removeItem,
     removeItems,
@@ -24,29 +22,73 @@
     </h1>
 
     <form on:submit={(e) => e.preventDefault()}>
-      <label class="font-medium label" for="project"
+      <label class="font-medium label" for="projectName"
         >{$t('home.labels.project')}
       </label>
       <input
-        id="project"
-        placeholder="A projekt neve"
+        placeholder={$t('home.labels.project')}
         class="input input-sm input-bordered w-full max-w-xs"
         type="text"
-        name="project"
-        bind:value={$selectedProject} />
+        name="projectName"
+        bind:value={$offer.projectName} />
 
-      <label class="font-medium label" for="partner">
-        {$t('home.labels.partner')}
+      <label class="font-medium label" for="offerNumber">
+        {$t('home.labels.offerNumber')}
       </label>
-      <select
-        id="partner"
-        class="select select-sm select-bordered w-full max-w-xs"
-        name="partner"
-        bind:value={$selectedPartner}>
-        {#each $partners as partner}
-          <option value={partner}>{partner}</option>
-        {/each}
-      </select>
+      <input
+        placeholder={$t('home.labels.offerNumber')}
+        class="input input-sm input-bordered w-full max-w-xs"
+        type="text"
+        name="offerNumber"
+        bind:value={$offer.offerNumber} />
+
+      <label class="font-medium label" for="offerPlace">
+        {$t('home.labels.offerPlace')}
+      </label>
+      <input
+        placeholder={$t('home.labels.offerPlace')}
+        class="input input-sm input-bordered w-full max-w-xs"
+        name="offerPlace"
+        bind:value={$offer.offerPlace} />
+
+      <label class="font-medium label" for="offerDate">
+        {$t('home.labels.offerDate')}
+      </label>
+      <input
+        placeholder={$t('home.labels.offerDate')}
+        class="input input-sm input-bordered w-full max-w-xs"
+        type="date"
+        name="offerDate"
+        bind:value={$offer.offerDate} />
+
+      <label class="font-medium label" for="validity">
+        {$t('home.labels.validity')}
+      </label>
+      <input
+        placeholder={$t('home.labels.validity')}
+        class="input input-sm input-bordered w-full max-w-xs"
+        type="number"
+        name="validity"
+        bind:value={$offer.validity} />
+
+      <label class="font-medium label" for="taxRate">
+        {$t('home.labels.taxRate')}
+      </label>
+      <input
+        placeholder={$t('home.labels.taxRate')}
+        class="input input-sm input-bordered w-full max-w-xs"
+        type="number"
+        name="taxRate"
+        bind:value={$offer.taxRate} />
+
+      <label class="font-medium label" for="currency">
+        {$t('home.labels.currency')}
+      </label>
+      <input
+        placeholder={$t('home.labels.currency')}
+        class="input input-sm input-bordered w-full max-w-xs"
+        name="currency"
+        bind:value={$offer.currency} />
     </form>
   </section>
 
@@ -70,6 +112,8 @@
               <th>{$t('home.tableColumns.unitPrice')}</th>
               <th>{$t('home.tableColumns.amount')}</th>
               <th>{$t('home.tableColumns.total')}</th>
+              <th>{$t('home.tableColumns.workPrice')}</th>
+              <th>{$t('home.tableColumns.materialPrice')}</th>
               <th class="w-12"></th>
             </tr>
           </thead>
@@ -91,6 +135,16 @@
                     class="input input-bordered input-sm text-right"
                     bind:value={item.amount} /></td>
                 <td>{item.amount * item.unitPrice}</td>
+                <td
+                  ><input
+                    type="number"
+                    class="input input-bordered input-sm w-full max-w-xs text-right"
+                    bind:value={item.workPrice} /></td>
+                <td
+                  ><input
+                    type="number"
+                    class="input input-bordered input-sm w-full max-w-xs text-right"
+                    bind:value={item.materialPrice} /></td>
                 <td>
                   <button class="btn btn-sm" on:click={() => removeItem(item)}>
                     {$t('home.actions.delete')}

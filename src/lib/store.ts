@@ -1,11 +1,12 @@
 import { writable, derived } from 'svelte/store';
-import { defaultOfferItem, type OfferItem } from './types';
+import { defaultOffer, defaultOfferItem, type Offer, type OfferItem, type Partner } from './types';
 import type { Database } from './db';
 
-const TAX_RATE = 1.27;
+let taxRate = writable(defaultOffer.taxRate);
 
-export const partners = writable<string[]>([]);
-export const selectedPartner = writable('');
+export const offer = writable<Offer>(defaultOffer);
+export const partners = writable<Partner[]>([]);
+export const selectedPartner = writable<Partner | null>(null);
 
 export const selectedProject = writable('');
 export const offerItems = writable<OfferItem[]>([]);
@@ -14,7 +15,9 @@ export const hasItem = derived(offerItems, (items) => items.length > 0);
 export const netto = derived(offerItems, (items) =>
   items.reduce((sum, i) => sum + i.unitPrice * i.amount, 0),
 );
-export const brutto = derived(netto, ($netto) => $netto * TAX_RATE);
+
+export const tax = derived([netto, taxRate], ([$netto, $taxRate]) => $netto * $taxRate);
+export const brutto = derived([netto, tax], ([$netto, $tax]) => $netto + $tax);
 
 export function addItem() {
   offerItems.update(($items) => [...$items, { ...defaultOfferItem }]);
@@ -28,7 +31,8 @@ export function removeItems() {
   offerItems.set([]);
 }
 
-export async function restore(db: Database) {
+export async function restoreFrom(db: Database) {
   const records = await db.partners.toArray();
-  partners.set(records.map((r) => r.name));
+  partners.set(records);
+  selectedPartner.set(records[0]);
 }

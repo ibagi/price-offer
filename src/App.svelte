@@ -5,12 +5,12 @@
   import Home from './pages/Home.svelte';
   import Preview from './pages/Preview.svelte';
 
-  import * as store from './lib/store';
+  import { restoreFrom } from './lib/store';
   import db from './lib/db';
 
   onMount(async () => {
     await db.initialize();
-    await store.restore(db);
+    await restoreFrom(db);
   });
 </script>
 
