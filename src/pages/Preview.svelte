@@ -1,6 +1,15 @@
 <script lang="ts">
   import { Link } from 'svelte-navigator';
-  import { offer, offerItems, netto, tax, brutto } from '../lib/store';
+  import { t } from '../lib/i18n';
+  import {
+    contact,
+    partner,
+    offer,
+    offerItems,
+    netto,
+    tax,
+    brutto,
+  } from '../lib/store';
 
   let saving = false;
 
@@ -17,120 +26,127 @@
 
 <main class="max-w-7xl mx-auto">
   <div class="flex items-center gap-2">
-    <img height="150" width="250" src="logo.png" alt="Cég"/>
-    <h1 class="flex-1 font-bold text-5xl">Árajánlat</h1>
-
-    <button class="btn btn-sm btn-primary" class:no-print={saving} on:click={print}>
-      Nyomtatás
+    <img height="150" width="250" src="logo.png" alt="Cég" />
+    <h1 class="flex-1 font-bold text-5xl">
+      {$t('preview.title')}
+    </h1>
+    <button
+      class="btn btn-sm btn-primary"
+      class:no-print={saving}
+      on:click={print}>
+      {$t('preview.actions.print')}
     </button>
     <button class="btn btn-sm btn-neutral" class:no-print={saving}>
-      <Link to="/">Vissza</Link>
+      <Link to="/">{$t('preview.actions.back')}</Link>
     </button>
   </div>
 
   <div class="data-container px-6 py-2">
     <div class="flex pb-2 justify-between">
-      <div class="text-sm"><i>Küldő/Von/From</i></div>
+      <div class="text-sm"><i>{$t('preview.labels.from')}</i></div>
       <div class="flex-1"></div>
-      <div class="text-sm"><i>Címzett/An/To</i></div>
+      <div class="text-sm"><i>{$t('preview.labels.to')}</i></div>
     </div>
 
     <div class="font-bold text-lg">
-      P-TOOL 
+      {$contact.title}
     </div>
     <div class="font-bold text-lg pb-4">
-      Szerszámgyártó Kft.
+      {$contact.subtitle}
     </div>
 
     <div class="flex text-md">
-      <div class="w-48 font-bold">Mobiltelefon:</div>
-      <div>+36 30 908 9291</div>
+      <div class="w-48 font-bold">{$t('preview.labels.phone')}</div>
+      <div>{$contact.phone}</div>
     </div>
 
     <div class="flex text-md">
-      <div class="w-48 font-bold">E-mail:</div>
-      <div>ptool.kft@gmail.com</div>
+      <div class="w-48 font-bold">{$t('preview.labels.email')}</div>
+      <div>{$contact.email}</div>
     </div>
 
     <div class="flex text-md">
-      <div class="w-48 font-bold">Cím:</div>
-      <div>2234 Maglód Ady Endre utca 25-39 5/B</div>
+      <div class="w-48 font-bold">{$t('preview.labels.address')}</div>
+      <div>{$contact.address}</div>
       <div class="flex-1"></div>
-      <div class="w-48 font-bold">Cím:</div>
-      <div></div>
+      <div class="w-48 font-bold">{$t('preview.labels.address')}</div>
+      <div>{$partner.address}</div>
     </div>
 
     <div class="flex text-md">
-      <div class="w-48 font-bold">Cégjegyzéksz.:</div>
-      <div>13-09-217197</div>
+      <div class="w-48 font-bold">{$t('preview.labels.companyNumber')}</div>
+      <div>{$contact.companyNumber}</div>
       <div class="flex-1"></div>
-      <div class="w-48 font-bold">Cégjegyzéksz.:</div>
-      <div></div>
+      <div class="w-48 font-bold">{$t('preview.labels.companyNumber')}</div>
+      <div>{$partner.companyNumber}</div>
     </div>
 
     <div class="flex text-md">
-      <div class="w-48 font-bold">Adószám:</div>
-      <div>27541706-2-13</div>
+      <div class="w-48 font-bold">{$t('preview.labels.taxNumber')}</div>
+      <div>{$contact.taxNumber}</div>
       <div class="flex-1"></div>
-      <div class="w-48 font-bold">Adószám:</div>
-      <div></div>
+      <div class="w-48 font-bold">{$t('preview.labels.taxNumber')}</div>
+      <div>{$partner.taxNumber}</div>
     </div>
 
     <div class="flex text-md">
-      <div class="w-48 font-bold">Bankszámlaszám:</div>
-      <div>12011739-01798762-00100009</div>
+      <div class="w-48 font-bold">{$t('preview.labels.bankAccountNumber')}</div>
+      <div>{$contact.bankAccountNumber}</div>
     </div>
   </div>
 
   <div class="flex justify-end pt-4">
-    <div class="font-bold pr-6">Ajánlat száma:</div>
+    <div class="font-bold pr-6">{$t('preview.labels.offerNumber')}</div>
     <div class="font-bold border-full flex justify-center w-48">
       <span>{$offer.offerNumber}</span>
     </div>
   </div>
 
   <div class="font-bold text-2xl py-4">
-    <i>Tisztelt Partnerünk!</i>
+    <i>{$t('preview.greeting')}</i>
   </div>
 
-  <div class="text-xl pb-6">
-    Mellékelten küldjük a kért árajánlatot:
-  </div>
+  <div class="text-xl pb-6">{$t('preview.tableLabel')}</div>
 
   <table class="w-full">
     <thead>
       <tr>
-        <th class="table-header" rowspan="2">Ajánlat száma</th>
-        <th class="table-header" rowspan="2">Munka megnevezése</th>
-        <th class="table-header" rowspan="2">Darab</th>
-        <th class="table-header" rowspan="2">Ár/db</th>
-        <th class="table-header" rowspan="2">Érték</th>
-        <th class="table-header" colspan="2">Leírás, megjegyzések</th>
+        <th class="table-header" rowspan="2"
+          >{$t('preview.table.offerNumber')}</th>
+        <th class="table-header" rowspan="2">{$t('preview.table.itemName')}</th>
+        <th class="table-header" rowspan="2">{$t('preview.table.amount')}</th>
+        <th class="table-header" rowspan="2"
+          >{$t('preview.table.unitPrice')}</th>
+        <th class="table-header" rowspan="2">{$t('preview.table.price')}</th>
+        <th class="table-header" colspan="2"
+          >{$t('preview.table.description')}</th>
       </tr>
       <tr>
-        <th class="table-header">Marás</th>
-        <th class="table-header">Anyag</th>
+        <th class="table-header">{$t('preview.table.workPrice')}</th>
+        <th class="table-header">{$t('preview.table.materialPrice')}</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="table-cell" rowspan={$offerItems.length + 1}>{$offer.offerNumber}</td>
+        <td class="table-cell" rowspan={$offerItems.length + 1}
+          >{$offer.offerNumber}</td>
       </tr>
       {#each $offerItems as item}
-      <tr>
-        <td class="table-cell">{item.name}</td>
-        <td class="table-cell">{item.amount}</td>
-        <td class="table-cell">{item.unitPrice}</td>
-        <td class="table-cell">{item.unitPrice * item.amount} {$offer.currency}</td>
-        <td class="table-cell">{item.workPrice} {$offer.currency}</td>
-        <td class="table-cell">{item.materialPrice} {$offer.currency}</td>
-      </tr>
+        <tr>
+          <td class="table-cell">{item.name}</td>
+          <td class="table-cell">{item.amount}</td>
+          <td class="table-cell">{item.unitPrice}</td>
+          <td class="table-cell"
+            >{item.unitPrice * item.amount} {$offer.currency}</td>
+          <td class="table-cell">{item.workPrice} {$offer.currency}</td>
+          <td class="table-cell">{item.materialPrice} {$offer.currency}</td>
+        </tr>
       {/each}
       <tr>
         <td></td>
         <td></td>
         <td></td>
-        <td class="font-bold px-2">Nettó: </td>
+        <td class="font-bold px-2">{$t('preview.table.netto')}</td>
         <td class="font-bold px-2 text-right">{$netto} {$offer.currency}</td>
         <td></td>
         <td></td>
@@ -139,7 +155,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td class="font-bold px-2">ÁFA: </td>
+        <td class="font-bold px-2">{$t('preview.table.tax')}</td>
         <td class="font-bold px-2 text-right">{$tax} {$offer.currency}</td>
         <td></td>
         <td></td>
@@ -148,41 +164,40 @@
         <td></td>
         <td></td>
         <td></td>
-        <td class="font-bold px-2 summary-underline">Bruttó: </td>
-        <td class="font-bold px-2 summary-underline text-right">{$brutto} {$offer.currency}</td>
+        <td class="font-bold px-2 summary-underline"
+          >{$t('preview.table.brutto')}</td>
+        <td class="font-bold px-2 summary-underline text-right"
+          >{$brutto} {$offer.currency}</td>
         <td></td>
         <td></td>
       </tr>
     </tbody>
   </table>
 
-  <div class="font-bold pb-6">
-    Projekt megnevezése:
+  <div class="font-bold">{$t('preview.labels.project')}</div>
+  <div class="text-sm pb-2">
+    {$offer.projectName}
   </div>
 
-  <div class="font-bold">
-    Számlázás:
-  </div>
+  <div class="font-bold">{$t('preview.labels.taxation')}</div>
   <div class="text-sm pb-2">
-    Áfa: {$offer.taxRate * 100} %
+    {$t('preview.fields.taxation', { tax: $offer.taxRate })}
   </div>
 
-  <div class="font-bold">
-    Ajánlat érvényessége:
-  </div>
+  <div class="font-bold">{$t('preview.labels.validity')}</div>
   <div class="text-sm pb-2">
-    {$offer.validity} nap
+    {$t('preview.fields.validity', { days: $offer.validity })}
   </div>
 
   <div class="pb-2">
-    A további együttműködés reményében köszönjük megtisztelő megkeresését!
+    {$t('preview.farawell')}
   </div>
   <div>
-    {$offer.offerPlace}, {new Intl.DateTimeFormat().format($offer.offerDate)}
+    {$offer.offerPlace}, {$offer.offerDate}
   </div>
 
   <div class="py-2 flex justify-end text-xl">
-    Üdvözlettel: <strong class="px-1">Papp Zoltán</strong>
+    {$t('preview.regards')}<strong class="px-1">{$contact.person}</strong>
   </div>
 </main>
 
@@ -209,7 +224,7 @@
   .table-cell {
     font-weight: bold;
     text-align: center;
-    padding: .25rem;
+    padding: 0.25rem;
     border: 3px solid black;
     background-color: #f2f2f2;
   }
