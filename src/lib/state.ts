@@ -32,8 +32,8 @@ export const tax = derived(
 );
 export const brutto = derived([netto, tax], ([$netto, $tax]) => $netto + $tax);
 
-export function totalPrice(offerItem : OfferItem) {
-  return (offerItem.materialPrice + offerItem.workPrice) * offerItem.amount;
+export function totalPrice(item : OfferItem) {
+  return (item.materialPrice + item.workPrice) * item.amount;
 }
 
 export function addItem() {
