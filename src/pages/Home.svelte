@@ -3,7 +3,11 @@
 
   import CardLayout from '../layouts/CardLayout.svelte';
   import { t } from '../lib/i18n';
+
+  import type { Contact, Partner } from '../lib/types';
   import {
+    contact,
+    partner,
     offer,
     offerItems,
     hasItem,
@@ -12,7 +16,16 @@
     addItem,
     removeItem,
     removeItems,
-  } from '../lib/store';
+    totalPrice,
+  } from '../lib/state';
+
+  import * as db from '../lib/db';
+
+  function persistState($contact: Contact, $partner: Partner) {
+    db.saveState({ contact: $contact, partner: $partner });
+  }
+
+  $: persistState($contact, $partner);
 </script>
 
 <CardLayout>
@@ -92,15 +105,18 @@
     </form>
   </section>
 
-  <section slot="right">
-    <div class="flex gap-4">
+  <section class="flex flex-col h-full" slot="right">
+    <div class="flex gap-2">
       <h2 class="card-title flex-1" tabindex="-1">
         {$t('home.tableHeader')}
       </h2>
       <button class="btn btn-sm" on:click={removeItems}
         >{$t('home.actions.clearAll')}</button>
-      <button class="btn btn-sm" on:click={addItem}
+      <button class="btn btn-neutral btn-sm" on:click={addItem}
         >{$t('home.actions.add')}</button>
+        <button class="btn btn-sm btn-primary" disabled={!$hasItem}>
+          <Link to="/preview">{$t('home.actions.preview')}</Link>
+        </button>
     </div>
 
     {#if $hasItem}
@@ -124,17 +140,13 @@
                   ><input
                     class="input input-bordered input-sm w-full max-w-xs"
                     bind:value={item.name} /></td>
-                <td
-                  ><input
-                    type="number"
-                    class="input input-bordered input-sm w-full max-w-xs text-right"
-                    bind:value={item.unitPrice} /></td>
+                <td>{item.workPrice + item.materialPrice}</td>
                 <td
                   ><input
                     type="number"
                     class="input input-bordered input-sm text-right"
                     bind:value={item.amount} /></td>
-                <td>{item.amount * item.unitPrice}</td>
+                <td>{totalPrice(item)}</td>
                 <td
                   ><input
                     type="number"
@@ -168,15 +180,9 @@
     {/if}
 
     {#if !$hasItem}
-      <p class="flex justify-center items-center h-32">
+      <p class="flex flex-1 justify-center items-center h-32">
         {$t('home.hint')}
       </p>
     {/if}
-  </section>
-
-  <section slot="actions" class="pt-3">
-    <button class="btn btn-neutral" disabled={!$hasItem}>
-      <Link to="/preview">{$t('home.actions.preview')}</Link>
-    </button>
   </section>
 </CardLayout>

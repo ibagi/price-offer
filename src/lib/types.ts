@@ -1,3 +1,8 @@
+export interface PersistedState {
+  contact: Contact;
+  partner: Partner;
+}
+
 export interface Contact {
   person: string;
   title: string;
@@ -57,7 +62,6 @@ export const defaultOffer: Offer = {
 export interface OfferItem {
   name: string;
   amount: number;
-  unitPrice: number;
   workPrice: number;
   materialPrice: number;
 }
@@ -65,7 +69,6 @@ export interface OfferItem {
 export const defaultOfferItem: OfferItem = {
   name: '',
   amount: 1,
-  unitPrice: 1,
   workPrice: 1,
-  materialPrice: 1,
+  materialPrice: 1
 };

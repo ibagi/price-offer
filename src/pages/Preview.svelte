@@ -9,7 +9,8 @@
     netto,
     tax,
     brutto,
-  } from '../lib/store';
+    totalPrice,
+  } from '../lib/state';
 
   let saving = false;
 
@@ -30,15 +31,15 @@
     <h1 class="flex-1 font-bold text-5xl">
       {$t('preview.title')}
     </h1>
-    <button
-      class="btn btn-sm btn-primary"
-      class:no-print={saving}
-      on:click={print}>
-      {$t('preview.actions.print')}
-    </button>
     <button class="btn btn-sm btn-neutral" class:no-print={saving}>
       <Link to="/">{$t('preview.actions.back')}</Link>
     </button>
+    <button
+    class="btn btn-sm btn-primary"
+    class:no-print={saving}
+    on:click={print}>
+    {$t('preview.actions.print')}
+  </button>
   </div>
 
   <div class="data-container px-6 py-2">
@@ -135,9 +136,9 @@
         <tr>
           <td class="table-cell">{item.name}</td>
           <td class="table-cell">{item.amount}</td>
-          <td class="table-cell">{item.unitPrice}</td>
+          <td class="table-cell">{item.workPrice + item.materialPrice}</td>
           <td class="table-cell"
-            >{item.unitPrice * item.amount} {$offer.currency}</td>
+            >{totalPrice(item)} {$offer.currency}</td>
           <td class="table-cell">{item.workPrice} {$offer.currency}</td>
           <td class="table-cell">{item.materialPrice} {$offer.currency}</td>
         </tr>

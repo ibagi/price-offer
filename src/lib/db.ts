@@ -1,31 +1,21 @@
-import Dexie, { type Table } from 'dexie';
+import type { PersistedState } from './types';
 
-export interface PartnerRecord {
-  id?: number;
-  name: string;
+const LOCAL_STORAGE_KEY = 'price-offer-data';
+
+export function saveState(state: PersistedState) {
+  window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
 }
 
-const seed = {
-  partners: [{ name: 'Partner és társa Bt.' }],
-};
+export function loadState(fallBackState: PersistedState) {
+  const existingData = window.localStorage.getItem(LOCAL_STORAGE_KEY);
 
-export class Database extends Dexie {
-  partners!: Table<PartnerRecord>;
-
-  constructor() {
-    super('price-offer');
-    this.version(1).stores({
-      partners: '++id, name',
-    });
+  if (!existingData) {
+    window.localStorage.setItem(
+      LOCAL_STORAGE_KEY,
+      JSON.stringify(fallBackState),
+    );
+    return fallBackState;
   }
 
-  async initialize() {
-    const alreadySeeded = (await this.partners.count()) > 0;
-    if (!alreadySeeded) {
-      this.partners.bulkAdd(seed.partners);
-    }
-  }
+  return JSON.parse(existingData) as PersistedState;
 }
-
-const db = new Database();
-export default db;

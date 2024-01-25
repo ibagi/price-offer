@@ -5,7 +5,7 @@
     <div class="divider divider-horizontal"></div>
 
     <!-- Right side -->
-    <div class="flex-1">
+    <div class="w-full flex flex-col flex-1">
       <slot name="right" />
       <div class="card-actions justify-end">
         <slot name="actions" />
