@@ -1,5 +1,5 @@
-<main class="w-screen h-screen bg-gray-100 p-6">
-  <div class="card card-side bg-base-100 shadow-sm px-4 py-4 w-full">
+<main class="flex w-screen h-screen bg-gray-100 p-8">
+  <div class="card card-side bg-base-100 shadow-lg px-4 py-4 w-full">
     <!-- Left side -->
     <slot name="left" />
     <div class="divider divider-horizontal"></div>

@@ -26,15 +26,8 @@ export const netto = derived(offerItems, (items) =>
   items.reduce((sum, i) => sum + totalPrice(i), 0),
 );
 
-export const tax = derived([offerItems, taxRate], ([$items, $taxRate]) =>
-  $items.reduce(
-    (sum, i) =>
-      sum +
-      new Decimal(totalPrice(i) * ($taxRate / 100))
-        .toDecimalPlaces(0, Decimal.ROUND_HALF_FLOOR)
-        .toNumber(),
-    0,
-  ),
+export const tax = derived([netto, taxRate], ([$netto, $taxRate]) =>
+  new Decimal($netto * ($taxRate / 100)).toDecimalPlaces(0).toNumber(),
 );
 export const brutto = derived([netto, tax], ([$netto, $tax]) => $netto + $tax);
 

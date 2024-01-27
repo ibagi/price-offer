@@ -10,6 +10,7 @@
     partner,
     taxRate,
     offer,
+    tax,
     offerItems,
     hasItem,
     netto,
@@ -37,6 +38,16 @@
     </h1>
 
     <form on:submit={(e) => e.preventDefault()}>
+      <label class="font-medium label" for="offerNumber">
+        {$t('home.labels.offerNumber')}
+      </label>
+      <input
+        placeholder={$t('home.labels.offerNumber')}
+        class="input input-sm input-bordered w-full max-w-xs"
+        type="text"
+        name="offerNumber"
+        bind:value={$offer.offerNumber} />
+
       <label class="font-medium label" for="projectName"
         >{$t('home.labels.project')}
       </label>
@@ -47,16 +58,6 @@
         type="text"
         name="projectName"
         bind:value={$offer.projectName} />
-
-      <label class="font-medium label" for="offerNumber">
-        {$t('home.labels.offerNumber')}
-      </label>
-      <input
-        placeholder={$t('home.labels.offerNumber')}
-        class="input input-sm input-bordered w-full max-w-xs"
-        type="text"
-        name="offerNumber"
-        bind:value={$offer.offerNumber} />
 
       <label class="font-medium label" for="offerPlace">
         {$t('home.labels.offerPlace')}
@@ -170,14 +171,23 @@
       </div>
 
       <div class="divider"></div>
-      <div class="flex justify-end gap-2">
-        <strong>{$t('home.summary.netto', { netto: $netto })}</strong>
-        <strong
-          >{$t('home.summary.brutto', {
+      <div class="font-bold flex justify-end gap-4">
+        <div>
+          {$t('home.summary.netto', {
+            netto: $netto,
+            currency: $offer.currency,
+          })}
+        </div>
+        <div>
+          {$t('home.summary.tax', { tax: $tax, currency: $offer.currency })}
+        </div>
+        <div>
+          {$t('home.summary.brutto', {
             brutto: $brutto,
-          })}</strong>
+            currency: $offer.currency,
+          })}
+        </div>
       </div>
-      <div class="flex justify-end"></div>
     {/if}
 
     {#if !$hasItem}
