@@ -1,4 +1,5 @@
 import { writable, derived } from 'svelte/store';
+import { Decimal } from 'decimal.js';
 
 import {
   defaultContact,
@@ -13,26 +14,31 @@ import {
 
 import * as db from './db';
 
-let taxRate = writable(defaultOffer.taxRate / 100);
-
 export const contact = writable<Contact>({ ...defaultContact });
 export const partner = writable<Partner>({ ...defaultPartner });
 
 export const offer = writable<Offer>(defaultOffer);
 export const offerItems = writable<OfferItem[]>([]);
-
 export const hasItem = derived(offerItems, (items) => items.length > 0);
+
+export const taxRate = writable(27);
 export const netto = derived(offerItems, (items) =>
   items.reduce((sum, i) => sum + totalPrice(i), 0),
 );
 
-export const tax = derived(
-  [netto, taxRate],
-  ([$netto, $taxRate]) => $netto * $taxRate,
+export const tax = derived([offerItems, taxRate], ([$items, $taxRate]) =>
+  $items.reduce(
+    (sum, i) =>
+      sum +
+      new Decimal(totalPrice(i) * ($taxRate / 100))
+        .toDecimalPlaces(0, Decimal.ROUND_HALF_FLOOR)
+        .toNumber(),
+    0,
+  ),
 );
 export const brutto = derived([netto, tax], ([$netto, $tax]) => $netto + $tax);
 
-export function totalPrice(item : OfferItem) {
+export function totalPrice(item: OfferItem) {
   return (item.materialPrice + item.workPrice) * item.amount;
 }
 

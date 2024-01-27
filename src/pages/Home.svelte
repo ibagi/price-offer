@@ -8,6 +8,7 @@
   import {
     contact,
     partner,
+    taxRate,
     offer,
     offerItems,
     hasItem,
@@ -20,6 +21,7 @@
   } from '../lib/state';
 
   import * as db from '../lib/db';
+  import DateInput from '../components/DateInput.svelte';
 
   function persistState($contact: Contact, $partner: Partner) {
     db.saveState({ contact: $contact, partner: $partner });
@@ -39,6 +41,7 @@
         >{$t('home.labels.project')}
       </label>
       <input
+        tabindex="0"
         placeholder={$t('home.labels.project')}
         class="input input-sm input-bordered w-full max-w-xs"
         type="text"
@@ -67,10 +70,8 @@
       <label class="font-medium label" for="offerDate">
         {$t('home.labels.offerDate')}
       </label>
-      <input
+      <DateInput
         placeholder={$t('home.labels.offerDate')}
-        class="input input-sm input-bordered w-full max-w-xs"
-        type="date"
         name="offerDate"
         bind:value={$offer.offerDate} />
 
@@ -92,7 +93,7 @@
         class="input input-sm input-bordered w-full max-w-xs"
         type="number"
         name="taxRate"
-        bind:value={$offer.taxRate} />
+        bind:value={$taxRate} />
 
       <label class="font-medium label" for="currency">
         {$t('home.labels.currency')}
@@ -114,9 +115,9 @@
         >{$t('home.actions.clearAll')}</button>
       <button class="btn btn-neutral btn-sm" on:click={addItem}
         >{$t('home.actions.add')}</button>
-        <button class="btn btn-sm btn-primary" disabled={!$hasItem}>
-          <Link to="/preview">{$t('home.actions.preview')}</Link>
-        </button>
+      <button class="btn btn-sm btn-primary" disabled={!$hasItem}>
+        <Link to="/preview">{$t('home.actions.preview')}</Link>
+      </button>
     </div>
 
     {#if $hasItem}

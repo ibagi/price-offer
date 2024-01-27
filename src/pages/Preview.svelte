@@ -7,6 +7,7 @@
     offer,
     offerItems,
     netto,
+    taxRate,
     tax,
     brutto,
     totalPrice,
@@ -35,11 +36,11 @@
       <Link to="/">{$t('preview.actions.back')}</Link>
     </button>
     <button
-    class="btn btn-sm btn-primary"
-    class:no-print={saving}
-    on:click={print}>
-    {$t('preview.actions.print')}
-  </button>
+      class="btn btn-sm btn-primary"
+      class:no-print={saving}
+      on:click={print}>
+      {$t('preview.actions.print')}
+    </button>
   </div>
 
   <div class="data-container px-6 py-2">
@@ -137,40 +138,30 @@
           <td class="table-cell">{item.name}</td>
           <td class="table-cell">{item.amount}</td>
           <td class="table-cell">{item.workPrice + item.materialPrice}</td>
-          <td class="table-cell"
-            >{totalPrice(item)} {$offer.currency}</td>
+          <td class="table-cell">{totalPrice(item)} {$offer.currency}</td>
           <td class="table-cell">{item.workPrice} {$offer.currency}</td>
           <td class="table-cell">{item.materialPrice} {$offer.currency}</td>
         </tr>
       {/each}
       <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td colspan="3"></td>
         <td class="font-bold px-2">{$t('preview.table.netto')}</td>
         <td class="font-bold px-2 text-right">{$netto} {$offer.currency}</td>
-        <td></td>
-        <td></td>
+        <td colspan="2"></td>
       </tr>
       <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td colspan="3"></td>
         <td class="font-bold px-2">{$t('preview.table.tax')}</td>
         <td class="font-bold px-2 text-right">{$tax} {$offer.currency}</td>
-        <td></td>
-        <td></td>
+        <td colspan="2"></td>
       </tr>
       <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td colspan="3"></td>
         <td class="font-bold px-2 summary-underline"
           >{$t('preview.table.brutto')}</td>
         <td class="font-bold px-2 summary-underline text-right"
           >{$brutto} {$offer.currency}</td>
-        <td></td>
-        <td></td>
+        <td colspan="2"></td>
       </tr>
     </tbody>
   </table>
@@ -182,7 +173,7 @@
 
   <div class="font-bold">{$t('preview.labels.taxation')}</div>
   <div class="text-sm pb-2">
-    {$t('preview.fields.taxation', { tax: $offer.taxRate })}
+    {$t('preview.fields.taxation', { tax: $taxRate })}
   </div>
 
   <div class="font-bold">{$t('preview.labels.validity')}</div>
@@ -194,7 +185,7 @@
     {$t('preview.farawell')}
   </div>
   <div>
-    {$offer.offerPlace}, {$offer.offerDate}
+    {$offer.offerPlace}, {Intl.DateTimeFormat().format($offer.offerDate)}
   </div>
 
   <div class="py-2 flex justify-end text-xl">

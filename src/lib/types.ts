@@ -42,9 +42,8 @@ export const defaultPartner: Partner = {
 export interface Offer {
   projectName: string;
   offerNumber: string;
-  offerDate: string;
+  offerDate: Date;
   offerPlace: string;
-  taxRate: number;
   validity: number;
   currency: string;
 }
@@ -52,9 +51,8 @@ export interface Offer {
 export const defaultOffer: Offer = {
   projectName: '',
   offerNumber: `XX-PT-${new Date().getFullYear().toString().slice(2, 4)}-000`,
-  offerDate: new Intl.DateTimeFormat().format(new Date()),
+  offerDate: new Date(),
   offerPlace: 'Maglód',
-  taxRate: 27,
   validity: 30,
   currency: 'HUF',
 };
@@ -70,5 +68,5 @@ export const defaultOfferItem: OfferItem = {
   name: '',
   amount: 1,
   workPrice: 1,
-  materialPrice: 1
+  materialPrice: 1,
 };
