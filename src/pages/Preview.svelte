@@ -28,8 +28,8 @@
 
 <main class="max-w-7xl mx-auto">
   <div class="flex items-center gap-2">
-    <img height="150" width="250" src="logo.png" alt="Cég" />
-    <h1 class="flex-1 font-bold text-5xl">
+    <img height="100" width="200" src="logo.png" alt="Cég" />
+    <h1 class="flex-1 font-bold text-4xl">
       {$t('preview.title')}
     </h1>
     <button class="btn btn-sm btn-neutral" class:no-print={saving}>
@@ -43,11 +43,14 @@
     </button>
   </div>
 
-  <div class="data-container px-6 py-2">
+  <div class="data-container px-6 py-2 text-md">
     <div class="flex pb-2 justify-between">
-      <div class="text-sm"><i>{$t('preview.labels.from')}</i></div>
-      <div class="flex-1"></div>
-      <div class="text-sm"><i>{$t('preview.labels.to')}</i></div>
+      <div class="flex flex-1 justify-center">
+        <div class="text-sm"><i>{$t('preview.labels.from')}</i></div>
+      </div>
+      <div class="flex flex-1 justify-center">
+        <div class="text-sm"><i>{$t('preview.labels.to')}</i></div>
+      </div>
     </div>
 
     <div class="font-bold text-lg">
@@ -57,58 +60,70 @@
       {$contact.subtitle}
     </div>
 
-    <div class="flex text-md">
-      <div class="w-48 font-bold">{$t('preview.labels.phone')}</div>
+    <div class="flex">
+      <div class="w-36 font-bold">{$t('preview.labels.phone')}</div>
       <div>{$contact.phone}</div>
     </div>
 
-    <div class="flex text-md">
-      <div class="w-48 font-bold">{$t('preview.labels.email')}</div>
+    <div class="flex">
+      <div class="w-36 font-bold">{$t('preview.labels.email')}</div>
       <div>{$contact.email}</div>
     </div>
 
-    <div class="flex text-md">
-      <div class="w-48 font-bold">{$t('preview.labels.address')}</div>
-      <div>{$contact.address}</div>
-      <div class="flex-1"></div>
-      <div class="w-48 font-bold">{$t('preview.labels.address')}</div>
-      <div>{$partner.address}</div>
+    <div class="flex">
+      <div class="flex flex-1">
+        <div class="w-36 font-bold">{$t('preview.labels.address')}</div>
+        <div>{$contact.address}</div>
+      </div>
+
+      <div class="flex flex-1">
+        <div class="w-36 font-bold">{$t('preview.labels.address')}</div>
+        <div>{$partner.address}</div>
+      </div>
     </div>
 
-    <div class="flex text-md">
-      <div class="w-48 font-bold">{$t('preview.labels.companyNumber')}</div>
-      <div>{$contact.companyNumber}</div>
-      <div class="flex-1"></div>
-      <div class="w-48 font-bold">{$t('preview.labels.companyNumber')}</div>
-      <div>{$partner.companyNumber}</div>
+    <div class="flex">
+      <div class="flex flex-1">
+        <div class="w-36 font-bold">{$t('preview.labels.companyNumber')}</div>
+        <div>{$contact.companyNumber}</div>
+      </div>
+      <div class="flex flex-1">
+        <div class="w-36 font-bold">{$t('preview.labels.companyNumber')}</div>
+        <div>{$partner.companyNumber}</div>
+      </div>
     </div>
 
-    <div class="flex text-md">
-      <div class="w-48 font-bold">{$t('preview.labels.taxNumber')}</div>
-      <div>{$contact.taxNumber}</div>
-      <div class="flex-1"></div>
-      <div class="w-48 font-bold">{$t('preview.labels.taxNumber')}</div>
-      <div>{$partner.taxNumber}</div>
+    <div class="flex">
+      <div class="flex flex-1">
+        <div class="w-36 font-bold">{$t('preview.labels.taxNumber')}</div>
+        <div>{$contact.taxNumber}</div>
+      </div>
+
+      <div class="flex flex-1">
+        <div class="w-36 font-bold">{$t('preview.labels.taxNumber')}</div>
+        <div>{$partner.taxNumber}</div>
+      </div>
+
     </div>
 
-    <div class="flex text-md">
-      <div class="w-48 font-bold">{$t('preview.labels.bankAccountNumber')}</div>
+    <div class="flex">
+      <div class="w-36 font-bold">{$t('preview.labels.bankAccountNumber')}</div>
       <div>{$contact.bankAccountNumber}</div>
     </div>
   </div>
 
   <div class="flex justify-end pt-4">
-    <div class="font-bold pr-6">{$t('preview.labels.offerNumber')}</div>
+    <div class="font-bold pr-6 underline">{$t('preview.labels.offerNumber')}</div>
     <div class="font-bold border-full flex justify-center w-48">
       <span>{$offer.offerNumber}</span>
     </div>
   </div>
 
-  <div class="font-bold text-2xl py-4">
+  <div class="font-bold text-xl py-4">
     <i>{$t('preview.greeting')}</i>
   </div>
 
-  <div class="text-xl pb-6">{$t('preview.tableLabel')}</div>
+  <div class="text-lg pb-6">{$t('preview.tableLabel')}</div>
 
   <table class="w-full">
     <thead>
@@ -200,7 +215,7 @@
 
   .data-container {
     background-color: #daeef3;
-    border: 3px solid black;
+    border: 3px double black;
   }
 
   .border-full {
