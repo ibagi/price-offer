@@ -1,13 +1,11 @@
 <script lang="ts">
   import { Link } from 'svelte-navigator';
-
+  import { Edit } from 'lucide-svelte';
   import CardLayout from '../layouts/CardLayout.svelte';
   import { t } from '../lib/i18n';
 
-  import type { Contact, Partner } from '../lib/types';
   import {
     contact,
-    partner,
     taxRate,
     offer,
     tax,
@@ -19,16 +17,11 @@
     removeItem,
     removeItems,
     totalPrice,
+    partners,
+    selectedPartner,
   } from '../lib/state';
 
-  import * as db from '../lib/db';
   import DateInput from '../components/DateInput.svelte';
-
-  function persistState($contact: Contact, $partner: Partner) {
-    db.saveState({ contact: $contact, partner: $partner });
-  }
-
-  $: persistState($contact, $partner);
 </script>
 
 <CardLayout>
@@ -36,12 +29,34 @@
     <h1 class="font-bold text-xl pb-2" tabindex="-1">
       {$t('home.title')}
     </h1>
+      <label class="font-medium label" for="partner">
+        {$t('home.labels.partner')}
+      </label>
 
-    <form on:submit={(e) => e.preventDefault()}>
+      <div class="flex gap-2">
+        <select
+          id="partner"
+          placeholder={$t('home.labels.partner')}
+          class="select select-sm select-bordered w-full max-w-xs"
+          name="partner"
+          disabled={$partners.length === 0}
+          bind:value={$selectedPartner}>
+          {#each $partners as partner}
+            <option value={partner}>{partner.name}</option>
+          {/each}
+        </select>
+        <button class="btn btn-sm btn-neutral p-0 px-1">
+          <Link to="/partners">
+            <Edit />
+          </Link>
+        </button>
+      </div>
+
       <label class="font-medium label" for="offerNumber">
         {$t('home.labels.offerNumber')}
       </label>
       <input
+        id="offerNumber"
         placeholder={$t('home.labels.offerNumber')}
         class="input input-sm input-bordered w-full max-w-xs"
         type="text"
@@ -52,7 +67,7 @@
         >{$t('home.labels.project')}
       </label>
       <input
-        tabindex="0"
+        id="projectName"
         placeholder={$t('home.labels.project')}
         class="input input-sm input-bordered w-full max-w-xs"
         type="text"
@@ -63,6 +78,7 @@
         {$t('home.labels.offerPlace')}
       </label>
       <input
+        id="offerPlace"
         placeholder={$t('home.labels.offerPlace')}
         class="input input-sm input-bordered w-full max-w-xs"
         name="offerPlace"
@@ -72,6 +88,7 @@
         {$t('home.labels.offerDate')}
       </label>
       <DateInput
+        id="offerDate"
         placeholder={$t('home.labels.offerDate')}
         name="offerDate"
         bind:value={$offer.offerDate} />
@@ -80,6 +97,7 @@
         {$t('home.labels.validity')}
       </label>
       <input
+        id="validity"
         placeholder={$t('home.labels.validity')}
         class="input input-sm input-bordered w-full max-w-xs"
         type="number"
@@ -90,6 +108,7 @@
         {$t('home.labels.taxRate')}
       </label>
       <input
+        id="taxRate"
         placeholder={$t('home.labels.taxRate')}
         class="input input-sm input-bordered w-full max-w-xs"
         type="number"
@@ -100,11 +119,11 @@
         {$t('home.labels.currency')}
       </label>
       <input
+        id="currency"
         placeholder={$t('home.labels.currency')}
         class="input input-sm input-bordered w-full max-w-xs"
         name="currency"
         bind:value={$offer.currency} />
-    </form>
   </section>
 
   <section class="flex flex-col h-full" slot="right">

@@ -5,6 +5,7 @@ const translations: Translations = {
     'home.title': 'Új ajánlat',
     'home.tableHeader': 'Ajánlat tételei',
     'home.hint': "A 'Hozzáadás' gombbal adj tételeket az árajánlathoz.",
+    'home.labels.partner': 'Partner',
     'home.labels.project': 'Projekt',
     'home.labels.offerNumber': 'Ajánlat száma',
     'home.labels.offerDate': 'Kelt, dátum',
@@ -58,6 +59,16 @@ const translations: Translations = {
     'preview.farawell':
       'A további együttműködés reményében köszönjük megtisztelő megkeresését!',
     'preview.regards': 'Üdvözlettel: ',
+    'partners.title': 'Partnerek',
+    'partners.actions.add': 'Hozzáadás',
+    'partners.actions.back': 'Vissza az ajánlathoz',
+    'partners.hint': 'Úgy néz ki még nem rögzített partnert.',
+    'partners.actions.addPartner': 'Partner rögzítése',
+    'partners.actions.delete': 'Törlés',
+    'partners.tableColumns.name': 'Partner neve',
+    'partners.tableColumns.address': 'Cím',
+    'partners.tableColumns.companyNumber': 'Cégjegyzékszám',
+    'partners.tableColumns.taxNumber': 'Adószám',
   },
 };
 

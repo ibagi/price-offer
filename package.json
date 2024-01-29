@@ -29,6 +29,7 @@
     "daisyui": "^4.6.0",
     "dayjs": "^1.11.10",
     "decimal.js": "^10.4.3",
+    "lucide-svelte": "^0.317.0",
     "svelte-navigator": "^3.2.2"
   }
 }

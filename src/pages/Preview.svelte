@@ -3,7 +3,7 @@
   import { t } from '../lib/i18n';
   import {
     contact,
-    partner,
+    selectedPartner,
     offer,
     offerItems,
     netto,
@@ -45,10 +45,11 @@
 
   <div class="data-container px-6 py-2 text-md">
     <div class="grid grid-cols-2">
-
       <div class="flex flex-col border-r-2 border-dotted border-gray-500">
         <div class="flex justify-center">
-          <div class="text-sm self-center"><i>{$t('preview.labels.from')}</i></div>
+          <div class="text-sm self-center">
+            <i>{$t('preview.labels.from')}</i>
+          </div>
         </div>
 
         <div class="font-bold text-lg">
@@ -84,7 +85,9 @@
         </div>
 
         <div class="flex">
-          <div class="w-36 font-bold">{$t('preview.labels.bankAccountNumber')}</div>
+          <div class="w-36 font-bold">
+            {$t('preview.labels.bankAccountNumber')}
+          </div>
           <div>{$contact.bankAccountNumber}</div>
         </div>
       </div>
@@ -93,30 +96,36 @@
         <div class="flex justify-center">
           <div class="text-sm"><i>{$t('preview.labels.to')}</i></div>
         </div>
+        <div class="font-bold text-lg">
+          {$selectedPartner?.name}
+        </div>
 
         <div class="flex flex-col h-full justify-content-end pb-6">
           <div class="flex">
             <div class="w-36 font-bold">{$t('preview.labels.address')}</div>
-            <div>{$partner.address}</div>
+            <div>{$selectedPartner?.address}</div>
           </div>
-  
+
           <div class="flex">
-            <div class="w-36 font-bold">{$t('preview.labels.companyNumber')}</div>
-            <div>{$partner.companyNumber}</div>
+            <div class="w-36 font-bold">
+              {$t('preview.labels.companyNumber')}
+            </div>
+            <div>{$selectedPartner?.companyNumber}</div>
           </div>
-  
+
           <div class="flex">
             <div class="w-36 font-bold">{$t('preview.labels.taxNumber')}</div>
-            <div>{$partner.taxNumber}</div>
+            <div>{$selectedPartner?.taxNumber}</div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 
   <div class="flex justify-end pt-4">
-    <div class="font-bold pr-6 underline">{$t('preview.labels.offerNumber')}</div>
+    <div class="font-bold pr-6 underline">
+      {$t('preview.labels.offerNumber')}
+    </div>
     <div class="font-bold border-full flex justify-center w-48">
       <span>{$offer.offerNumber}</span>
     </div>

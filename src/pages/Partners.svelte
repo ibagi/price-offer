@@ -1,0 +1,101 @@
+<script lang="ts">
+  import { Link } from 'svelte-navigator';
+  import CardLayout from '../layouts/CardLayout.svelte';
+
+  import { t } from '../lib/i18n';
+  import type { Partner } from '../lib/types';
+  import { partners, addPartner, removePartner } from '../lib/state';
+  import { saveState } from '../lib/db';
+
+  function saveChanges($partners: Partner[]) {
+    saveState({ partners: $partners });
+  }
+
+  $: saveChanges($partners);
+</script>
+
+<CardLayout hideLeftSite={true}>
+  <section class="flex flex-col h-full" slot="right">
+    <div class="flex justify-between pb-2">
+      <h1 class="font-bold text-xl pb-2">{$t('partners.title')}</h1>
+      <div class="flex gap-2">
+        <button class="btn btn-sm self-end">
+          <Link to="/">
+            {$t('partners.actions.back')}
+          </Link>
+        </button>
+
+        {#if $partners.length > 0}
+          <button class="btn btn-neutral btn-sm self-end" on:click={addPartner}
+            >{$t('partners.actions.add')}</button>
+        {/if}
+      </div>
+    </div>
+
+    {#if $partners.length === 0}
+      <div class="flex h-full justify-center items-center">
+        <div class="flex flex-col items-center gap-4">
+          <p class="text-lg">{$t('partners.hint')}</p>
+          <button class="btn btn-neutral btn-lg" on:click={addPartner}
+            >{$t('partners.actions.addPartner')}</button>
+        </div>
+      </div>
+    {/if}
+
+    {#if $partners.length > 0}
+      <div class="overflow-x-auto w-full">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>{$t('partners.tableColumns.name')}</th>
+              <th>{$t('partners.tableColumns.address')}</th>
+              <th class="w-48">{$t('partners.tableColumns.companyNumber')}</th>
+              <th class="w-48">{$t('partners.tableColumns.taxNumber')}</th>
+              <th class="w-10"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each $partners as partner}
+              <tr>
+                <td>
+                  <input
+                    class="input input-sm input-bordered w-full"
+                    type="text"
+                    name="projectName"
+                    bind:value={partner.name} />
+                </td>
+                <td>
+                  <input
+                    class="input input-sm input-bordered w-full"
+                    type="text"
+                    name="projectName"
+                    bind:value={partner.address} />
+                </td>
+                <td>
+                  <input
+                    class="input input-sm input-bordered w-full"
+                    type="text"
+                    name="projectName"
+                    bind:value={partner.companyNumber} />
+                </td>
+                <td>
+                  <input
+                    class="input input-sm input-bordered w-full"
+                    type="text"
+                    name="projectName"
+                    bind:value={partner.taxNumber} />
+                </td>
+                <td>
+                  <button
+                    class="btn btn-sm"
+                    on:click={() => removePartner(partner)}
+                    >{$t('partners.actions.delete')}</button>
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    {/if}
+  </section>
+</CardLayout>

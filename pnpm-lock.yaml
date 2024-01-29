@@ -17,6 +17,9 @@ dependencies:
   decimal.js:
     specifier: ^10.4.3
     version: 10.4.3
+  lucide-svelte:
+    specifier: ^0.317.0
+    version: 0.317.0(svelte@4.2.8)
   svelte-navigator:
     specifier: ^3.2.2
     version: 3.2.2(svelte@4.2.8)(typescript@5.2.2)
@@ -1430,6 +1433,17 @@ packages:
         integrity: sha512-/1clY/ui8CzjKFyjdvwPWJUYKiFVXG2I2cY0ssG7h4+hwk+XOIX7ZSG9Q7TW8TW3Kp3BUSqgFWBLgL4PJ+Blag==,
       }
     engines: { node: 14 || >=16.14 }
+
+  /lucide-svelte@0.317.0(svelte@4.2.8):
+    resolution:
+      {
+        integrity: sha512-FkCcEJRqwn8g8csfr1lTKgXB4nP/e5vD51YHYugesYfkoJ8BGpN/Sq+Vi9xu+ML9gu+1qDZZ726+nnQbqf+OSw==,
+      }
+    peerDependencies:
+      svelte: '>=3 <5'
+    dependencies:
+      svelte: 4.2.8
+    dev: false
 
   /magic-string@0.30.5:
     resolution:

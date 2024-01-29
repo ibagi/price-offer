@@ -3,19 +3,20 @@ import { Decimal } from 'decimal.js';
 
 import {
   defaultContact,
-  defaultPartner,
   defaultOffer,
   defaultOfferItem,
   type Offer,
   type OfferItem,
   type Partner,
   type Contact,
+  defaultPartner,
 } from './types';
 
 import * as db from './db';
 
 export const contact = writable<Contact>({ ...defaultContact });
-export const partner = writable<Partner>({ ...defaultPartner });
+export const partners = writable<Partner[]>([]);
+export const selectedPartner = writable<Partner | undefined>();
 
 export const offer = writable<Offer>(defaultOffer);
 export const offerItems = writable<OfferItem[]>([]);
@@ -47,12 +48,26 @@ export function removeItems() {
   offerItems.set([]);
 }
 
+export function addPartner() {
+  partners.update(($partners) =>
+    [...$partners, { ...defaultPartner }].toSorted((a, b) =>
+      a.name.localeCompare(b.name),
+    ),
+  );
+}
+
+export function removePartner(partner: Partner) {
+  partners.update(($partners) =>
+    $partners.filter((p) => p !== partner),
+  );
+}
+
 export function restoreState() {
   const persistedState = db.loadState({
     contact: defaultContact,
-    partner: defaultPartner,
+    partners: [],
   });
 
+  partners.set(persistedState.partners ?? []);
   contact.set(persistedState.contact);
-  partner.set(persistedState.partner);
 }

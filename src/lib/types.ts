@@ -1,6 +1,6 @@
 export interface PersistedState {
   contact: Contact;
-  partner: Partner;
+  partners: Partner[];
 }
 
 export interface Contact {
@@ -28,13 +28,15 @@ export const defaultContact: Contact = {
 };
 
 export interface Partner {
+  name: string;
   address: string;
   companyNumber: string;
   taxNumber: string;
 }
 
 export const defaultPartner: Partner = {
-  address: '-',
+  name: '',
+  address: '',
   companyNumber: '00-00-000000',
   taxNumber: '00000000-0-00',
 };

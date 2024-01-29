@@ -5,6 +5,7 @@
 
   let internal: string | undefined;
 
+  export let id = '';
   export let placeholder = '';
   export let name = '';
   export let value = new Date();
@@ -19,7 +20,7 @@
 </script>
 
 <input
-  {...{ placeholder, name }}
+  {...{ id, placeholder, name }}
   class="input input-sm input-bordered w-full max-w-xs"
   type="date"
   bind:value={internal} />
