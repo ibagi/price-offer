@@ -28,7 +28,7 @@
 
 <main class="max-w-7xl mx-auto">
   <div class="flex items-center gap-2">
-    <img height="100" width="200" src="logo.png" alt="Cég" />
+    <img height="200" width="250" src="logo.png" alt="Cég" />
     <h1 class="flex-1 font-bold text-4xl">
       {$t('preview.title')}
     </h1>
@@ -44,71 +44,74 @@
   </div>
 
   <div class="data-container px-6 py-2 text-md">
-    <div class="flex pb-2 justify-between">
-      <div class="flex flex-1 justify-center">
-        <div class="text-sm"><i>{$t('preview.labels.from')}</i></div>
-      </div>
-      <div class="flex flex-1 justify-center">
-        <div class="text-sm"><i>{$t('preview.labels.to')}</i></div>
-      </div>
-    </div>
+    <div class="grid grid-cols-2">
 
-    <div class="font-bold text-lg">
-      {$contact.title}
-    </div>
-    <div class="font-bold text-lg pb-4">
-      {$contact.subtitle}
-    </div>
+      <div class="flex flex-col border-r-2 border-dotted border-gray-500">
+        <div class="flex justify-center">
+          <div class="text-sm self-center"><i>{$t('preview.labels.from')}</i></div>
+        </div>
 
-    <div class="flex">
-      <div class="w-36 font-bold">{$t('preview.labels.phone')}</div>
-      <div>{$contact.phone}</div>
-    </div>
+        <div class="font-bold text-lg">
+          {$contact.title}
+        </div>
+        <div class="font-bold text-lg pb-4">
+          {$contact.subtitle}
+        </div>
 
-    <div class="flex">
-      <div class="w-36 font-bold">{$t('preview.labels.email')}</div>
-      <div>{$contact.email}</div>
-    </div>
+        <div class="flex">
+          <div class="w-36 font-bold">{$t('preview.labels.phone')}</div>
+          <div>{$contact.phone}</div>
+        </div>
 
-    <div class="flex">
-      <div class="flex flex-1">
-        <div class="w-36 font-bold">{$t('preview.labels.address')}</div>
-        <div>{$contact.address}</div>
-      </div>
+        <div class="flex">
+          <div class="w-36 font-bold">{$t('preview.labels.email')}</div>
+          <div>{$contact.email}</div>
+        </div>
 
-      <div class="flex flex-1">
-        <div class="w-36 font-bold">{$t('preview.labels.address')}</div>
-        <div>{$partner.address}</div>
-      </div>
-    </div>
+        <div class="flex">
+          <div class="w-36 font-bold">{$t('preview.labels.address')}</div>
+          <div>{$contact.address}</div>
+        </div>
 
-    <div class="flex">
-      <div class="flex flex-1">
-        <div class="w-36 font-bold">{$t('preview.labels.companyNumber')}</div>
-        <div>{$contact.companyNumber}</div>
-      </div>
-      <div class="flex flex-1">
-        <div class="w-36 font-bold">{$t('preview.labels.companyNumber')}</div>
-        <div>{$partner.companyNumber}</div>
-      </div>
-    </div>
+        <div class="flex">
+          <div class="w-36 font-bold">{$t('preview.labels.companyNumber')}</div>
+          <div>{$contact.companyNumber}</div>
+        </div>
 
-    <div class="flex">
-      <div class="flex flex-1">
-        <div class="w-36 font-bold">{$t('preview.labels.taxNumber')}</div>
-        <div>{$contact.taxNumber}</div>
+        <div class="flex">
+          <div class="w-36 font-bold">{$t('preview.labels.taxNumber')}</div>
+          <div>{$contact.taxNumber}</div>
+        </div>
+
+        <div class="flex">
+          <div class="w-36 font-bold">{$t('preview.labels.bankAccountNumber')}</div>
+          <div>{$contact.bankAccountNumber}</div>
+        </div>
       </div>
 
-      <div class="flex flex-1">
-        <div class="w-36 font-bold">{$t('preview.labels.taxNumber')}</div>
-        <div>{$partner.taxNumber}</div>
+      <div class="flex flex-col mx-2">
+        <div class="flex justify-center">
+          <div class="text-sm"><i>{$t('preview.labels.to')}</i></div>
+        </div>
+
+        <div class="flex flex-col h-full justify-content-end pb-6">
+          <div class="flex">
+            <div class="w-36 font-bold">{$t('preview.labels.address')}</div>
+            <div>{$partner.address}</div>
+          </div>
+  
+          <div class="flex">
+            <div class="w-36 font-bold">{$t('preview.labels.companyNumber')}</div>
+            <div>{$partner.companyNumber}</div>
+          </div>
+  
+          <div class="flex">
+            <div class="w-36 font-bold">{$t('preview.labels.taxNumber')}</div>
+            <div>{$partner.taxNumber}</div>
+          </div>
+        </div>
+
       </div>
-
-    </div>
-
-    <div class="flex">
-      <div class="w-36 font-bold">{$t('preview.labels.bankAccountNumber')}</div>
-      <div>{$contact.bankAccountNumber}</div>
     </div>
   </div>
 
@@ -238,5 +241,9 @@
 
   .summary-underline {
     border-bottom: 3px solid black;
+  }
+
+  .justify-content-end {
+    justify-content: end;
   }
 </style>
