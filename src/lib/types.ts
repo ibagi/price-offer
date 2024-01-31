@@ -16,15 +16,15 @@ export interface Contact {
 }
 
 export const defaultContact: Contact = {
-  person: 'Papp Zoltán',
-  title: 'P-TOOL',
-  subtitle: 'Szerszámgyártó Kft.',
-  email: 'ptool.kft@gmail.com',
-  phone: '+36 30 908 9291',
-  address: '2234 Maglód Ady Endre utca 25-39 5/B',
-  companyNumber: '13-09-217197',
-  taxNumber: '27541706-2-13',
-  bankAccountNumber: '12011739-01798762-00100009',
+  person: '-',
+  title: '-',
+  subtitle: '-',
+  email: 'mail@example.com',
+  phone: '+36 00 000 0000',
+  address: '-',
+  companyNumber: '00-00-000000',
+  taxNumber: '000000-0-00',
+  bankAccountNumber: '000000-000000-00100009',
 };
 
 export interface Partner {

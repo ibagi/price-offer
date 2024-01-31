@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { Link } from 'svelte-navigator';
-  import CardLayout from '../layouts/CardLayout.svelte';
+  import Layout from '../layouts/Layout.svelte';
 
   import { t } from '../lib/i18n';
   import type { Partner } from '../lib/types';
@@ -14,17 +13,11 @@
   $: saveChanges($partners);
 </script>
 
-<CardLayout hideLeftSite={true}>
+<Layout>
   <section class="flex flex-col h-full" slot="right">
     <div class="flex justify-between pb-2">
-      <h1 class="font-bold text-xl pb-2">{$t('partners.title')}</h1>
+      <h1 class="font-bold text-lg pb-2">{$t('partners.title')}</h1>
       <div class="flex gap-2">
-        <button class="btn btn-sm self-end">
-          <Link to="/">
-            {$t('partners.actions.back')}
-          </Link>
-        </button>
-
         {#if $partners.length > 0}
           <button class="btn btn-neutral btn-sm self-end" on:click={addPartner}
             >{$t('partners.actions.add')}</button>
@@ -98,4 +91,4 @@
       </div>
     {/if}
   </section>
-</CardLayout>
+</Layout>

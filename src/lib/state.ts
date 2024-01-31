@@ -57,9 +57,7 @@ export function addPartner() {
 }
 
 export function removePartner(partner: Partner) {
-  partners.update(($partners) =>
-    $partners.filter((p) => p !== partner),
-  );
+  partners.update(($partners) => $partners.filter((p) => p !== partner));
 }
 
 export function restoreState() {
