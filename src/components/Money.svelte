@@ -1,24 +1,25 @@
 <script lang="ts">
   import type { Currency } from '../lib/types';
-    import {locale} from '../lib/i18n';
+  import { locale } from '../lib/i18n';
 
   export let value = 0;
-  export let currency: Currency = 'HUF';
+  export let currency: Currency;
   export let fractions = 0;
 
   let text = '';
 
-  function formatNumber(val: number, loc: string) {
+  function formatNumber(val: number, loc: string, curr: string) {
     const formatter = new Intl.NumberFormat(loc, {
-        style: 'currency',
-        currency,
-        minimumFractionDigits: fractions
+      style: 'currency',
+      currency,
+      currencyDisplay: 'code',
+      minimumFractionDigits: fractions,
     });
 
     text = formatter.format(val);
   }
 
-  $: formatNumber(value, $locale);
+  $: formatNumber(value, $locale, currency);
 </script>
 
-<div class="text-center">{text}</div>
+<span>{text}</span>

@@ -13,6 +13,7 @@
     tax,
     brutto,
     totalPrice,
+    currency,
   } from '../lib/state';
   import { getDecimalPlaces } from '../lib/prices';
 
@@ -170,16 +171,16 @@
           <td class="table-cell">
             <Money
               value={item.workPrice + item.materialPrice}
-              currency={$offer.currency} />
+              currency={$currency} />
           </td>
           <td class="table-cell">
-            <Money value={totalPrice(item)} currency={$offer.currency} />
+            <Money value={totalPrice(item)} currency={$currency} />
           </td>
           <td class="table-cell">
-            <Money value={item.workPrice} currency={$offer.currency} />
+            <Money value={item.workPrice} currency={$currency} />
           </td>
           <td class="table-cell">
-            <Money value={item.materialPrice} currency={$offer.currency} />
+            <Money value={item.materialPrice} currency={$currency} />
           </td>
         </tr>
       {/each}
@@ -189,8 +190,8 @@
         <td class="font-bold px-2 text-right">
           <Money
             value={$netto}
-            currency={$offer.currency}
-            fractions={getDecimalPlaces($offer.currency)} />
+            currency={$currency}
+            fractions={getDecimalPlaces($currency)} />
         </td>
         <td colspan="2"></td>
       </tr>
@@ -200,8 +201,8 @@
         <td class="font-bold px-2 text-right">
           <Money
             value={$tax}
-            currency={$offer.currency}
-            fractions={getDecimalPlaces($offer.currency)} />
+            currency={$currency}
+            fractions={getDecimalPlaces($currency)} />
         </td>
         <td colspan="2"></td>
       </tr>
@@ -212,8 +213,8 @@
         <td class="font-bold px-2 summary-underline text-right">
           <Money
             value={$brutto}
-            currency={$offer.currency}
-            fractions={getDecimalPlaces($offer.currency)} />
+            currency={$currency}
+            fractions={getDecimalPlaces($currency)} />
         </td>
         <td colspan="2"></td>
       </tr>

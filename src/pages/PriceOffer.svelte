@@ -20,6 +20,7 @@
     totalPrice,
     partners,
     selectedPartner,
+    currency,
   } from '../lib/state';
   import PriceInput from '../components/PriceInput.svelte';
   import { currencies } from '../lib/types';
@@ -139,7 +140,7 @@
       placeholder={$t('priceOffer.labels.currency')}
       class="select select-sm select-bordered w-full max-w-xs"
       name="currency"
-      bind:value={$offer.currency}>
+      bind:value={$currency}>
       {#each currencies as currency}
         <option value={currency}>{currency}</option>
       {/each}
@@ -164,8 +165,8 @@
             <tr>
               <th>{$t('priceOffer.tableColumns.item')}</th>
               <th>{$t('priceOffer.tableColumns.unitPrice')}</th>
-              <th>{$t('priceOffer.tableColumns.amount')}</th>
               <th>{$t('priceOffer.tableColumns.total')}</th>
+              <th>{$t('priceOffer.tableColumns.amount')}</th>
               <th>{$t('priceOffer.tableColumns.workPrice')}</th>
               <th>{$t('priceOffer.tableColumns.materialPrice')}</th>
               <th class="w-12"></th>
@@ -174,25 +175,31 @@
           <tbody>
             {#each $offerItems as item}
               <tr>
-                <td
+                <td class="flex-grow-2"
                   ><input
-                    class="input input-bordered input-sm w-full max-w-xs"
+                    class="input input-bordered input-sm w-full"
                     bind:value={item.name} /></td>
-                <td>{item.workPrice + item.materialPrice} {$offer.currency}</td>
-                <td
+                <td class="w-32">
+                  <Money
+                    value={item.workPrice + item.materialPrice}
+                    currency={$currency} />
+                </td>
+                <td class="w-32">
+                  <Money value={totalPrice(item)} currency={$currency} />
+                </td>
+                <td class="w-24"
                   ><input
                     type="number"
-                    class="input input-bordered input-sm text-right"
+                    class="input input-bordered input-sm text-right w-24"
                     bind:value={item.amount} /></td>
-                <td>{totalPrice(item)} {$offer.currency}</td>
                 <td>
                   <PriceInput
                     bind:value={item.workPrice}
-                    currency={$offer.currency} />
+                    currency={$currency} />
                 </td><td>
                   <PriceInput
                     bind:value={item.materialPrice}
-                    currency={$offer.currency} />
+                    currency={$currency} />
                 </td><td>
                   <button class="btn btn-sm" on:click={() => removeItem(item)}>
                     {$t('priceOffer.actions.delete')}
@@ -205,18 +212,33 @@
       </div>
 
       <div class="divider"></div>
-      <div class="font-bold flex justify-end gap-6">
+      <div class="font-bold flex justify-end gap-8">
         <div class="text-center">
           <span>{$t('priceOffer.summary.netto')}</span>
-          <Money value={$netto} currency={$offer.currency} fractions={getDecimalPlaces($offer.currency)}></Money>
+          <div>
+            <Money
+              value={$netto}
+              currency={$currency}
+              fractions={getDecimalPlaces($currency)} />
+          </div>
         </div>
         <div class="text-center">
           <span>{$t('priceOffer.summary.tax')}</span>
-          <Money value={$tax} currency={$offer.currency} fractions={getDecimalPlaces($offer.currency)}></Money>
+          <div>
+            <Money
+              value={$tax}
+              currency={$currency}
+              fractions={getDecimalPlaces($currency)} />
+          </div>
         </div>
         <div class="text-center">
           <span>{$t('priceOffer.summary.brutto')}</span>
-          <Money value={$brutto} currency={$offer.currency} fractions={getDecimalPlaces($offer.currency)}></Money>
+          <div>
+            <Money
+              value={$brutto}
+              currency={$currency}
+              fractions={getDecimalPlaces($currency)} />
+          </div>
         </div>
       </div>
     {/if}

@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { Currency } from "../lib/types";
-  import { roundToFractions } from "../lib/prices";
+  import type { Currency } from '../lib/types';
+  import { roundToFractions } from '../lib/prices';
 
   export let currency: Currency;
   export let value = 0;
 
   function handleChange(val: number) {
-    if(Number.isNaN(val)) {
+    if (Number.isNaN(val)) {
       value = 0;
       return;
     }
@@ -15,14 +15,14 @@
   }
 </script>
 
-<div class="flex items-center">
+<div class="flex items-center w-full">
   <input
     type="number"
     min="0.01"
     step="any"
-    class="input input-bordered input-sm w-full text-right pr-12"
-    value={value}
-    on:change={e => handleChange(e.currentTarget.valueAsNumber)}/>
+    class="input input-bordered input-sm text-right w-full pr-12"
+    {value}
+    on:change={(e) => handleChange(e.currentTarget.valueAsNumber)} />
   <span style="margin-left: -3rem;">
     {currency}
   </span>

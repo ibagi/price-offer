@@ -1,5 +1,4 @@
 import { writable, derived } from 'svelte/store';
-import { Decimal } from 'decimal.js';
 
 import {
   defaultContact,
@@ -9,6 +8,7 @@ import {
   type OfferItem,
   type Partner,
   type Contact,
+  type Currency,
   defaultPartner,
 } from './types';
 
@@ -24,15 +24,23 @@ export const offerItems = writable<OfferItem[]>([]);
 export const hasItem = derived(offerItems, (items) => items.length > 0);
 
 export const taxRate = writable(27);
+export const currency = writable<Currency>('HUF');
 
-export const netto = derived([offerItems, offer], ([$offerItems, $offer]) => 
-  prices.netto($offerItems.map(totalPrice), $offer.currency));
+export const netto = derived(
+  [offerItems, currency],
+  ([$offerItems, $currency]) =>
+    prices.netto($offerItems.map(totalPrice), $currency),
+);
 
-export const tax = derived([netto, taxRate, offer], ([$netto, $taxRate, $offer]) => 
-  prices.tax($netto, $taxRate, $offer.currency));
+export const tax = derived(
+  [netto, taxRate, currency],
+  ([$netto, $taxRate, $currency]) => prices.tax($netto, $taxRate, $currency),
+);
 
-export const brutto = derived([netto, tax, offer], ([$netto, $tax, $offer]) => 
-  prices.brutto($netto, $tax, $offer.currency));
+export const brutto = derived(
+  [netto, tax, currency],
+  ([$netto, $tax, $currency]) => prices.brutto($netto, $tax, $currency),
+);
 
 export function totalPrice(item: OfferItem) {
   return (item.materialPrice + item.workPrice) * item.amount;
