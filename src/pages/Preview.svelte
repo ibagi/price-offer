@@ -1,6 +1,8 @@
 <script lang="ts">
   import { Link } from 'svelte-navigator';
   import { t } from '../lib/i18n';
+  import Money from '../components/Money.svelte';
+
   import {
     contact,
     selectedPartner,
@@ -12,6 +14,7 @@
     brutto,
     totalPrice,
   } from '../lib/state';
+  import { getDecimalPlaces } from '../lib/prices';
 
   let saving = false;
 
@@ -164,30 +167,54 @@
         <tr>
           <td class="table-cell">{item.name}</td>
           <td class="table-cell">{item.amount}</td>
-          <td class="table-cell">{item.workPrice + item.materialPrice}</td>
-          <td class="table-cell">{totalPrice(item)} {$offer.currency}</td>
-          <td class="table-cell">{item.workPrice} {$offer.currency}</td>
-          <td class="table-cell">{item.materialPrice} {$offer.currency}</td>
+          <td class="table-cell">
+            <Money
+              value={item.workPrice + item.materialPrice}
+              currency={$offer.currency} />
+          </td>
+          <td class="table-cell">
+            <Money value={totalPrice(item)} currency={$offer.currency} />
+          </td>
+          <td class="table-cell">
+            <Money value={item.workPrice} currency={$offer.currency} />
+          </td>
+          <td class="table-cell">
+            <Money value={item.materialPrice} currency={$offer.currency} />
+          </td>
         </tr>
       {/each}
       <tr>
         <td colspan="3"></td>
         <td class="font-bold px-2">{$t('preview.table.netto')}</td>
-        <td class="font-bold px-2 text-right">{$netto} {$offer.currency}</td>
+        <td class="font-bold px-2 text-right">
+          <Money
+            value={$netto}
+            currency={$offer.currency}
+            fractions={getDecimalPlaces($offer.currency)} />
+        </td>
         <td colspan="2"></td>
       </tr>
       <tr>
         <td colspan="3"></td>
         <td class="font-bold px-2">{$t('preview.table.tax')}</td>
-        <td class="font-bold px-2 text-right">{$tax} {$offer.currency}</td>
+        <td class="font-bold px-2 text-right">
+          <Money
+            value={$tax}
+            currency={$offer.currency}
+            fractions={getDecimalPlaces($offer.currency)} />
+        </td>
         <td colspan="2"></td>
       </tr>
       <tr>
         <td colspan="3"></td>
         <td class="font-bold px-2 summary-underline"
           >{$t('preview.table.brutto')}</td>
-        <td class="font-bold px-2 summary-underline text-right"
-          >{$brutto} {$offer.currency}</td>
+        <td class="font-bold px-2 summary-underline text-right">
+          <Money
+            value={$brutto}
+            currency={$offer.currency}
+            fractions={getDecimalPlaces($offer.currency)} />
+        </td>
         <td colspan="2"></td>
       </tr>
     </tbody>
@@ -201,6 +228,11 @@
   <div class="font-bold">{$t('preview.labels.taxation')}</div>
   <div class="text-sm pb-2">
     {$t('preview.fields.taxation', { tax: $taxRate })}
+  </div>
+
+  <div class="font-bold">{$t('preview.labels.productionTime')}</div>
+  <div class="text-sm pb-2">
+    {$t('preview.fields.productionTime', { days: $offer.productionTimeInDays })}
   </div>
 
   <div class="font-bold">{$t('preview.labels.validity')}</div>

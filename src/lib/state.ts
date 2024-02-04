@@ -13,6 +13,7 @@ import {
 } from './types';
 
 import * as db from './db';
+import * as prices from './prices';
 
 export const contact = writable<Contact>({ ...defaultContact });
 export const partners = writable<Partner[]>([]);
@@ -23,14 +24,15 @@ export const offerItems = writable<OfferItem[]>([]);
 export const hasItem = derived(offerItems, (items) => items.length > 0);
 
 export const taxRate = writable(27);
-export const netto = derived(offerItems, (items) =>
-  items.reduce((sum, i) => sum + totalPrice(i), 0),
-);
 
-export const tax = derived([netto, taxRate], ([$netto, $taxRate]) =>
-  new Decimal($netto * ($taxRate / 100)).toDecimalPlaces(0).toNumber(),
-);
-export const brutto = derived([netto, tax], ([$netto, $tax]) => $netto + $tax);
+export const netto = derived([offerItems, offer], ([$offerItems, $offer]) => 
+  prices.netto($offerItems.map(totalPrice), $offer.currency));
+
+export const tax = derived([netto, taxRate, offer], ([$netto, $taxRate, $offer]) => 
+  prices.tax($netto, $taxRate, $offer.currency));
+
+export const brutto = derived([netto, tax, offer], ([$netto, $tax, $offer]) => 
+  prices.brutto($netto, $tax, $offer.currency));
 
 export function totalPrice(item: OfferItem) {
   return (item.materialPrice + item.workPrice) * item.amount;

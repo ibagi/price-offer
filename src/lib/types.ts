@@ -47,7 +47,8 @@ export interface Offer {
   offerDate: Date;
   offerPlace: string;
   validity: number;
-  currency: string;
+  currency: Currency;
+  productionTimeInDays: number;
 }
 
 export const defaultOffer: Offer = {
@@ -57,6 +58,7 @@ export const defaultOffer: Offer = {
   offerPlace: 'Maglód',
   validity: 30,
   currency: 'HUF',
+  productionTimeInDays: 8
 };
 
 export interface OfferItem {
@@ -72,3 +74,9 @@ export const defaultOfferItem: OfferItem = {
   workPrice: 1,
   materialPrice: 1,
 };
+
+export type Currency = 'HUF' | 'EUR';
+export const currencies: Currency[] = [
+  'HUF',
+  'EUR'
+];
