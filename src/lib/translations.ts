@@ -77,7 +77,7 @@ const translations: Translations = {
     'partners.tableColumns.address': 'Cím',
     'partners.tableColumns.companyNumber': 'Cégjegyzékszám',
     'partners.tableColumns.taxNumber': 'Adószám',
-    'company.title': 'Árajánlaton megjelenő cég adatok',
+    'company.title': 'Cég adatok',
     'company.labels.title': 'Küldő címsor 1:',
     'company.labels.subtitle': 'Küldő címsor 2:',
     'company.labels.phone': 'Mobiltelefon:',

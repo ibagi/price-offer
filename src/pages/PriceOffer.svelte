@@ -33,7 +33,7 @@
     <h1 class="font-bold text-lg pb-2" tabindex="-1">
       {$t('priceOffer.title')}
     </h1>
-    <label class="font-medium label" for="partner">
+    <label class="font-medium label text-sm" for="partner">
       {$t('priceOffer.labels.partner')}
     </label>
 
@@ -58,7 +58,7 @@
       </Link>
     </div>
 
-    <label class="font-medium label" for="offerNumber">
+    <label class="font-medium label text-sm" for="offerNumber">
       {$t('priceOffer.labels.offerNumber')}
     </label>
     <input
@@ -69,7 +69,7 @@
       name="offerNumber"
       bind:value={$offer.offerNumber} />
 
-    <label class="font-medium label" for="projectName"
+    <label class="font-medium label text-sm" for="projectName"
       >{$t('priceOffer.labels.project')}
     </label>
     <input
@@ -80,7 +80,7 @@
       name="projectName"
       bind:value={$offer.projectName} />
 
-    <label class="font-medium label" for="offerPlace">
+    <label class="font-medium label text-sm" for="offerPlace">
       {$t('priceOffer.labels.offerPlace')}
     </label>
     <input
@@ -90,7 +90,7 @@
       name="offerPlace"
       bind:value={$offer.offerPlace} />
 
-    <label class="font-medium label" for="offerDate">
+    <label class="font-medium label text-sm" for="offerDate">
       {$t('priceOffer.labels.offerDate')}
     </label>
     <DateInput
@@ -99,7 +99,7 @@
       name="offerDate"
       bind:value={$offer.offerDate} />
 
-    <label class="font-medium label" for="validity">
+    <label class="font-medium label text-sm" for="validity">
       {$t('priceOffer.labels.validity')}
     </label>
     <input
@@ -110,7 +110,7 @@
       name="validity"
       bind:value={$offer.validity} />
 
-    <label class="font-medium label" for="taxRate">
+    <label class="font-medium label text-sm" for="taxRate">
       {$t('priceOffer.labels.taxRate')}
     </label>
     <input
@@ -121,7 +121,7 @@
       name="taxRate"
       bind:value={$taxRate} />
 
-    <label class="font-medium label" for="productionTime">
+    <label class="font-medium label text-sm" for="productionTime">
       {$t('priceOffer.labels.productionTime')}
     </label>
     <input
@@ -132,7 +132,7 @@
       name="productionTime"
       bind:value={$offer.productionTimeInDays} />
 
-    <label class="font-medium label" for="currency">
+    <label class="font-medium label text-sm" for="currency">
       {$t('priceOffer.labels.currency')}
     </label>
     <select
@@ -210,8 +210,17 @@
           </tbody>
         </table>
       </div>
+    {/if}
 
-      <div class="divider"></div>
+    {#if !$hasItem}
+      <p class="flex flex-1 justify-center items-center h-32">
+        {$t('priceOffer.hint')}
+      </p>
+    {/if}
+  </section>
+
+  <section slot="actions">
+    {#if $hasItem}
       <div class="font-bold flex justify-end gap-8">
         <div class="text-center">
           <span>{$t('priceOffer.summary.netto')}</span>
@@ -241,12 +250,6 @@
           </div>
         </div>
       </div>
-    {/if}
-
-    {#if !$hasItem}
-      <p class="flex flex-1 justify-center items-center h-32">
-        {$t('priceOffer.hint')}
-      </p>
     {/if}
   </section>
 </Layout>

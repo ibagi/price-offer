@@ -31,26 +31,26 @@
   $: setActiveRoute($location);
 </script>
 
-<nav class="flex justify-center gap-4 bg-teal-600">
+<nav class="flex justify-center bg-teal-600">
   <div role="tablist" class="tabs tabs-bordered">
     {#each routes as route}
       {#if route.isActive}
         <Link
           role="tab"
-          class="tab h-12 text-white text-lg tab-active"
+          class="tab text-base h-12 font-medium text-white tab-active bg-teal-700"
           as="a"
           to={route.to}>{route.title}</Link>
       {:else}
         <Link
           role="tab"
-          class="tab h-12 text-white text-lg"
+          class="tab text-base h-12 font-medium text-white"
           as="a"
           to={route.to}>{route.title}</Link>
       {/if}
     {/each}
     <Link
       role="tab"
-      class="tab h-12 text-white text-lg font-bold"
+      class="tab text-base h-12 text-white font-bold"
       as="a"
       to="/preview">{$t('navigation.preview')}</Link>
   </div>
