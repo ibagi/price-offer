@@ -1,19 +1,32 @@
-export interface PersistedState {
-  contact: Contact;
-  partners: Partner[];
-}
+import { z } from "zod";
 
-export interface Contact {
-  person: string;
-  title: string;
-  subtitle: string;
-  phone: string;
-  email: string;
-  address: string;
-  companyNumber: string;
-  taxNumber: string;
-  bankAccountNumber: string;
-}
+export const contactSchema = z.object({
+  person: z.string(),
+  title: z.string(),
+  subtitle: z.string(),
+  phone: z.string(),
+  email: z.string(),
+  address: z.string(),
+  companyNumber: z.string(),
+  taxNumber: z.string(),
+  bankAccountNumber: z.string(),
+});
+
+export const partnerSchema = z.object({
+  name: z.string(),
+  address: z.string(),
+  companyNumber: z.string(),
+  taxNumber: z.string(),
+});
+
+export const persistedStateSchema = z.object({
+  contact: z.object(contactSchema.shape),
+  partners: z.array(z.object(partnerSchema.shape))
+});
+
+export type PersistedState = z.infer<typeof persistedStateSchema>;
+export type Contact = z.infer<typeof contactSchema>; 
+export type Partner = z.infer<typeof partnerSchema>; 
 
 export const defaultContact: Contact = {
   person: '-',
@@ -26,13 +39,6 @@ export const defaultContact: Contact = {
   taxNumber: '000000-0-00',
   bankAccountNumber: '000000-000000-00100009',
 };
-
-export interface Partner {
-  name: string;
-  address: string;
-  companyNumber: string;
-  taxNumber: string;
-}
 
 export const defaultPartner: Partner = {
   name: '',

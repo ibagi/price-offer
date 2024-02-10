@@ -1,4 +1,4 @@
-import { defaultContact, type PersistedState } from './types';
+import { defaultContact, persistedStateSchema, type PersistedState } from './types';
 
 const LOCAL_STORAGE_KEY = 'price-offer-data';
 
@@ -15,15 +15,17 @@ export function saveState(update: Partial<PersistedState>) {
 }
 
 export function loadState(fallBackState: PersistedState) {
-  const existingData = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+  const persisted = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+  const validated = persistedStateSchema.safeParse(JSON.parse(persisted ?? '{}'), {
 
-  if (!existingData) {
-    window.localStorage.setItem(
-      LOCAL_STORAGE_KEY,
-      JSON.stringify(fallBackState),
-    );
-    return fallBackState;
+  });
+
+  if (validated.success) {
+    return validated.data;
+  } else {
+    console.error(validated.error)
   }
 
-  return JSON.parse(existingData) as PersistedState;
+  window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(fallBackState));
+  return fallBackState;
 }

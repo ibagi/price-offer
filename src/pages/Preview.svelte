@@ -101,25 +101,25 @@
           <div class="text-sm"><i>{$t('preview.labels.to')}</i></div>
         </div>
         <div class="font-bold text-lg">
-          {$selectedPartner?.name}
+          {$selectedPartner?.name ?? ''}
         </div>
 
         <div class="flex flex-col h-full justify-content-end pb-6">
           <div class="flex">
             <div class="w-36 font-bold">{$t('preview.labels.address')}</div>
-            <div>{$selectedPartner?.address}</div>
+            <div>{$selectedPartner?.address ?? ''}</div>
           </div>
 
           <div class="flex">
             <div class="w-36 font-bold">
               {$t('preview.labels.companyNumber')}
             </div>
-            <div>{$selectedPartner?.companyNumber}</div>
+            <div>{$selectedPartner?.companyNumber ?? ''}</div>
           </div>
 
           <div class="flex">
             <div class="w-36 font-bold">{$t('preview.labels.taxNumber')}</div>
-            <div>{$selectedPartner?.taxNumber}</div>
+            <div>{$selectedPartner?.taxNumber ?? ''}</div>
           </div>
         </div>
       </div>
