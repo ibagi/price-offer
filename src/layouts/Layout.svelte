@@ -15,7 +15,7 @@
       {/if}
 
       <!-- Right side -->
-      <div class="w-full  flex flex-col overflow-x-hidden">
+      <div class="w-full flex flex-col overflow-x-hidden">
         <div class="flex-1">
           <slot name="right" />
         </div>

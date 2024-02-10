@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const contactSchema = z.object({
   person: z.string(),
@@ -21,12 +21,12 @@ export const partnerSchema = z.object({
 
 export const persistedStateSchema = z.object({
   contact: z.object(contactSchema.shape),
-  partners: z.array(z.object(partnerSchema.shape))
+  partners: z.array(z.object(partnerSchema.shape)),
 });
 
 export type PersistedState = z.infer<typeof persistedStateSchema>;
-export type Contact = z.infer<typeof contactSchema>; 
-export type Partner = z.infer<typeof partnerSchema>; 
+export type Contact = z.infer<typeof contactSchema>;
+export type Partner = z.infer<typeof partnerSchema>;
 
 export const defaultContact: Contact = {
   person: '-',
