@@ -1,7 +1,9 @@
 <script lang="ts">
   import { Link, useLocation, type NavigatorLocation } from 'svelte-navigator';
   import type AnyObject from 'svelte-navigator/types/AnyObject';
+  import { LogOut } from 'lucide-svelte';
 
+  import { user, signOut } from '../lib/auth';
   import { t } from '../lib/i18n';
 
   let routes = [
@@ -31,7 +33,7 @@
   $: setActiveRoute($location);
 </script>
 
-<nav class="flex justify-center bg-teal-600">
+<nav class="flex bg-teal-600 justify-between px-8">
   <div role="tablist" class="tabs tabs-bordered">
     {#each routes as route}
       {#if route.isActive}
@@ -54,4 +56,12 @@
       as="a"
       to="/preview">{$t('navigation.preview')}</Link>
   </div>
+  {#if user}
+    <button
+      class="btn btn-small bg-teal-600 border-0 text-black-200 hover:text-white hover:bg-teal-600"
+      on:click={signOut}>
+      {$user?.primaryEmailAddress}
+      <LogOut />
+    </button>
+  {/if}
 </nav>
