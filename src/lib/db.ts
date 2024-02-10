@@ -16,15 +16,13 @@ export function saveState(update: Partial<PersistedState>) {
 
 export function loadState(fallBackState: PersistedState) {
   const persisted = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-  const validated = persistedStateSchema.safeParse(JSON.parse(persisted ?? '{}'), {
-
-  });
+  const validated = persistedStateSchema.safeParse(JSON.parse(persisted ?? '{}'));
 
   if (validated.success) {
     return validated.data;
-  } else {
-    console.error(validated.error)
   }
+
+  console.error(validated.error);
 
   window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(fallBackState));
   return fallBackState;
