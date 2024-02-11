@@ -19,3 +19,9 @@ body {
 h1 {
   outline: none;
 }
+
+/*Clerk overrides*/
+.cl-modalBackdrop {
+  align-items: center;
+  background: inherit;
+}

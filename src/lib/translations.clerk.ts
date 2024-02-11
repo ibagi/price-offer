@@ -1,4 +1,6 @@
-export const localization = {
+import type { DeepPartial, LocalizationResource } from "@clerk/types";
+
+export const localization: Record<string, DeepPartial<LocalizationResource>> = {
     hu: {
         signIn: {
             start: {
@@ -15,7 +17,7 @@ export const localization = {
                 label__alternativeMethods: 'Bejelentkezés más módszerrel'
             },
             emailCode: {
-                formSubtitle: 'Kód küldése emailben'
+                formSubtitle: 'Kód küldése emailben',
             }
         },
         formButtonPrimary: 'Tovább',

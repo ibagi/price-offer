@@ -11,7 +11,10 @@ const clerk = new Clerk(import.meta.env.VITE_CLERK_PUBLISHABLE_KEY);
 export const user = writable<User>(null);
 
 export async function loadSession() {
-  await clerk.load({ localization: localization.hu });
+  await clerk.load({ 
+    localization: localization.hu,
+    signUpUrl: ''
+  });
   user.set(clerk.user);
 }
 
