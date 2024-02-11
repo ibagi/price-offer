@@ -42,13 +42,13 @@
       {#if route.isActive}
         <Link
           role="tab"
-          class="tab text-base h-12 font-medium text-white tab-active bg-teal-700"
+          class="tab text-sm h-12 text-white tab-active bg-teal-700"
           as="a"
           to={route.to}>{route.title}</Link>
       {:else}
         <Link
           role="tab"
-          class="tab text-base h-12 font-medium text-white"
+          class="tab text-sm h-12 text-white"
           as="a"
           to={route.to}>{route.title}</Link>
       {/if}
