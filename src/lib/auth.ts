@@ -2,6 +2,8 @@ import Clerk from '@clerk/clerk-js';
 import type { UserResource } from '@clerk/types';
 import { writable } from 'svelte/store';
 
+import { localization } from './translations.clerk';
+
 type User = UserResource | null | undefined;
 
 const clerk = new Clerk(import.meta.env.VITE_CLERK_PUBLISHABLE_KEY);
@@ -9,7 +11,7 @@ const clerk = new Clerk(import.meta.env.VITE_CLERK_PUBLISHABLE_KEY);
 export const user = writable<User>(null);
 
 export async function loadSession() {
-  await clerk.load();
+  await clerk.load({ localization: localization.hu });
   user.set(clerk.user);
 }
 

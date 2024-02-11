@@ -60,7 +60,7 @@
     <button
       class="btn btn-small bg-teal-600 border-0 text-black-200 hover:text-white hover:bg-teal-600"
       on:click={signOut}>
-      {$user?.primaryEmailAddress}
+        {$user?.primaryEmailAddress}
       <LogOut />
     </button>
   {/if}

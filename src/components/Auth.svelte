@@ -1,16 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { user, loadSession, signIn } from '../lib/auth';
+  import { user, signIn, loadSession } from '../lib/auth';
+
+  let initialized = false;
 
   onMount(async () => {
     await loadSession();
+    initialized = true;
+
     if (!$user) {
       await signIn();
     }
   });
 
   async function checkSession(user: any) {
-    if (!user) {
+    if (initialized && !user) {
       await signIn();
     }
   }
