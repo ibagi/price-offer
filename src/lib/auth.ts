@@ -38,3 +38,7 @@ export async function signOut() {
     user.set(clerk.user);
   }
 }
+
+export function mountUserButton(el :HTMLDivElement) {
+  clerk.mountUserButton(el);
+}
