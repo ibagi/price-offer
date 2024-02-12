@@ -1,5 +1,6 @@
 <script lang="ts">
   import Layout from '../layouts/Layout.svelte';
+  import { Trash2 } from 'lucide-svelte';
 
   import { t } from '../lib/i18n';
   import type { Partner } from '../lib/types';
@@ -80,9 +81,11 @@
                 </td>
                 <td>
                   <button
+                    title={$t('partners.actions.delete')}
                     class="btn btn-sm"
-                    on:click={() => removePartner(partner)}
-                    >{$t('partners.actions.delete')}</button>
+                    on:click={() => removePartner(partner)}>
+                    <Trash2/>
+                  </button>
                 </td>
               </tr>
             {/each}

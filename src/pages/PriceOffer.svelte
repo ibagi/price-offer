@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Link } from 'svelte-navigator';
-  import { Edit } from 'lucide-svelte';
+  import { Edit, Trash2 } from 'lucide-svelte';
 
   import Layout from '../layouts/Layout.svelte';
   import DateInput from '../components/DateInput.svelte';
@@ -163,31 +163,31 @@
         <table class="table">
           <thead>
             <tr>
-              <th>{$t('priceOffer.tableColumns.item')}</th>
-              <th>{$t('priceOffer.tableColumns.unitPrice')}</th>
-              <th>{$t('priceOffer.tableColumns.total')}</th>
-              <th>{$t('priceOffer.tableColumns.amount')}</th>
-              <th>{$t('priceOffer.tableColumns.workPrice')}</th>
-              <th>{$t('priceOffer.tableColumns.materialPrice')}</th>
-              <th class="w-12"></th>
+              <th class="min-w-24">{$t('priceOffer.tableColumns.item')}</th>
+              <th class="max-w-32">{$t('priceOffer.tableColumns.unitPrice')}</th>
+              <th class="max-w-32">{$t('priceOffer.tableColumns.total')}</th>
+              <th class="w-4">{$t('priceOffer.tableColumns.amount')}</th>
+              <th class="min-w-36">{$t('priceOffer.tableColumns.workPrice')}</th>
+              <th class="min-w-36">{$t('priceOffer.tableColumns.materialPrice')}</th>
+              <th class="w-6"></th>
             </tr>
           </thead>
           <tbody>
             {#each $offerItems as item}
               <tr>
-                <td class="flex-grow-2"
+                <td class="min-w-24"
                   ><input
                     class="input input-bordered input-sm w-full"
                     bind:value={item.name} /></td>
-                <td class="w-32">
+                <td class="max-w-32">
                   <Money
                     value={item.workPrice + item.materialPrice}
                     currency={$currency} />
                 </td>
-                <td class="w-32">
+                <td class="max-w-32">
                   <Money value={totalPrice(item)} currency={$currency} />
                 </td>
-                <td class="w-24"
+                <td class="w-4"
                   ><input
                     type="number"
                     class="input input-bordered input-sm text-right w-24"
@@ -196,13 +196,14 @@
                   <PriceInput
                     bind:value={item.workPrice}
                     currency={$currency} />
-                </td><td>
+                </td>
+                <td>
                   <PriceInput
                     bind:value={item.materialPrice}
                     currency={$currency} />
-                </td><td>
-                  <button class="btn btn-sm" on:click={() => removeItem(item)}>
-                    {$t('priceOffer.actions.delete')}
+                </td><td class="w-6">
+                  <button title="{$t('priceOffer.actions.delete')}" class="btn btn-sm" on:click={() => removeItem(item)}>
+                    <Trash2 />
                   </button>
                 </td>
               </tr>

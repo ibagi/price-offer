@@ -10,14 +10,14 @@
     <div class="flex w-full gap-6">
       <!-- Left side -->
       {#if slots.left}
-        <div class="bg-white w-72 overflow-y-auto max-w-sm h-full rounded shadow-xl p-4 overflow-y-auto">
+        <div class="bg-white min-w-64 max-w-72 overflow-y-auto max-w-sm h-full rounded shadow-xl p-4 overflow-y-auto">
           <slot name="left" />
         </div>
       {/if}
 
       <!-- Right side -->
-      <div class="w-full h-full flex flex-col overflow-x-hidden bg-white rounded shadow-xl p-4">
-        <div class="overflow-y-auto">
+      <div class="w-full h-full flex flex-col bg-white rounded shadow-xl p-4 ">
+        <div class="overflow-y-auto overflow-x-hidden flex-1">
           <slot name="right" />
         </div>
 
