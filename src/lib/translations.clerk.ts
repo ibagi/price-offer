@@ -18,7 +18,11 @@ export const localization: Record<string, DeepPartial<LocalizationResource>> = {
             },
             emailCode: {
                 formSubtitle: 'Kód küldése emailben',
-            }
+            },
+        },
+        userButton: {
+            action__manageAccount: 'Profil adatok',
+            action__signOut: 'Kijelentkezés'
         },
         formButtonPrimary: 'Tovább',
         formFieldLabel__emailAddress: 'Email cím',
