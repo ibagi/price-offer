@@ -28,8 +28,6 @@ export function loadState(fallBackState: PersistedState) {
     return validated.data;
   }
 
-  console.error(validated.error);
-
   window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(fallBackState));
   return fallBackState;
 }

@@ -6,17 +6,18 @@
 
 <main class="flex flex-col w-screen h-screen overflow-hidden">
   <NavBar />
-  <div class="flex w-full h-full bg-gray-200 p-6">
-    <div class="flex w-full bg-white rounded shadow-xl p-4">
+  <div class="flex w-full h-full bg-gray-200 p-8">
+    <div class="flex w-full gap-6">
       <!-- Left side -->
       {#if slots.left}
-        <slot name="left" />
-        <div class="divider divider-horizontal"></div>
+        <div class="bg-white min-w-64 max-w-72 overflow-y-auto max-w-sm h-full rounded shadow-xl p-4 overflow-y-auto">
+          <slot name="left" />
+        </div>
       {/if}
 
       <!-- Right side -->
-      <div class="w-full flex flex-col overflow-x-hidden">
-        <div class="flex-1">
+      <div class="w-full h-full flex flex-col bg-white rounded shadow-xl p-4 ">
+        <div class="overflow-y-auto overflow-x-hidden flex-1">
           <slot name="right" />
         </div>
 

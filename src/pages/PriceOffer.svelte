@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Link } from 'svelte-navigator';
-  import { Edit } from 'lucide-svelte';
+  import { Edit, Trash2 } from 'lucide-svelte';
 
   import Layout from '../layouts/Layout.svelte';
   import DateInput from '../components/DateInput.svelte';
@@ -29,7 +29,7 @@
 </script>
 
 <Layout>
-  <section slot="left" class="w-64">
+  <section slot="left">
     <h1 class="font-bold text-lg pb-2" tabindex="-1">
       {$t('priceOffer.title')}
     </h1>
@@ -41,7 +41,7 @@
       <select
         id="partner"
         placeholder={$t('priceOffer.labels.partner')}
-        class="select select-sm select-bordered w-full max-w-xs"
+        class="select select-sm select-bordered w-full"
         name="partner"
         disabled={$partners.length === 0}
         bind:value={$selectedPartner}>
@@ -64,7 +64,7 @@
     <input
       id="offerNumber"
       placeholder={$t('priceOffer.labels.offerNumber')}
-      class="input input-sm input-bordered w-full max-w-xs"
+      class="input input-sm input-bordered w-full"
       type="text"
       name="offerNumber"
       bind:value={$offer.offerNumber} />
@@ -75,7 +75,7 @@
     <input
       id="projectName"
       placeholder={$t('priceOffer.labels.project')}
-      class="input input-sm input-bordered w-full max-w-xs"
+      class="input input-sm input-bordered w-full"
       type="text"
       name="projectName"
       bind:value={$offer.projectName} />
@@ -86,7 +86,7 @@
     <input
       id="offerPlace"
       placeholder={$t('priceOffer.labels.offerPlace')}
-      class="input input-sm input-bordered w-full max-w-xs"
+      class="input input-sm input-bordered w-full"
       name="offerPlace"
       bind:value={$offer.offerPlace} />
 
@@ -105,7 +105,7 @@
     <input
       id="validity"
       placeholder={$t('priceOffer.labels.validity')}
-      class="input input-sm input-bordered w-full max-w-xs"
+      class="input input-sm input-bordered w-full"
       type="number"
       name="validity"
       bind:value={$offer.validity} />
@@ -116,7 +116,7 @@
     <input
       id="taxRate"
       placeholder={$t('priceOffer.labels.taxRate')}
-      class="input input-sm input-bordered w-full max-w-xs"
+      class="input input-sm input-bordered w-full"
       type="number"
       name="taxRate"
       bind:value={$taxRate} />
@@ -127,7 +127,7 @@
     <input
       id="productionTime"
       placeholder={$t('priceOffer.labels.productionTime')}
-      class="input input-sm input-bordered w-full max-w-xs"
+      class="input input-sm input-bordered w-full"
       type="number"
       name="productionTime"
       bind:value={$offer.productionTimeInDays} />
@@ -159,35 +159,35 @@
     </div>
 
     {#if $hasItem}
-      <div class="overflow-x-auto w-full">
+      <div class="overflow-x-auto w-full py-2">
         <table class="table">
           <thead>
             <tr>
-              <th>{$t('priceOffer.tableColumns.item')}</th>
-              <th>{$t('priceOffer.tableColumns.unitPrice')}</th>
-              <th>{$t('priceOffer.tableColumns.total')}</th>
-              <th>{$t('priceOffer.tableColumns.amount')}</th>
-              <th>{$t('priceOffer.tableColumns.workPrice')}</th>
-              <th>{$t('priceOffer.tableColumns.materialPrice')}</th>
-              <th class="w-12"></th>
+              <th class="min-w-24">{$t('priceOffer.tableColumns.item')}</th>
+              <th class="max-w-32">{$t('priceOffer.tableColumns.unitPrice')}</th>
+              <th class="max-w-32">{$t('priceOffer.tableColumns.total')}</th>
+              <th class="w-4">{$t('priceOffer.tableColumns.amount')}</th>
+              <th class="min-w-36">{$t('priceOffer.tableColumns.workPrice')}</th>
+              <th class="min-w-36">{$t('priceOffer.tableColumns.materialPrice')}</th>
+              <th class="w-6"></th>
             </tr>
           </thead>
           <tbody>
             {#each $offerItems as item}
               <tr>
-                <td class="flex-grow-2"
+                <td class="min-w-24"
                   ><input
                     class="input input-bordered input-sm w-full"
                     bind:value={item.name} /></td>
-                <td class="w-32">
+                <td class="max-w-32">
                   <Money
                     value={item.workPrice + item.materialPrice}
                     currency={$currency} />
                 </td>
-                <td class="w-32">
+                <td class="max-w-32">
                   <Money value={totalPrice(item)} currency={$currency} />
                 </td>
-                <td class="w-24"
+                <td class="w-4"
                   ><input
                     type="number"
                     class="input input-bordered input-sm text-right w-24"
@@ -196,13 +196,14 @@
                   <PriceInput
                     bind:value={item.workPrice}
                     currency={$currency} />
-                </td><td>
+                </td>
+                <td>
                   <PriceInput
                     bind:value={item.materialPrice}
                     currency={$currency} />
-                </td><td>
-                  <button class="btn btn-sm" on:click={() => removeItem(item)}>
-                    {$t('priceOffer.actions.delete')}
+                </td><td class="w-6">
+                  <button title="{$t('priceOffer.actions.delete')}" class="btn btn-sm" on:click={() => removeItem(item)}>
+                    <Trash2 />
                   </button>
                 </td>
               </tr>
