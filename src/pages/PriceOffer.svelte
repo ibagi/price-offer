@@ -13,18 +13,7 @@
   import { getDecimalPlaces } from '../lib/prices';
 
   const { partners, selectedPartner } = partnerStore;
-  const {
-    offer,
-    offerItems,
-    netto,
-    tax,
-    brutto,
-    removeItem,
-    removeItems,
-    hasItem,
-    addItem,
-    totalPrice,
-  } = offerStore;
+  const { offer, offerItems, netto, tax, brutto, hasItem } = offerStore;
 </script>
 
 <Layout>
@@ -151,9 +140,9 @@
       <h2 class="card-title flex-1" tabindex="-1">
         {$t('priceOffer.tableHeader')}
       </h2>
-      <button class="btn btn-sm" on:click={removeItems}
+      <button class="btn btn-sm" on:click={offerStore.removeItems}
         >{$t('priceOffer.actions.clearAll')}</button>
-      <button class="btn btn-neutral btn-sm" on:click={addItem}
+      <button class="btn btn-neutral btn-sm" on:click={offerStore.addItem}
         >{$t('priceOffer.actions.add')}</button>
     </div>
 
@@ -187,7 +176,9 @@
                     currency={$offer.currency} />
                 </td>
                 <td class="max-w-32">
-                  <Money value={totalPrice(item)} currency={$offer.currency} />
+                  <Money
+                    value={offerStore.totalPrice(item)}
+                    currency={$offer.currency} />
                 </td>
                 <td class="w-4"
                   ><input
@@ -207,7 +198,7 @@
                   <button
                     title={$t('priceOffer.actions.delete')}
                     class="btn btn-sm"
-                    on:click={() => removeItem(item)}>
+                    on:click={() => offerStore.removeItem(item)}>
                     <Trash2 />
                   </button>
                 </td>

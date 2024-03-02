@@ -1,13 +1,13 @@
 import * as db from './db';
 import { defaultContact, defaultOffer } from './types';
 
-import { createOfferStore } from '../stores/offer';
-import { createPartnerStore } from '../stores/partner';
-import { createContactStore } from '../stores/contact';
+import { ContactStore } from '../stores/contact';
+import { PartnerStore } from '../stores/partner';
+import { OfferStore } from '../stores/offer';
 
-export const contactStore = createContactStore({ ...defaultContact });
-export const partnerStore = createPartnerStore([]);
-export const offerStore = createOfferStore({ ...defaultOffer }, []);
+export const contactStore = new ContactStore({ ...defaultContact });
+export const partnerStore = new PartnerStore([]);
+export const offerStore = new OfferStore({ ...defaultOffer }, []);
 
 export function restoreState() {
   const persistedState = db.loadState({

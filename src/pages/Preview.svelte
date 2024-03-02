@@ -8,7 +8,7 @@
 
   const { contact } = contactStore;
   const { selectedPartner } = partnerStore;
-  const { offer, offerItems, netto, tax, brutto, totalPrice } = offerStore;
+  const { offer, offerItems, netto, tax, brutto } = offerStore;
 
   let saving = false;
 
@@ -167,7 +167,9 @@
               currency={$offer.currency} />
           </td>
           <td class="table-cell">
-            <Money value={totalPrice(item)} currency={$offer.currency} />
+            <Money
+              value={offerStore.totalPrice(item)}
+              currency={$offer.currency} />
           </td>
           <td class="table-cell">
             <Money value={item.workPrice} currency={$offer.currency} />

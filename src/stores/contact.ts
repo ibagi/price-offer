@@ -1,9 +1,10 @@
-import { writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 import { type Contact } from '../lib/types';
 
-export function createContactStore(from: Contact) {
-  const contact = writable<Contact>(from);
-  return {
-    contact,
-  };
+export class ContactStore {
+  contact: Writable<Contact>;
+
+  constructor(from: Contact) {
+    this.contact = writable<Contact>(from);
+  }
 }
