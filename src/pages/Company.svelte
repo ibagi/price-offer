@@ -3,8 +3,10 @@
   import { saveState } from '../lib/db';
   import { t } from '../lib/i18n';
 
-  import { contact } from '../lib/state';
+  import { contactStore } from '../lib/state';
   import type { Contact } from '../lib/types';
+
+  const { contact } = contactStore;
 
   type Field = keyof Contact;
 

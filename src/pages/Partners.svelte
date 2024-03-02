@@ -4,9 +4,10 @@
 
   import { t } from '../lib/i18n';
   import type { Partner } from '../lib/types';
-  import { partners, addPartner, removePartner } from '../lib/state';
   import { saveState } from '../lib/db';
+  import { partnerStore } from '../lib/state';
 
+  const { partners, addPartner, removePartner } = partnerStore;
   function saveChanges($partners: Partner[]) {
     saveState({ partners: $partners });
   }
@@ -84,7 +85,7 @@
                     title={$t('partners.actions.delete')}
                     class="btn btn-sm"
                     on:click={() => removePartner(partner)}>
-                    <Trash2/>
+                    <Trash2 />
                   </button>
                 </td>
               </tr>

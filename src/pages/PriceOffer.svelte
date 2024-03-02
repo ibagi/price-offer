@@ -6,26 +6,25 @@
   import DateInput from '../components/DateInput.svelte';
 
   import { t } from '../lib/i18n';
-  import {
-    taxRate,
-    offer,
-    tax,
-    offerItems,
-    hasItem,
-    netto,
-    brutto,
-    addItem,
-    removeItem,
-    removeItems,
-    totalPrice,
-    partners,
-    selectedPartner,
-    currency,
-  } from '../lib/state';
+  import { partnerStore, offerStore } from '../lib/state';
   import PriceInput from '../components/PriceInput.svelte';
   import { currencies } from '../lib/types';
   import Money from '../components/Money.svelte';
   import { getDecimalPlaces } from '../lib/prices';
+
+  const { partners, selectedPartner } = partnerStore;
+  const {
+    offer,
+    offerItems,
+    netto,
+    tax,
+    brutto,
+    removeItem,
+    removeItems,
+    hasItem,
+    addItem,
+    totalPrice,
+  } = offerStore;
 </script>
 
 <Layout>
@@ -119,7 +118,7 @@
       class="input input-sm input-bordered w-full"
       type="number"
       name="taxRate"
-      bind:value={$taxRate} />
+      bind:value={$offer.taxRate} />
 
     <label class="font-medium label text-sm" for="productionTime">
       {$t('priceOffer.labels.productionTime')}
@@ -140,7 +139,7 @@
       placeholder={$t('priceOffer.labels.currency')}
       class="select select-sm select-bordered w-full max-w-xs"
       name="currency"
-      bind:value={$currency}>
+      bind:value={$offer.currency}>
       {#each currencies as currency}
         <option value={currency}>{currency}</option>
       {/each}
@@ -164,11 +163,14 @@
           <thead>
             <tr>
               <th class="min-w-24">{$t('priceOffer.tableColumns.item')}</th>
-              <th class="max-w-32">{$t('priceOffer.tableColumns.unitPrice')}</th>
+              <th class="max-w-32"
+                >{$t('priceOffer.tableColumns.unitPrice')}</th>
               <th class="max-w-32">{$t('priceOffer.tableColumns.total')}</th>
               <th class="w-4">{$t('priceOffer.tableColumns.amount')}</th>
-              <th class="min-w-36">{$t('priceOffer.tableColumns.workPrice')}</th>
-              <th class="min-w-36">{$t('priceOffer.tableColumns.materialPrice')}</th>
+              <th class="min-w-36"
+                >{$t('priceOffer.tableColumns.workPrice')}</th>
+              <th class="min-w-36"
+                >{$t('priceOffer.tableColumns.materialPrice')}</th>
               <th class="w-6"></th>
             </tr>
           </thead>
@@ -182,10 +184,10 @@
                 <td class="max-w-32">
                   <Money
                     value={item.workPrice + item.materialPrice}
-                    currency={$currency} />
+                    currency={$offer.currency} />
                 </td>
                 <td class="max-w-32">
-                  <Money value={totalPrice(item)} currency={$currency} />
+                  <Money value={totalPrice(item)} currency={$offer.currency} />
                 </td>
                 <td class="w-4"
                   ><input
@@ -195,14 +197,17 @@
                 <td>
                   <PriceInput
                     bind:value={item.workPrice}
-                    currency={$currency} />
+                    currency={$offer.currency} />
                 </td>
                 <td>
                   <PriceInput
                     bind:value={item.materialPrice}
-                    currency={$currency} />
+                    currency={$offer.currency} />
                 </td><td class="w-6">
-                  <button title="{$t('priceOffer.actions.delete')}" class="btn btn-sm" on:click={() => removeItem(item)}>
+                  <button
+                    title={$t('priceOffer.actions.delete')}
+                    class="btn btn-sm"
+                    on:click={() => removeItem(item)}>
                     <Trash2 />
                   </button>
                 </td>
@@ -228,8 +233,8 @@
           <div>
             <Money
               value={$netto}
-              currency={$currency}
-              fractions={getDecimalPlaces($currency)} />
+              currency={$offer.currency}
+              fractions={getDecimalPlaces($offer.currency)} />
           </div>
         </div>
         <div class="text-center">
@@ -237,8 +242,8 @@
           <div>
             <Money
               value={$tax}
-              currency={$currency}
-              fractions={getDecimalPlaces($currency)} />
+              currency={$offer.currency}
+              fractions={getDecimalPlaces($offer.currency)} />
           </div>
         </div>
         <div class="text-center">
@@ -246,8 +251,8 @@
           <div>
             <Money
               value={$brutto}
-              currency={$currency}
-              fractions={getDecimalPlaces($currency)} />
+              currency={$offer.currency}
+              fractions={getDecimalPlaces($offer.currency)} />
           </div>
         </div>
       </div>

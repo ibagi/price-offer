@@ -61,7 +61,9 @@
   </div>
   {#if user}
     <div class="flex items-center gap-2">
-      <div class="font-medium text-white text-sm">{$user?.primaryEmailAddress}</div>
+      <div class="font-medium text-white text-sm">
+        {$user?.primaryEmailAddress}
+      </div>
       <div bind:this={userButtonElement}></div>
     </div>
   {/if}

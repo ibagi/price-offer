@@ -47,6 +47,13 @@ export const defaultPartner: Partner = {
   taxNumber: '00000000-0-00',
 };
 
+export interface OfferItem {
+  name: string;
+  amount: number;
+  workPrice: number;
+  materialPrice: number;
+}
+
 export interface Offer {
   projectName: string;
   offerNumber: string;
@@ -54,6 +61,9 @@ export interface Offer {
   offerPlace: string;
   validity: number;
   productionTimeInDays: number;
+  currency: Currency;
+  taxRate: number;
+  items: OfferItem[];
 }
 
 export const defaultOffer: Offer = {
@@ -63,14 +73,10 @@ export const defaultOffer: Offer = {
   offerPlace: 'Maglód',
   validity: 30,
   productionTimeInDays: 8,
+  currency: 'HUF',
+  taxRate: 27,
+  items: [],
 };
-
-export interface OfferItem {
-  name: string;
-  amount: number;
-  workPrice: number;
-  materialPrice: number;
-}
 
 export const defaultOfferItem: OfferItem = {
   name: '',

@@ -3,19 +3,12 @@
   import { t } from '../lib/i18n';
   import Money from '../components/Money.svelte';
 
-  import {
-    contact,
-    selectedPartner,
-    offer,
-    offerItems,
-    netto,
-    taxRate,
-    tax,
-    brutto,
-    totalPrice,
-    currency,
-  } from '../lib/state';
+  import { contactStore, partnerStore, offerStore } from '../lib/state';
   import { getDecimalPlaces } from '../lib/prices';
+
+  const { contact } = contactStore;
+  const { selectedPartner } = partnerStore;
+  const { offer, offerItems, netto, tax, brutto, totalPrice } = offerStore;
 
   let saving = false;
 
@@ -171,16 +164,16 @@
           <td class="table-cell">
             <Money
               value={item.workPrice + item.materialPrice}
-              currency={$currency} />
+              currency={$offer.currency} />
           </td>
           <td class="table-cell">
-            <Money value={totalPrice(item)} currency={$currency} />
+            <Money value={totalPrice(item)} currency={$offer.currency} />
           </td>
           <td class="table-cell">
-            <Money value={item.workPrice} currency={$currency} />
+            <Money value={item.workPrice} currency={$offer.currency} />
           </td>
           <td class="table-cell">
-            <Money value={item.materialPrice} currency={$currency} />
+            <Money value={item.materialPrice} currency={$offer.currency} />
           </td>
         </tr>
       {/each}
@@ -190,8 +183,8 @@
         <td class="font-bold px-2 text-right">
           <Money
             value={$netto}
-            currency={$currency}
-            fractions={getDecimalPlaces($currency)} />
+            currency={$offer.currency}
+            fractions={getDecimalPlaces($offer.currency)} />
         </td>
         <td colspan="2"></td>
       </tr>
@@ -201,8 +194,8 @@
         <td class="font-bold px-2 text-right">
           <Money
             value={$tax}
-            currency={$currency}
-            fractions={getDecimalPlaces($currency)} />
+            currency={$offer.currency}
+            fractions={getDecimalPlaces($offer.currency)} />
         </td>
         <td colspan="2"></td>
       </tr>
@@ -213,8 +206,8 @@
         <td class="font-bold px-2 summary-underline text-right">
           <Money
             value={$brutto}
-            currency={$currency}
-            fractions={getDecimalPlaces($currency)} />
+            currency={$offer.currency}
+            fractions={getDecimalPlaces($offer.currency)} />
         </td>
         <td colspan="2"></td>
       </tr>
@@ -228,7 +221,7 @@
 
   <div class="font-bold">{$t('preview.labels.taxation')}</div>
   <div class="text-sm pb-2">
-    {$t('preview.fields.taxation', { tax: $taxRate })}
+    {$t('preview.fields.taxation', { tax: $offer.taxRate })}
   </div>
 
   <div class="font-bold">{$t('preview.labels.productionTime')}</div>

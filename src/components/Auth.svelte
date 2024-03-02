@@ -25,5 +25,5 @@
 {#if $user}
   <slot />
 {:else}
-<div class="w-screen h-screen bg-gray-200"></div>
+  <div class="w-screen h-screen bg-gray-200"></div>
 {/if}
