@@ -5,7 +5,7 @@ import { createOfferStore } from '../stores/offer';
 import { createPartnerStore } from '../stores/partner';
 import { createContactStore } from '../stores/contact';
 
-export const contactStore = createContactStore({...defaultContact});
+export const contactStore = createContactStore({ ...defaultContact });
 export const partnerStore = createPartnerStore([]);
 export const offerStore = createOfferStore({ ...defaultOffer }, []);
 
