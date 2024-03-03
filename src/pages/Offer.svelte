@@ -12,7 +12,7 @@
   import { updateOffer } from '../data/offer';
 
   export let offerState: OfferState;
-  const { partners, selectedPartner } = partnerState;
+  const { partners } = partnerState;
   const { offer, netto, tax, brutto, hasItem } = offerState;
 
   $: saveOffer($offer);
@@ -38,9 +38,9 @@
         class="select select-sm select-bordered w-full"
         name="partner"
         disabled={$partners.length === 0}
-        bind:value={$selectedPartner}>
+        bind:value={$offer.partnerId}>
         {#each $partners as partner}
-          <option value={partner}>{partner.name}</option>
+          <option value={partner.id}>{partner.name}</option>
         {/each}
       </select>
       <Link

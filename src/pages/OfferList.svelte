@@ -1,18 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Link } from 'svelte-navigator';
+  import { Link, useNavigate } from 'svelte-navigator';
   import { ArrowUpLeftFromSquareIcon } from 'lucide-svelte';
   import { t } from '../lib/i18n';
   import { type Offer } from '../lib/types';
   import Layout from '../layouts/Layout.svelte';
   import { getOffers, createOffer } from '../data/offer';
 
+  const navigate = useNavigate();
   const dateFormat = new Intl.DateTimeFormat();
+
   let priceOffers: Offer[] = [];
 
   async function newOffer() {
-    await createOffer();
-    priceOffers = await getOffers();
+    const created = await createOffer();
+    navigate(`offer/${created.id}`);
   }
 
   onMount(async () => {
@@ -23,18 +25,18 @@
 <Layout>
   <section slot="right">
     <div class="flex justify-between pr-2 sticky top-0 bg-white">
-      <h1 class="font-bold text-lg pb-2">{$t('priceOfferList.title')}</h1>
+      <h1 class="font-bold text-lg pb-2">{$t('offerList.title')}</h1>
       <button class="btn btn-sm btn-neutral" on:click={newOffer}>
-        Hozzáadás
+        {$t('offerList.actions.add')}
       </button>
     </div>
 
     <div class="flex justify-center">
       <ul class="flex flex-1 h-full flex-col gap-3 py-2 px-4">
         {#each priceOffers as offer}
-          <li class="flex justify-between border-b-2 px-4 py-2">
+          <li class="flex justify-between border-b-2 px-4 pb-2">
             <div class="flex flex-col gap-1">
-              <div class="flex gap-2 items-center font-medium">
+              <div class="flex gap-3 items-center font-medium">
                 <div class="text-teal-600">{offer.offerNumber}</div>
                 <div
                   class="text-sm text-gray-600 bg-gray-100 border text-center w-24 rounded">
@@ -42,10 +44,10 @@
                 </div>
               </div>
               <div class="text-sm text-gray-500">
-                {dateFormat.format(offer.offerDate)}
+                Ajánlat dátuma: {dateFormat.format(offer.offerDate)}
               </div>
             </div>
-            <div>
+            <div class="self-center">
               <Link to="/offer/{offer.id}">
                 <ArrowUpLeftFromSquareIcon />
               </Link>

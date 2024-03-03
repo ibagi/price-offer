@@ -10,7 +10,7 @@ type LoadFailed = {
   success: false;
 };
 
-type LoadSuccessful<T> = {
+type LoadSuccessfull<T> = {
   data: T;
   success: true;
 };
@@ -47,7 +47,7 @@ export async function loadData<T>(
 export async function tryLoadData<T>(
   key: string,
   schema: ZodType<T>,
-): Promise<LoadFailed | LoadSuccessful<T>> {
+): Promise<LoadFailed | LoadSuccessfull<T>> {
   const persisted = await db.getItem<T>(key);
   const validated = schema.safeParse(persisted);
 

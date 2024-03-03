@@ -1,18 +1,18 @@
-import { writable, type Writable } from 'svelte/store';
-import { defaultPartner, type Partner } from '../lib/types';
+import { derived, writable, type Readable, type Writable } from 'svelte/store';
+import { defaultPartner, type Offer, type Partner } from '../lib/types';
+import { nanoid } from 'nanoid';
 
 export class PartnerState {
   partners: Writable<Partner[]>;
-  selectedPartner: Writable<Partner | undefined>;
 
   constructor(from: Partner[]) {
     this.partners = writable<Partner[]>(from);
-    this.selectedPartner = writable<Partner | undefined>();
   }
 
   addPartner = () => {
+    const newPartner = { ...defaultPartner, id: nanoid() };
     this.partners.update(($partners) =>
-      [...$partners, { ...defaultPartner }].toSorted((a, b) =>
+      [...$partners, newPartner].toSorted((a, b) =>
         a.name.localeCompare(b.name),
       ),
     );
@@ -21,4 +21,10 @@ export class PartnerState {
   removePartner = (partner: Partner) => {
     this.partners.update(($partners) => $partners.filter((p) => p !== partner));
   };
+
+  selectBy(offer: Readable<Offer>) {
+    return derived([offer, this.partners], ([$offer, $partners]) =>
+      ($partners ?? []).find((p) => p.id === $offer.partnerId),
+    );
+  }
 }

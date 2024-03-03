@@ -38,6 +38,7 @@ export async function createOffer() {
   };
 
   await db.saveData(`offers/${offer.id}`, offer);
+  return offer;
 }
 
 export async function updateOffer(offer: Offer) {

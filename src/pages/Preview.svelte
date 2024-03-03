@@ -9,8 +9,8 @@
   let saving = false;
 
   const { contact } = contactState;
-  const { selectedPartner } = partnerState;
   const { offer, netto, tax, brutto } = offerState;
+  const selectedPartner = partnerState.selectBy(offer);
 
   function print(e: MouseEvent) {
     e.preventDefault();
@@ -30,7 +30,7 @@
       {$t('preview.title')}
     </h1>
     <button class="btn btn-sm btn-neutral" class:no-print={saving}>
-      <Link to="/">{$t('preview.actions.back')}</Link>
+      <Link to="/offer/{$offer.id}">{$t('preview.actions.back')}</Link>
     </button>
     <button
       class="btn btn-sm btn-primary"

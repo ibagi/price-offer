@@ -13,6 +13,7 @@ export const contactSchema = z.object({
 });
 
 export const partnerSchema = z.object({
+  id: z.string(),
   name: z.string(),
   address: z.string(),
   companyNumber: z.string(),
@@ -20,7 +21,7 @@ export const partnerSchema = z.object({
 });
 
 const currencySchema = z.enum(['HUF', 'EUR']);
-const offerStatusSchema = z.enum(['prepared', 'sent', 'accepted', 'rejected']);
+const offerStatusSchema = z.enum(['created', 'sent', 'accepted', 'rejected']);
 
 export const offerItemSchema = z.object({
   name: z.string(),
@@ -31,6 +32,7 @@ export const offerItemSchema = z.object({
 
 export const offerSchema = z.object({
   id: z.string(),
+  createdAt: z.date(),
   sequence: z.number(),
   projectName: z.string(),
   offerNumber: z.string(),
@@ -41,6 +43,7 @@ export const offerSchema = z.object({
   currency: currencySchema,
   taxRate: z.number(),
   status: offerStatusSchema,
+  partnerId: z.string(),
   items: z.array(offerItemSchema),
 });
 
@@ -68,6 +71,7 @@ export const defaultContact: Contact = {
 };
 
 export const defaultPartner: Partner = {
+  id: '',
   name: '',
   address: '',
   companyNumber: '00-00-000000',
@@ -79,13 +83,15 @@ export const defaultOffer: Offer = {
   sequence: 0,
   projectName: '',
   offerNumber: '',
+  createdAt: new Date(),
   offerDate: new Date(),
   offerPlace: 'Maglód',
   validity: 30,
   productionTimeInDays: 8,
   currency: 'HUF',
   taxRate: 27,
-  status: 'prepared',
+  status: 'created',
+  partnerId: '',
   items: [],
 };
 
