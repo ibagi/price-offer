@@ -2,10 +2,11 @@ type Translations = Record<string, Record<string, string>>;
 
 const translations: Translations = {
   hu: {
-    'navigation.priceOffer': 'Árajánlat',
+    'navigation.priceOfferList': 'Ajánlatok',
     'navigation.partners': 'Partnerek',
     'navigation.company': 'Cég adatok',
     'navigation.preview': 'Előnézet',
+    'priceOfferList.title': 'Ajánlatok',
     'priceOffer.title': 'Árjánlat',
     'priceOffer.tableHeader': 'Ajánlat tételei',
     'priceOffer.hint': "A 'Hozzáadás' gombbal adj tételeket az árajánlathoz.",
@@ -87,6 +88,10 @@ const translations: Translations = {
     'company.labels.taxNumber': 'Adószám:',
     'company.labels.bankAccountNumber': 'Bankszámlaszám:',
     'company.labels.person': 'Aláírt:',
+    'offer.status.prepared': 'Előkészítve',
+    'offer.status.sent': 'Elküldve',
+    'offer.status.accepted': 'Elfogadva',
+    'offer.status.rejected': 'Elutasítva',
   },
 };
 

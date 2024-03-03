@@ -2,15 +2,15 @@
   import { Link } from 'svelte-navigator';
   import { t } from '../lib/i18n';
   import Money from '../components/Money.svelte';
-
-  import { contactStore, partnerStore, offerStore } from '../lib/state';
+  import { contactState, partnerState, OfferState } from '../state';
   import { getDecimalPlaces } from '../lib/prices';
 
-  const { contact } = contactStore;
-  const { selectedPartner } = partnerStore;
-  const { offer, offerItems, netto, tax, brutto } = offerStore;
-
+  export let offerState = new OfferState();
   let saving = false;
+
+  const { contact } = contactState;
+  const { selectedPartner } = partnerState;
+  const { offer, netto, tax, brutto } = offerState;
 
   function print(e: MouseEvent) {
     e.preventDefault();
@@ -25,7 +25,7 @@
 
 <main class="max-w-7xl mx-auto">
   <div class="flex items-center gap-2">
-    <img height="200" width="250" src="logo.png" alt="Cég" />
+    <img height="200" width="250" src="/logo.png" alt="Cég" />
     <h1 class="flex-1 font-bold text-4xl">
       {$t('preview.title')}
     </h1>
@@ -154,10 +154,10 @@
     </thead>
     <tbody>
       <tr>
-        <td class="table-cell" rowspan={$offerItems.length + 1}
+        <td class="table-cell" rowspan={$offer.items.length + 1}
           >{$offer.offerNumber}</td>
       </tr>
-      {#each $offerItems as item}
+      {#each $offer.items as item}
         <tr>
           <td class="table-cell">{item.name}</td>
           <td class="table-cell">{item.amount}</td>
@@ -168,7 +168,7 @@
           </td>
           <td class="table-cell">
             <Money
-              value={offerStore.totalPrice(item)}
+              value={offerState.totalPrice(item)}
               currency={$offer.currency} />
           </td>
           <td class="table-cell">

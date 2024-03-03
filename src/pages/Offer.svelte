@@ -1,19 +1,25 @@
 <script lang="ts">
   import { Link } from 'svelte-navigator';
   import { Edit, Trash2 } from 'lucide-svelte';
-
   import Layout from '../layouts/Layout.svelte';
   import DateInput from '../components/DateInput.svelte';
-
   import { t } from '../lib/i18n';
-  import { partnerStore, offerStore } from '../lib/state';
+  import { partnerState, OfferState } from '../state';
   import PriceInput from '../components/PriceInput.svelte';
-  import { currencies } from '../lib/types';
+  import { currencies, type Offer } from '../lib/types';
   import Money from '../components/Money.svelte';
   import { getDecimalPlaces } from '../lib/prices';
+  import { updateOffer } from '../data/offer';
 
-  const { partners, selectedPartner } = partnerStore;
-  const { offer, offerItems, netto, tax, brutto, hasItem } = offerStore;
+  export let offerState: OfferState;
+  const { partners, selectedPartner } = partnerState;
+  const { offer, netto, tax, brutto, hasItem } = offerState;
+
+  $: saveOffer($offer);
+
+  function saveOffer(data: Offer) {
+    updateOffer(data);
+  }
 </script>
 
 <Layout>
@@ -140,10 +146,13 @@
       <h2 class="card-title flex-1" tabindex="-1">
         {$t('priceOffer.tableHeader')}
       </h2>
-      <button class="btn btn-sm" on:click={offerStore.removeItems}
+      <button class="btn btn-sm" on:click={offerState.removeItems}
         >{$t('priceOffer.actions.clearAll')}</button>
-      <button class="btn btn-neutral btn-sm" on:click={offerStore.addItem}
+      <button class="btn btn-neutral btn-sm" on:click={offerState.addItem}
         >{$t('priceOffer.actions.add')}</button>
+      <Link to="/preview/{$offer.id}" class="btn btn-sm btn-primary">
+        {$t('priceOffer.actions.preview')}
+      </Link>
     </div>
 
     {#if $hasItem}
@@ -164,7 +173,7 @@
             </tr>
           </thead>
           <tbody>
-            {#each $offerItems as item}
+            {#each $offer.items as item}
               <tr>
                 <td class="min-w-24"
                   ><input
@@ -177,7 +186,7 @@
                 </td>
                 <td class="max-w-32">
                   <Money
-                    value={offerStore.totalPrice(item)}
+                    value={offerState.totalPrice(item)}
                     currency={$offer.currency} />
                 </td>
                 <td class="w-4"
@@ -198,7 +207,7 @@
                   <button
                     title={$t('priceOffer.actions.delete')}
                     class="btn btn-sm"
-                    on:click={() => offerStore.removeItem(item)}>
+                    on:click={() => offerState.removeItem(item)}>
                     <Trash2 />
                   </button>
                 </td>

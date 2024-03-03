@@ -19,14 +19,41 @@ export const partnerSchema = z.object({
   taxNumber: z.string(),
 });
 
-export const persistedStateSchema = z.object({
-  contact: z.object(contactSchema.shape),
-  partners: z.array(z.object(partnerSchema.shape)),
+const currencySchema = z.enum(['HUF', 'EUR']);
+const offerStatusSchema = z.enum(['prepared', 'sent', 'accepted', 'rejected']);
+
+export const offerItemSchema = z.object({
+  name: z.string(),
+  amount: z.number(),
+  workPrice: z.number(),
+  materialPrice: z.number(),
 });
 
-export type PersistedState = z.infer<typeof persistedStateSchema>;
+export const offerSchema = z.object({
+  id: z.string(),
+  sequence: z.number(),
+  projectName: z.string(),
+  offerNumber: z.string(),
+  offerDate: z.date(),
+  offerPlace: z.string(),
+  validity: z.number(),
+  productionTimeInDays: z.number(),
+  currency: currencySchema,
+  taxRate: z.number(),
+  status: offerStatusSchema,
+  items: z.array(offerItemSchema),
+});
+
 export type Contact = z.infer<typeof contactSchema>;
 export type Partner = z.infer<typeof partnerSchema>;
+
+export type Currency = z.infer<typeof currencySchema>;
+
+export type OfferStatus = z.infer<typeof offerStatusSchema>;
+export type Offer = z.infer<typeof offerSchema>;
+export type OfferItem = z.infer<typeof offerItemSchema>;
+
+export const currencies: Currency[] = ['HUF', 'EUR'];
 
 export const defaultContact: Contact = {
   person: '-',
@@ -47,34 +74,18 @@ export const defaultPartner: Partner = {
   taxNumber: '00000000-0-00',
 };
 
-export interface OfferItem {
-  name: string;
-  amount: number;
-  workPrice: number;
-  materialPrice: number;
-}
-
-export interface Offer {
-  projectName: string;
-  offerNumber: string;
-  offerDate: Date;
-  offerPlace: string;
-  validity: number;
-  productionTimeInDays: number;
-  currency: Currency;
-  taxRate: number;
-  items: OfferItem[];
-}
-
 export const defaultOffer: Offer = {
+  id: '',
+  sequence: 0,
   projectName: '',
-  offerNumber: `XX-PT-${new Date().getFullYear().toString().slice(2, 4)}-000`,
+  offerNumber: '',
   offerDate: new Date(),
   offerPlace: 'Maglód',
   validity: 30,
   productionTimeInDays: 8,
   currency: 'HUF',
   taxRate: 27,
+  status: 'prepared',
   items: [],
 };
 
@@ -84,6 +95,3 @@ export const defaultOfferItem: OfferItem = {
   workPrice: 1,
   materialPrice: 1,
 };
-
-export type Currency = 'HUF' | 'EUR';
-export const currencies: Currency[] = ['HUF', 'EUR'];

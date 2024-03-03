@@ -3,16 +3,11 @@
   import { Trash2 } from 'lucide-svelte';
 
   import { t } from '../lib/i18n';
-  import type { Partner } from '../lib/types';
-  import { saveState } from '../lib/db';
-  import { partnerStore } from '../lib/state';
+  import { savePartners } from '../data/partner';
+  import { partnerState } from '../state';
 
-  const { partners, addPartner, removePartner } = partnerStore;
-  function saveChanges($partners: Partner[]) {
-    saveState({ partners: $partners });
-  }
-
-  $: saveChanges($partners);
+  const { partners, addPartner, removePartner } = partnerState;
+  $: savePartners($partners);
 </script>
 
 <Layout>

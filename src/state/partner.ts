@@ -1,7 +1,7 @@
 import { writable, type Writable } from 'svelte/store';
 import { defaultPartner, type Partner } from '../lib/types';
 
-export class PartnerStore {
+export class PartnerState {
   partners: Writable<Partner[]>;
   selectedPartner: Writable<Partner | undefined>;
 

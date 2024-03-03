@@ -1,7 +1,7 @@
 import { writable, type Writable } from 'svelte/store';
 import { type Contact } from '../lib/types';
 
-export class ContactStore {
+export class ContactState {
   contact: Writable<Contact>;
 
   constructor(from: Contact) {
