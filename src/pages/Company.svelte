@@ -2,7 +2,7 @@
   import { t } from '../lib/i18n';
   import type { Contact } from '../lib/types';
   import { contactState } from '../state';
-  import { saveContact } from '../data/contact';
+  import { saveContact } from '../services/contact';
   import Layout from '../layouts/Layout.svelte';
 
   type Field = keyof Contact;

@@ -5,7 +5,7 @@
   import { t } from '../lib/i18n';
   import { type Offer } from '../lib/types';
   import Layout from '../layouts/Layout.svelte';
-  import { getOffers, createOffer } from '../data/offer';
+  import { getOffers, createOffer } from '../services/offer';
 
   const navigate = useNavigate();
   const dateFormat = new Intl.DateTimeFormat();

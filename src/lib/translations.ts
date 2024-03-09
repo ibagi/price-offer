@@ -11,6 +11,7 @@ const translations: Translations = {
     'priceOffer.title': 'Árjánlat',
     'priceOffer.tableHeader': 'Ajánlat tételei',
     'priceOffer.hint': "A 'Hozzáadás' gombbal adj tételeket az árajánlathoz.",
+    'priceOffer.labels.status': 'Státusz',
     'priceOffer.labels.partner': 'Partner',
     'priceOffer.labels.project': 'Projekt',
     'priceOffer.labels.offerNumber': 'Ajánlat száma',

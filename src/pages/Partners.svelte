@@ -3,7 +3,7 @@
   import { Trash2 } from 'lucide-svelte';
 
   import { t } from '../lib/i18n';
-  import { savePartners } from '../data/partner';
+  import { savePartners } from '../services/partner';
   import { partnerState } from '../state';
 
   const { partners, addPartner, removePartner } = partnerState;

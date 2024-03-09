@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getOffer } from '../data/offer';
+  import { getOffer } from '../services/offer';
   import { OfferState } from '../state';
 
   export let offerId = '';

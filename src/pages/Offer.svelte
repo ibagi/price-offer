@@ -6,10 +6,10 @@
   import { t } from '../lib/i18n';
   import { partnerState, OfferState } from '../state';
   import PriceInput from '../components/PriceInput.svelte';
-  import { currencies, type Offer } from '../lib/types';
+  import { currencies, offerStatuses, type Offer } from '../lib/types';
   import Money from '../components/Money.svelte';
   import { getDecimalPlaces } from '../lib/prices';
-  import { updateOffer } from '../data/offer';
+  import { updateOffer } from '../services/offer';
 
   export let offerState: OfferState;
   const { partners } = partnerState;
@@ -27,6 +27,7 @@
     <h1 class="font-bold text-lg pb-2" tabindex="-1">
       {$t('priceOffer.title')}
     </h1>
+
     <label class="font-medium label text-sm" for="partner">
       {$t('priceOffer.labels.partner')}
     </label>
@@ -51,6 +52,21 @@
         <Edit />
       </Link>
     </div>
+
+    <label class="font-medium label text-sm" for="status">
+      {$t('priceOffer.labels.status')}
+    </label>
+
+    <select
+      id="status"
+      placeholder={$t('priceOffer.labels.status')}
+      class="select select-sm select-bordered w-full"
+      name="status"
+      bind:value={$offer.status}>
+      {#each offerStatuses as status}
+        <option value={status}>{$t(`offer.status.${status}`)}</option>
+      {/each}
+    </select>
 
     <label class="font-medium label text-sm" for="offerNumber">
       {$t('priceOffer.labels.offerNumber')}

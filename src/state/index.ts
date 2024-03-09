@@ -2,8 +2,8 @@ import { defaultContact } from '../lib/types';
 
 import { ContactState } from './contact';
 import { PartnerState } from './partner';
-import { getPartners } from '../data/partner';
-import { getContact } from '../data/contact';
+import { getPartners } from '../services/partner';
+import { getContact } from '../services/contact';
 import { OfferState } from './offer';
 
 export const contactState = new ContactState({ ...defaultContact });
