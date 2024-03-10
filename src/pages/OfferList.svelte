@@ -1,15 +1,17 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { Link } from 'svelte-navigator';
-  import {
-    ArrowUpLeftFromSquareIcon,
-    CopyPlus,
-    Trash2,
-  } from 'lucide-svelte';
+  import { ArrowUpLeftFromSquareIcon, CopyPlus, Trash2 } from 'lucide-svelte';
   import { t } from '../lib/i18n';
   import { type Offer } from '../lib/types';
   import Layout from '../layouts/Layout.svelte';
-  import { getOffers, createOffer, getOfferYears, deleteOffer, copyOffer } from '../services/offer';
+  import {
+    getOffers,
+    createOffer,
+    getOfferYears,
+    deleteOffer,
+    copyOffer,
+  } from '../services/offer';
 
   const dateFormat = new Intl.DateTimeFormat();
 

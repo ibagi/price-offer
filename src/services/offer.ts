@@ -6,12 +6,13 @@ import { type Offer, defaultOffer, offerSchema } from '../lib/types';
 const KeyPrefix = 'offers';
 const offerId = () => `${new Date().getFullYear()}_${nanoid()}`;
 const offerKey = (offerId: string) => `${KeyPrefix}/${offerId}`;
-const offerYear = (offerId: string) => Number(offerId.split('/')[1].split('_')[0]);
+const offerYear = (offerId: string) =>
+  Number(offerId.split('/')[1].split('_')[0]);
 
 export async function getOfferYears() {
   const offerCounts = await getOfferCountByYears();
   const years = new Set([...offerCounts.keys(), new Date().getFullYear()]);
-  return Array.from(years).toSorted((a,b) => a > b ? b : a);
+  return Array.from(years).toSorted((a, b) => (a > b ? b : a));
 }
 
 async function getOfferCountByYears() {
@@ -36,11 +37,13 @@ function createOfferNumber(sequence: number) {
 
 export async function getOffers(year: number) {
   const keys = await db.getKeys(`${KeyPrefix}/${year}`);
-  const results = await Promise.all(keys.map(key => db.tryLoadData<Offer>(key, offerSchema)));
+  const results = await Promise.all(
+    keys.map((key) => db.tryLoadData<Offer>(key, offerSchema)),
+  );
   return results
-    .filter(r => r.success)
-    .map(r => (r as db.Loaded<Offer>).data)
-    .toSorted((a,b) => a.sequence > b.sequence ? -1 : 1);
+    .filter((r) => r.success)
+    .map((r) => (r as db.Loaded<Offer>).data)
+    .toSorted((a, b) => (a.sequence > b.sequence ? -1 : 1));
 }
 
 export async function getOffer(offerId: string) {
