@@ -90,6 +90,7 @@ export async function copyOffer(id: string) {
     offerNumber: createOfferNumber(sequence),
     createdAt: new Date(),
     sequence,
+    status: 'created',
   };
 
   await db.saveData(offerKey(clone.id), clone);

@@ -2,16 +2,18 @@
   import { onMount } from 'svelte';
   import { Link } from 'svelte-navigator';
   import { ArrowUpLeftFromSquareIcon, CopyPlus, Trash2 } from 'lucide-svelte';
-  import { t } from '../lib/i18n';
-  import { type Offer } from '../lib/types';
-  import Layout from '../layouts/Layout.svelte';
+  import { t } from '../../lib/i18n';
+  import { type Offer } from '../../lib/types';
+  import Layout from '../../layouts/Layout.svelte';
+  import OfferStatusBadge from './OfferStatusBadge.svelte';
+
   import {
     getOffers,
     createOffer,
     getOfferYears,
     deleteOffer,
     copyOffer,
-  } from '../services/offer';
+  } from '../../services/offer';
 
   const dateFormat = new Intl.DateTimeFormat();
 
@@ -72,12 +74,9 @@
         {#each priceOffers as offer}
           <li class="flex justify-between border-b-2 px-4 pb-2">
             <div class="flex flex-col gap-1">
-              <div class="flex gap-3 items-center font-medium">
-                <div class="text-teal-600">{offer.offerNumber}</div>
-                <div
-                  class="text-sm text-gray-600 bg-gray-100 border text-center w-24 rounded">
-                  {$t(`offer.status.${offer.status}`)}
-                </div>
+              <div class="flex gap-3 items-center">
+                <div class="text-teal-600 font-medium">{offer.offerNumber}</div>
+                <OfferStatusBadge status={offer.status} />
               </div>
               <div class="text-sm text-gray-500">
                 {dateFormat.format(offer.offerDate)}

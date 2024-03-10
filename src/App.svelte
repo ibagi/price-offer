@@ -3,7 +3,7 @@
 
   import Auth from './components/Auth.svelte';
 
-  import OfferList from './pages/OfferList.svelte';
+  import OfferList from './pages/OfferList/OfferList.svelte';
   import Offer from './pages/Offer.svelte';
   import Preview from './pages/Preview.svelte';
   import Company from './pages/Company.svelte';
