@@ -6,11 +6,11 @@ const db = localforage.createInstance({
   name: 'price-offer',
 });
 
-type LoadFailed = {
+export type LoadFailed = {
   success: false;
 };
 
-type LoadSuccessfull<T> = {
+export type Loaded<T> = {
   data: T;
   success: true;
 };
@@ -47,7 +47,7 @@ export async function loadData<T>(
 export async function tryLoadData<T>(
   key: string,
   schema: ZodType<T>,
-): Promise<LoadFailed | LoadSuccessfull<T>> {
+): Promise<LoadFailed | Loaded<T>> {
   const persisted = await db.getItem<T>(key);
   const validated = schema.safeParse(persisted);
 
@@ -60,4 +60,8 @@ export async function tryLoadData<T>(
 
 export async function saveData<T>(key: string, data: T) {
   await db.setItem(key, data);
+}
+
+export async function removeData(key: string) {
+  await db.removeItem(key);
 }

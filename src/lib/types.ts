@@ -106,5 +106,5 @@ export const offerStatuses: OfferStatus[] = [
   'created',
   'sent',
   'accepted',
-  'rejected'
+  'rejected',
 ];

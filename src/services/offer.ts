@@ -4,11 +4,28 @@ import * as db from './db';
 import { type Offer, defaultOffer, offerSchema } from '../lib/types';
 
 const KeyPrefix = 'offers';
-const recordKey = (offerId: string) => `${KeyPrefix}/${offerId}`;
+const offerId = () => `${new Date().getFullYear()}_${nanoid()}`;
+const offerKey = (offerId: string) => `${KeyPrefix}/${offerId}`;
+const offerYear = (offerId: string) => Number(offerId.split('/')[1].split('_')[0]);
+
+export async function getOfferYears() {
+  const offerCounts = await getOfferCountByYears();
+  const years = new Set([...offerCounts.keys(), new Date().getFullYear()]);
+  return Array.from(years).toSorted((a,b) => a > b ? b : a);
+}
+
+async function getOfferCountByYears() {
+  return (await db.getKeys(KeyPrefix)).reduce((map, key) => {
+    const year = offerYear(key);
+    map.set(year, (map.get(year) ?? 0) + 1);
+    return map;
+  }, new Map<number, number>());
+}
 
 async function nextSequenceNumber() {
-  const existingKeys = await db.getKeys(KeyPrefix);
-  return existingKeys.length + 1;
+  const counts = await getOfferCountByYears();
+  const sequence = counts.get(new Date().getFullYear()) ?? 0;
+  return sequence + 1;
 }
 
 function createOfferNumber(sequence: number) {
@@ -17,21 +34,17 @@ function createOfferNumber(sequence: number) {
   return `XX-PT-${shortYear}-${sequenceString}`;
 }
 
-export async function getOffers() {
-  const offers = [];
-
-  for (const key of await db.getKeys(KeyPrefix)) {
-    const result = await db.tryLoadData<Offer>(key, offerSchema);
-    if (result.success) {
-      offers.push(result.data);
-    }
-  }
-
-  return offers.toSorted((a, b) => (a.sequence > b.sequence ? -1 : 1));
+export async function getOffers(year: number) {
+  const keys = await db.getKeys(`${KeyPrefix}/${year}`);
+  const results = await Promise.all(keys.map(key => db.tryLoadData<Offer>(key, offerSchema)));
+  return results
+    .filter(r => r.success)
+    .map(r => (r as db.Loaded<Offer>).data)
+    .toSorted((a,b) => a.sequence > b.sequence ? -1 : 1);
 }
 
 export async function getOffer(offerId: string) {
-  const result = await db.tryLoadData<Offer>(recordKey(offerId), offerSchema);
+  const result = await db.tryLoadData<Offer>(offerKey(offerId), offerSchema);
   if (result.success) {
     return result.data;
   } else {
@@ -41,39 +54,41 @@ export async function getOffer(offerId: string) {
 
 export async function createOffer() {
   const sequence = await nextSequenceNumber();
-
   const offer: Offer = {
     ...defaultOffer,
-    id: nanoid(),
+    id: offerId(),
     createdAt: new Date(),
     offerNumber: createOfferNumber(sequence),
     sequence,
   };
 
-  await db.saveData(recordKey(offer.id), offer);
+  await db.saveData(offerKey(offer.id), offer);
   return offer;
 }
 
 export async function updateOffer(offer: Offer) {
-  await db.saveData(recordKey(offer.id), offer);
+  await db.saveData(offerKey(offer.id), offer);
 }
 
-export async function copyOffer(offerId: string) {
-  const offer = await getOffer(offerId);
+export async function deleteOffer(offerId: string) {
+  await db.removeData(offerKey(offerId));
+}
+
+export async function copyOffer(id: string) {
+  const offer = await getOffer(id);
   if (!offer) {
     throw new Error('Offer not found!');
   }
 
   const sequence = await nextSequenceNumber();
-
   const clone = {
     ...structuredClone(offer),
-    id: nanoid(),
-    createdAt: new Date(),
+    id: offerId(),
     offerNumber: createOfferNumber(sequence),
+    createdAt: new Date(),
     sequence,
   };
 
-  await db.saveData(recordKey(clone.id), clone);
+  await db.saveData(offerKey(clone.id), clone);
   return clone;
 }
