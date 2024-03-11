@@ -3,15 +3,11 @@
   import { Trash2 } from 'lucide-svelte';
 
   import { t } from '../lib/i18n';
-  import type { Partner } from '../lib/types';
-  import { partners, addPartner, removePartner } from '../lib/state';
-  import { saveState } from '../lib/db';
+  import { savePartners } from '../services/partner';
+  import { partnerState } from '../state';
 
-  function saveChanges($partners: Partner[]) {
-    saveState({ partners: $partners });
-  }
-
-  $: saveChanges($partners);
+  const { partners, addPartner, removePartner } = partnerState;
+  $: savePartners($partners);
 </script>
 
 <Layout>
@@ -84,7 +80,7 @@
                     title={$t('partners.actions.delete')}
                     class="btn btn-sm"
                     on:click={() => removePartner(partner)}>
-                    <Trash2/>
+                    <Trash2 />
                   </button>
                 </td>
               </tr>

@@ -2,22 +2,15 @@
   import { Link } from 'svelte-navigator';
   import { t } from '../lib/i18n';
   import Money from '../components/Money.svelte';
-
-  import {
-    contact,
-    selectedPartner,
-    offer,
-    offerItems,
-    netto,
-    taxRate,
-    tax,
-    brutto,
-    totalPrice,
-    currency,
-  } from '../lib/state';
+  import { contactState, partnerState, OfferState } from '../state';
   import { getDecimalPlaces } from '../lib/prices';
 
+  export let offerState = new OfferState();
   let saving = false;
+
+  const { contact } = contactState;
+  const { offer, netto, tax, brutto } = offerState;
+  const selectedPartner = partnerState.selectBy(offer);
 
   function print(e: MouseEvent) {
     e.preventDefault();
@@ -32,12 +25,12 @@
 
 <main class="max-w-7xl mx-auto">
   <div class="flex items-center gap-2">
-    <img height="200" width="250" src="logo.png" alt="Cég" />
+    <img height="200" width="250" src="/logo.png" alt="Cég" />
     <h1 class="flex-1 font-bold text-4xl">
       {$t('preview.title')}
     </h1>
     <button class="btn btn-sm btn-neutral" class:no-print={saving}>
-      <Link to="/">{$t('preview.actions.back')}</Link>
+      <Link to="/offer/{$offer.id}">{$t('preview.actions.back')}</Link>
     </button>
     <button
       class="btn btn-sm btn-primary"
@@ -161,26 +154,28 @@
     </thead>
     <tbody>
       <tr>
-        <td class="table-cell" rowspan={$offerItems.length + 1}
+        <td class="table-cell" rowspan={$offer.items.length + 1}
           >{$offer.offerNumber}</td>
       </tr>
-      {#each $offerItems as item}
+      {#each $offer.items as item}
         <tr>
           <td class="table-cell">{item.name}</td>
           <td class="table-cell">{item.amount}</td>
           <td class="table-cell">
             <Money
               value={item.workPrice + item.materialPrice}
-              currency={$currency} />
+              currency={$offer.currency} />
           </td>
           <td class="table-cell">
-            <Money value={totalPrice(item)} currency={$currency} />
+            <Money
+              value={offerState.totalPrice(item)}
+              currency={$offer.currency} />
           </td>
           <td class="table-cell">
-            <Money value={item.workPrice} currency={$currency} />
+            <Money value={item.workPrice} currency={$offer.currency} />
           </td>
           <td class="table-cell">
-            <Money value={item.materialPrice} currency={$currency} />
+            <Money value={item.materialPrice} currency={$offer.currency} />
           </td>
         </tr>
       {/each}
@@ -190,8 +185,8 @@
         <td class="font-bold px-2 text-right">
           <Money
             value={$netto}
-            currency={$currency}
-            fractions={getDecimalPlaces($currency)} />
+            currency={$offer.currency}
+            fractions={getDecimalPlaces($offer.currency)} />
         </td>
         <td colspan="2"></td>
       </tr>
@@ -201,8 +196,8 @@
         <td class="font-bold px-2 text-right">
           <Money
             value={$tax}
-            currency={$currency}
-            fractions={getDecimalPlaces($currency)} />
+            currency={$offer.currency}
+            fractions={getDecimalPlaces($offer.currency)} />
         </td>
         <td colspan="2"></td>
       </tr>
@@ -213,8 +208,8 @@
         <td class="font-bold px-2 summary-underline text-right">
           <Money
             value={$brutto}
-            currency={$currency}
-            fractions={getDecimalPlaces($currency)} />
+            currency={$offer.currency}
+            fractions={getDecimalPlaces($offer.currency)} />
         </td>
         <td colspan="2"></td>
       </tr>
@@ -228,7 +223,7 @@
 
   <div class="font-bold">{$t('preview.labels.taxation')}</div>
   <div class="text-sm pb-2">
-    {$t('preview.fields.taxation', { tax: $taxRate })}
+    {$t('preview.fields.taxation', { tax: $offer.taxRate })}
   </div>
 
   <div class="font-bold">{$t('preview.labels.productionTime')}</div>

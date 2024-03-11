@@ -1,7 +1,7 @@
 import './styles/app.css';
 
 import App from './App.svelte';
-import { restoreState } from './lib/state';
+import { restoreState } from './state';
 
 restoreState();
 

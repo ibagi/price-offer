@@ -1,31 +1,25 @@
 <script lang="ts">
   import { Link } from 'svelte-navigator';
   import { Edit, Trash2 } from 'lucide-svelte';
-
   import Layout from '../layouts/Layout.svelte';
   import DateInput from '../components/DateInput.svelte';
-
   import { t } from '../lib/i18n';
-  import {
-    taxRate,
-    offer,
-    tax,
-    offerItems,
-    hasItem,
-    netto,
-    brutto,
-    addItem,
-    removeItem,
-    removeItems,
-    totalPrice,
-    partners,
-    selectedPartner,
-    currency,
-  } from '../lib/state';
+  import { partnerState, OfferState } from '../state';
   import PriceInput from '../components/PriceInput.svelte';
-  import { currencies } from '../lib/types';
+  import { currencies, offerStatuses, type Offer } from '../lib/types';
   import Money from '../components/Money.svelte';
   import { getDecimalPlaces } from '../lib/prices';
+  import { updateOffer } from '../services/offer';
+
+  export let offerState: OfferState;
+  const { partners } = partnerState;
+  const { offer, netto, tax, brutto, hasItem } = offerState;
+
+  $: saveOffer($offer);
+
+  function saveOffer(data: Offer) {
+    updateOffer(data);
+  }
 </script>
 
 <Layout>
@@ -33,6 +27,7 @@
     <h1 class="font-bold text-lg pb-2" tabindex="-1">
       {$t('priceOffer.title')}
     </h1>
+
     <label class="font-medium label text-sm" for="partner">
       {$t('priceOffer.labels.partner')}
     </label>
@@ -44,9 +39,9 @@
         class="select select-sm select-bordered w-full"
         name="partner"
         disabled={$partners.length === 0}
-        bind:value={$selectedPartner}>
+        bind:value={$offer.partnerId}>
         {#each $partners as partner}
-          <option value={partner}>{partner.name}</option>
+          <option value={partner.id}>{partner.name}</option>
         {/each}
       </select>
       <Link
@@ -57,6 +52,21 @@
         <Edit />
       </Link>
     </div>
+
+    <label class="font-medium label text-sm" for="status">
+      {$t('priceOffer.labels.status')}
+    </label>
+
+    <select
+      id="status"
+      placeholder={$t('priceOffer.labels.status')}
+      class="select select-sm select-bordered w-full"
+      name="status"
+      bind:value={$offer.status}>
+      {#each offerStatuses as status}
+        <option value={status}>{$t(`offer.status.${status}`)}</option>
+      {/each}
+    </select>
 
     <label class="font-medium label text-sm" for="offerNumber">
       {$t('priceOffer.labels.offerNumber')}
@@ -119,7 +129,7 @@
       class="input input-sm input-bordered w-full"
       type="number"
       name="taxRate"
-      bind:value={$taxRate} />
+      bind:value={$offer.taxRate} />
 
     <label class="font-medium label text-sm" for="productionTime">
       {$t('priceOffer.labels.productionTime')}
@@ -140,7 +150,7 @@
       placeholder={$t('priceOffer.labels.currency')}
       class="select select-sm select-bordered w-full max-w-xs"
       name="currency"
-      bind:value={$currency}>
+      bind:value={$offer.currency}>
       {#each currencies as currency}
         <option value={currency}>{currency}</option>
       {/each}
@@ -152,10 +162,13 @@
       <h2 class="card-title flex-1" tabindex="-1">
         {$t('priceOffer.tableHeader')}
       </h2>
-      <button class="btn btn-sm" on:click={removeItems}
+      <button class="btn btn-sm" on:click={offerState.removeItems}
         >{$t('priceOffer.actions.clearAll')}</button>
-      <button class="btn btn-neutral btn-sm" on:click={addItem}
+      <button class="btn btn-neutral btn-sm" on:click={offerState.addItem}
         >{$t('priceOffer.actions.add')}</button>
+      <Link to="/preview/{$offer.id}" class="btn btn-sm btn-primary">
+        {$t('priceOffer.actions.preview')}
+      </Link>
     </div>
 
     {#if $hasItem}
@@ -164,16 +177,19 @@
           <thead>
             <tr>
               <th class="min-w-24">{$t('priceOffer.tableColumns.item')}</th>
-              <th class="max-w-32">{$t('priceOffer.tableColumns.unitPrice')}</th>
+              <th class="max-w-32"
+                >{$t('priceOffer.tableColumns.unitPrice')}</th>
               <th class="max-w-32">{$t('priceOffer.tableColumns.total')}</th>
               <th class="w-4">{$t('priceOffer.tableColumns.amount')}</th>
-              <th class="min-w-36">{$t('priceOffer.tableColumns.workPrice')}</th>
-              <th class="min-w-36">{$t('priceOffer.tableColumns.materialPrice')}</th>
+              <th class="min-w-36"
+                >{$t('priceOffer.tableColumns.workPrice')}</th>
+              <th class="min-w-36"
+                >{$t('priceOffer.tableColumns.materialPrice')}</th>
               <th class="w-6"></th>
             </tr>
           </thead>
           <tbody>
-            {#each $offerItems as item}
+            {#each $offer.items as item}
               <tr>
                 <td class="min-w-24"
                   ><input
@@ -182,10 +198,12 @@
                 <td class="max-w-32">
                   <Money
                     value={item.workPrice + item.materialPrice}
-                    currency={$currency} />
+                    currency={$offer.currency} />
                 </td>
                 <td class="max-w-32">
-                  <Money value={totalPrice(item)} currency={$currency} />
+                  <Money
+                    value={offerState.totalPrice(item)}
+                    currency={$offer.currency} />
                 </td>
                 <td class="w-4"
                   ><input
@@ -195,14 +213,17 @@
                 <td>
                   <PriceInput
                     bind:value={item.workPrice}
-                    currency={$currency} />
+                    currency={$offer.currency} />
                 </td>
                 <td>
                   <PriceInput
                     bind:value={item.materialPrice}
-                    currency={$currency} />
+                    currency={$offer.currency} />
                 </td><td class="w-6">
-                  <button title="{$t('priceOffer.actions.delete')}" class="btn btn-sm" on:click={() => removeItem(item)}>
+                  <button
+                    title={$t('priceOffer.actions.delete')}
+                    class="btn btn-sm"
+                    on:click={() => offerState.removeItem(item)}>
                     <Trash2 />
                   </button>
                 </td>
@@ -228,8 +249,8 @@
           <div>
             <Money
               value={$netto}
-              currency={$currency}
-              fractions={getDecimalPlaces($currency)} />
+              currency={$offer.currency}
+              fractions={getDecimalPlaces($offer.currency)} />
           </div>
         </div>
         <div class="text-center">
@@ -237,8 +258,8 @@
           <div>
             <Money
               value={$tax}
-              currency={$currency}
-              fractions={getDecimalPlaces($currency)} />
+              currency={$offer.currency}
+              fractions={getDecimalPlaces($offer.currency)} />
           </div>
         </div>
         <div class="text-center">
@@ -246,8 +267,8 @@
           <div>
             <Money
               value={$brutto}
-              currency={$currency}
-              fractions={getDecimalPlaces($currency)} />
+              currency={$offer.currency}
+              fractions={getDecimalPlaces($offer.currency)} />
           </div>
         </div>
       </div>

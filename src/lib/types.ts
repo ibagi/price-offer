@@ -13,20 +13,50 @@ export const contactSchema = z.object({
 });
 
 export const partnerSchema = z.object({
+  id: z.string(),
   name: z.string(),
   address: z.string(),
   companyNumber: z.string(),
   taxNumber: z.string(),
 });
 
-export const persistedStateSchema = z.object({
-  contact: z.object(contactSchema.shape),
-  partners: z.array(z.object(partnerSchema.shape)),
+const currencySchema = z.enum(['HUF', 'EUR']);
+const offerStatusSchema = z.enum(['created', 'sent', 'accepted', 'rejected']);
+
+export const offerItemSchema = z.object({
+  name: z.string(),
+  amount: z.number(),
+  workPrice: z.number(),
+  materialPrice: z.number(),
 });
 
-export type PersistedState = z.infer<typeof persistedStateSchema>;
+export const offerSchema = z.object({
+  id: z.string(),
+  createdAt: z.date(),
+  sequence: z.number(),
+  projectName: z.string(),
+  offerNumber: z.string(),
+  offerDate: z.date(),
+  offerPlace: z.string(),
+  validity: z.number(),
+  productionTimeInDays: z.number(),
+  currency: currencySchema,
+  taxRate: z.number(),
+  status: offerStatusSchema,
+  partnerId: z.string(),
+  items: z.array(offerItemSchema),
+});
+
 export type Contact = z.infer<typeof contactSchema>;
 export type Partner = z.infer<typeof partnerSchema>;
+
+export type Currency = z.infer<typeof currencySchema>;
+
+export type OfferStatus = z.infer<typeof offerStatusSchema>;
+export type Offer = z.infer<typeof offerSchema>;
+export type OfferItem = z.infer<typeof offerItemSchema>;
+
+export const currencies: Currency[] = ['HUF', 'EUR'];
 
 export const defaultContact: Contact = {
   person: '-',
@@ -41,36 +71,29 @@ export const defaultContact: Contact = {
 };
 
 export const defaultPartner: Partner = {
+  id: '',
   name: '',
   address: '',
   companyNumber: '00-00-000000',
   taxNumber: '00000000-0-00',
 };
 
-export interface Offer {
-  projectName: string;
-  offerNumber: string;
-  offerDate: Date;
-  offerPlace: string;
-  validity: number;
-  productionTimeInDays: number;
-}
-
 export const defaultOffer: Offer = {
+  id: '',
+  sequence: 0,
   projectName: '',
-  offerNumber: `XX-PT-${new Date().getFullYear().toString().slice(2, 4)}-000`,
+  offerNumber: '',
+  createdAt: new Date(),
   offerDate: new Date(),
   offerPlace: 'Maglód',
   validity: 30,
   productionTimeInDays: 8,
+  currency: 'HUF',
+  taxRate: 27,
+  status: 'created',
+  partnerId: '',
+  items: [],
 };
-
-export interface OfferItem {
-  name: string;
-  amount: number;
-  workPrice: number;
-  materialPrice: number;
-}
 
 export const defaultOfferItem: OfferItem = {
   name: '',
@@ -79,5 +102,9 @@ export const defaultOfferItem: OfferItem = {
   materialPrice: 1,
 };
 
-export type Currency = 'HUF' | 'EUR';
-export const currencies: Currency[] = ['HUF', 'EUR'];
+export const offerStatuses: OfferStatus[] = [
+  'created',
+  'sent',
+  'accepted',
+  'rejected',
+];

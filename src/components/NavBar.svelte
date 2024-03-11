@@ -19,7 +19,7 @@
     },
     {
       to: '/',
-      title: $t('navigation.priceOffer'),
+      title: $t('navigation.priceOfferList'),
       isActive: false,
     },
   ];
@@ -53,15 +53,12 @@
           to={route.to}>{route.title}</Link>
       {/if}
     {/each}
-    <Link
-      role="tab"
-      class="tab text-base h-12 text-white font-bold"
-      as="a"
-      to="/preview">{$t('navigation.preview')}</Link>
   </div>
   {#if user}
     <div class="flex items-center gap-2">
-      <div class="font-medium text-white text-sm">{$user?.primaryEmailAddress}</div>
+      <div class="font-medium text-white text-sm">
+        {$user?.primaryEmailAddress}
+      </div>
       <div bind:this={userButtonElement}></div>
     </div>
   {/if}

@@ -2,13 +2,20 @@ type Translations = Record<string, Record<string, string>>;
 
 const translations: Translations = {
   hu: {
-    'navigation.priceOffer': 'Árajánlat',
+    'navigation.priceOfferList': 'Ajánlatok',
     'navigation.partners': 'Partnerek',
     'navigation.company': 'Cég adatok',
     'navigation.preview': 'Előnézet',
+    'offerList.title': 'Ajánlatok',
+    'offerList.labels.yearButton': '{{ year }} év ajánlatai',
+    'offerList.actions.add': 'Új ajánlat',
+    'offerList.actions.open': 'Ajánlat megtekintése',
+    'offerList.actions.copy': 'Ajánlat másolása',
+    'offerList.actions.delete': 'Ájanlat törlése',
     'priceOffer.title': 'Árjánlat',
     'priceOffer.tableHeader': 'Ajánlat tételei',
     'priceOffer.hint': "A 'Hozzáadás' gombbal adj tételeket az árajánlathoz.",
+    'priceOffer.labels.status': 'Státusz',
     'priceOffer.labels.partner': 'Partner',
     'priceOffer.labels.project': 'Projekt',
     'priceOffer.labels.offerNumber': 'Ajánlat száma',
@@ -68,7 +75,7 @@ const translations: Translations = {
       'A további együttműködés reményében köszönjük megtisztelő megkeresését!',
     'preview.regards': 'Üdvözlettel: ',
     'partners.title': 'Partnerek',
-    'partners.actions.add': 'Hozzáadás',
+    'partners.actions.add': 'Új partner',
     'partners.actions.back': 'Vissza az ajánlathoz',
     'partners.hint': 'Úgy néz ki még nem rögzített partnert.',
     'partners.actions.addPartner': 'Partner rögzítése',
@@ -87,6 +94,10 @@ const translations: Translations = {
     'company.labels.taxNumber': 'Adószám:',
     'company.labels.bankAccountNumber': 'Bankszámlaszám:',
     'company.labels.person': 'Aláírt:',
+    'offer.status.created': 'Létrehozva',
+    'offer.status.sent': 'Elküldve',
+    'offer.status.accepted': 'Elfogadva',
+    'offer.status.rejected': 'Elutasítva',
   },
 };
 

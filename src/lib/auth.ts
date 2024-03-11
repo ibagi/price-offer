@@ -11,9 +11,9 @@ const clerk = new Clerk(import.meta.env.VITE_CLERK_PUBLISHABLE_KEY);
 export const user = writable<User>(null);
 
 export async function loadSession() {
-  await clerk.load({ 
+  await clerk.load({
     localization: localization.hu,
-    signUpUrl: ''
+    signUpUrl: '',
   });
   user.set(clerk.user);
 }
@@ -39,6 +39,6 @@ export async function signOut() {
   }
 }
 
-export function mountUserButton(el :HTMLDivElement) {
+export function mountUserButton(el: HTMLDivElement) {
   clerk.mountUserButton(el);
 }

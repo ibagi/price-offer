@@ -1,13 +1,11 @@
 <script lang="ts">
-  import Layout from '../layouts/Layout.svelte';
-  import { saveState } from '../lib/db';
   import { t } from '../lib/i18n';
-
-  import { contact } from '../lib/state';
   import type { Contact } from '../lib/types';
+  import { contactState } from '../state';
+  import { saveContact } from '../services/contact';
+  import Layout from '../layouts/Layout.svelte';
 
   type Field = keyof Contact;
-
   const fields: Field[] = [
     'title',
     'subtitle',
@@ -20,11 +18,8 @@
     'person',
   ];
 
-  function saveChanges(update: Contact) {
-    saveState({ contact: update });
-  }
-
-  $: saveChanges($contact);
+  const { contact } = contactState;
+  $: saveContact($contact);
 </script>
 
 <Layout>
