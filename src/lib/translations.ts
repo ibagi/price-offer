@@ -27,6 +27,8 @@ const translations: Translations = {
     'priceOffer.labels.currency': 'Pénznem',
     'priceOffer.tooltips.partner': 'Partnerek megadása',
     'priceOffer.actions.clearAll': 'Összes törlése',
+    'priceOffer.actions.export': 'Tételek exportálása',
+    'priceOffer.actions.import': 'Tételek importálása',
     'priceOffer.actions.add': 'Hozzáadás',
     'priceOffer.actions.delete': 'Törlés',
     'priceOffer.actions.preview': 'Előnézet',
@@ -98,6 +100,10 @@ const translations: Translations = {
     'offer.status.sent': 'Elküldve',
     'offer.status.accepted': 'Elfogadva',
     'offer.status.rejected': 'Elutasítva',
+    'export.headers.item': 'Tétel',
+    'export.headers.amount': 'Darabszám',
+    'export.headers.materialPrice': 'Anyagköltség',
+    'export.headers.workPrice': 'Munkaköltség',
   },
 };
 

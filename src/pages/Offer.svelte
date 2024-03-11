@@ -1,15 +1,20 @@
 <script lang="ts">
   import { Link } from 'svelte-navigator';
-  import { Edit, Trash2 } from 'lucide-svelte';
+  import {
+    DownloadIcon,
+    Edit,
+    Trash2,
+    UploadIcon,
+  } from 'lucide-svelte';
   import Layout from '../layouts/Layout.svelte';
   import DateInput from '../components/DateInput.svelte';
-  import { t } from '../lib/i18n';
+  import { locale, t } from '../lib/i18n';
   import { partnerState, OfferState } from '../state';
   import PriceInput from '../components/PriceInput.svelte';
   import { currencies, offerStatuses, type Offer } from '../lib/types';
   import Money from '../components/Money.svelte';
   import { getDecimalPlaces } from '../lib/prices';
-  import { updateOffer } from '../services/offer';
+  import { exporItems, importItems, updateOffer } from '../services/offer';
 
   export let offerState: OfferState;
   const { partners } = partnerState;
@@ -162,6 +167,18 @@
       <h2 class="card-title flex-1" tabindex="-1">
         {$t('priceOffer.tableHeader')}
       </h2>
+      <button
+        title={$t('priceOffer.actions.export')}
+        class="btn btn-sm"
+        on:click={() => exporItems($offer.id, $locale)}>
+        <DownloadIcon size={18} />
+      </button>
+      <button
+        title={$t('priceOffer.actions.import')}
+        class="btn btn-sm"
+        on:click={() => importItems($offer.id)}>
+        <UploadIcon size={18} />
+      </button>
       <button class="btn btn-sm" on:click={offerState.removeItems}
         >{$t('priceOffer.actions.clearAll')}</button>
       <button class="btn btn-neutral btn-sm" on:click={offerState.addItem}

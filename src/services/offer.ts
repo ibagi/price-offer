@@ -1,7 +1,14 @@
 import { nanoid } from 'nanoid';
 
+import { translate } from '../lib/i18n';
 import * as db from './db';
-import { type Offer, defaultOffer, offerSchema } from '../lib/types';
+import {
+  type Offer,
+  type OfferItem,
+  defaultOffer,
+  offerSchema,
+} from '../lib/types';
+import { generateCsv } from '../lib/csv';
 
 const KeyPrefix = 'offers';
 const offerId = () => `${new Date().getFullYear()}_${nanoid()}`;
@@ -95,4 +102,49 @@ export async function copyOffer(id: string) {
 
   await db.saveData(offerKey(clone.id), clone);
   return clone;
+}
+
+export async function exporItems(offerId: string, locale: string) {
+  const loadResult = await db.tryLoadData<Offer>(
+    offerKey(offerId),
+    offerSchema,
+  );
+  if (!loadResult.success) {
+    throw new Error('Error during loading offer');
+  }
+
+  const items = loadResult.data.items;
+  const data = generateCsv<OfferItem>(items, {
+    withHeaders: true,
+    seperator: ';',
+    selectors: [
+      {
+        header: translate(locale, 'export.headers.item'),
+        value: (item) => item.name,
+      },
+      {
+        header: translate(locale, 'export.headers.amount'),
+        value: (item) => item.amount.toString(),
+      },
+      {
+        header: translate(locale, 'export.headers.materialPrice'),
+        value: (item) => item.materialPrice.toString(),
+      },
+      {
+        header: translate(locale, 'export.headers.workPrice'),
+        value: (item) => item.workPrice.toString(),
+      },
+    ],
+  });
+
+  const url = window.URL.createObjectURL(data);
+
+  const link = document.createElement('a');
+  link.setAttribute('download', `${loadResult.data.offerNumber}.csv`);
+  link.href = url;
+  link.click();
+}
+
+export function importItems(offerId: string) {
+  throw new Error('Not implemented!');
 }

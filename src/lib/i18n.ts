@@ -4,7 +4,11 @@ import translations from './translations';
 export const locale = writable('hu');
 export const locales = Object.keys(translations);
 
-function translate(locale: string, key: string, vars: Record<string, string>) {
+export function translate(
+  locale: string,
+  key: string,
+  vars: Record<string, string> = {},
+) {
   if (!key) {
     throw new Error('no key provided to $t()');
   }
