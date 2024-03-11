@@ -9,7 +9,7 @@
   const bgColors: ClassMap = {
     created: 'bg-slate-100',
     sent: 'bg-slate-500',
-    accepted: 'bg-emerald-600',
+    accepted: 'bg-emerald-500',
     rejected: 'bg-red-500',
   };
 
@@ -22,7 +22,7 @@
 </script>
 
 <div
-  class="text-sm bg-gray-100 border text-center w-24 rounded {bgColors[
+  class="text-sm text-center w-24 rounded {bgColors[
     status
   ]} {colors[status]}">
   {$t(`offer.status.${status}`)}

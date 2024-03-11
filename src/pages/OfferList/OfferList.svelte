@@ -1,11 +1,18 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { Link } from 'svelte-navigator';
-  import { ArrowUpLeftFromSquareIcon, CopyPlus, Trash2 } from 'lucide-svelte';
+  import {
+    ArrowUpLeftFromSquareIcon,
+    Clock,
+    CopyPlus,
+    Trash2,
+    User,
+  } from 'lucide-svelte';
   import { t } from '../../lib/i18n';
   import { type Offer } from '../../lib/types';
   import Layout from '../../layouts/Layout.svelte';
   import OfferStatusBadge from './OfferStatusBadge.svelte';
+  import { partnerState } from '../../state';
 
   import {
     getOffers,
@@ -16,6 +23,7 @@
   } from '../../services/offer';
 
   const dateFormat = new Intl.DateTimeFormat();
+  const { partners } = partnerState;
 
   let priceOffers: Offer[] = [];
   let years: number[] = [];
@@ -38,6 +46,10 @@
   async function handleDelete(offerId: string) {
     await deleteOffer(offerId);
     await loadOffers(selectedYear);
+  }
+
+  function partnerName(partnerId: string) {
+    return $partners.find((p) => p.id === partnerId)?.name ?? '-';
   }
 
   onMount(async () => {
@@ -78,8 +90,15 @@
                 <div class="text-teal-600 font-medium">{offer.offerNumber}</div>
                 <OfferStatusBadge status={offer.status} />
               </div>
-              <div class="text-sm text-gray-500">
-                {dateFormat.format(offer.offerDate)}
+              <div class="text-sm text-gray-500 flex items-center gap-1">
+                <span><Clock size={14} /></span>
+                <span>{dateFormat.format(offer.offerDate)}</span>
+                {#if offer.partnerId}
+                  <span class="ml-1"><User size={14} /></span>
+                  <span class="font-medium">
+                    {partnerName(offer.partnerId)}
+                  </span>
+                {/if}
               </div>
             </div>
             <div class="flex gap-6 self-center text-sm">
