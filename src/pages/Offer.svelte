@@ -1,11 +1,6 @@
 <script lang="ts">
   import { Link } from 'svelte-navigator';
-  import {
-    DownloadIcon,
-    Edit,
-    Trash2,
-    UploadIcon,
-  } from 'lucide-svelte';
+  import { DownloadIcon, Edit, Trash2, UploadIcon } from 'lucide-svelte';
   import Layout from '../layouts/Layout.svelte';
   import DateInput from '../components/DateInput.svelte';
   import { locale, t } from '../lib/i18n';

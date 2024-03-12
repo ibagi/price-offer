@@ -27,7 +27,10 @@ export class OfferState {
       prices.tax($netto, $offer.taxRate, $offer.currency),
     );
 
-    this.brutto = derived([this.netto, this.tax], ([$netto, $tax]) => $netto + $tax);
+    this.brutto = derived(
+      [this.netto, this.tax],
+      ([$netto, $tax]) => $netto + $tax,
+    );
     this.hasItem = derived(this.offer, ($offer) => $offer.items.length > 0);
   }
 
