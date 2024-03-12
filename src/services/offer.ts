@@ -31,9 +31,9 @@ async function getOfferCountByYears() {
 }
 
 async function nextSequenceNumber() {
-  const counts = await getOfferCountByYears();
-  const sequence = counts.get(new Date().getFullYear()) ?? 0;
-  return sequence + 1;
+    const offers = await getOffers(new Date().getFullYear());
+    const currentSequence = offers.reduce((max, offer) => max > offer.sequence ? max : offer.sequence, 0);
+    return currentSequence + 1;
 }
 
 function createOfferNumber(sequence: number) {
