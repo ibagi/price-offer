@@ -25,10 +25,6 @@ export function tax(netValue: number, taxRate: number, currency: Currency) {
   return round(netValue * taxMultiplier, currency);
 }
 
-export function brutto(netValue: number, taxValue: number, currency: Currency) {
-  return round(netValue + taxValue, currency);
-}
-
 export function round(value: number, currency: Currency) {
   return new Decimal(value)
     .toDecimalPlaces(getDecimalPlaces(currency))
