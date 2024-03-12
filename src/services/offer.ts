@@ -32,7 +32,7 @@ async function nextSequenceNumber() {
 function createOfferNumber(sequence: number) {
   const sequenceString = String(sequence).padStart(3, '0');
   const shortYear = new Date().getFullYear().toString().slice(2, 4);
-  return `XX-PT-${shortYear}-${sequenceString}`;
+  return `AJ-PT-${shortYear}-${sequenceString}`;
 }
 
 export async function getOffers(year: number) {
