@@ -2,9 +2,11 @@
   import { onMount } from 'svelte';
   import { Link, useLocation, type NavigatorLocation } from 'svelte-navigator';
   import type AnyObject from 'svelte-navigator/types/AnyObject';
+  import { DownloadIcon } from 'lucide-svelte';
 
   import { user, mountUserButton } from '../lib/auth';
   import { t } from '../lib/i18n';
+  import { exportData } from '../services/db';
 
   let routes = [
     {
@@ -54,12 +56,19 @@
       {/if}
     {/each}
   </div>
-  {#if user}
-    <div class="flex items-center gap-2">
+
+  <div class="flex items-center gap-2">
+    <button
+      class="btn btn-small btn-outline border-0 text-white hover:bg-teal-800"
+      on:click={() => exportData()}
+      title={$t('navigation.actions.export')}>
+      <DownloadIcon />
+    </button>
+    {#if user}
       <div class="font-medium text-white text-sm">
         {$user?.primaryEmailAddress}
       </div>
       <div bind:this={userButtonElement}></div>
-    </div>
-  {/if}
+    {/if}
+  </div>
 </nav>

@@ -6,6 +6,7 @@ const translations: Translations = {
     'navigation.partners': 'Partnerek',
     'navigation.company': 'Cég adatok',
     'navigation.preview': 'Előnézet',
+    'navigation.actions.export': 'Adatok exportálása',
     'offerList.title': 'Ajánlatok',
     'offerList.labels.yearButton': '{{ year }} év ajánlatai',
     'offerList.actions.add': 'Új ajánlat',

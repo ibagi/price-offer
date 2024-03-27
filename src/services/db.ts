@@ -65,3 +65,22 @@ export async function saveData<T>(key: string, data: T) {
 export async function removeData(key: string) {
   await db.removeItem(key);
 }
+
+export async function exportData() {
+  const keys = await getKeys('.*');
+  const result: Record<string, any> = {};
+  for (const key of keys) {
+    const data = await db.getItem(key);
+    result[key] = data;
+  }
+
+  const exportData = new Blob([JSON.stringify(result, null, 2)], {
+    type: 'application/json',
+  });
+  const url = window.URL.createObjectURL(exportData);
+
+  const link = document.createElement('a');
+  link.setAttribute('download', `price-offer.json`);
+  link.href = url;
+  link.click();
+}
