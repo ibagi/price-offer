@@ -22,8 +22,6 @@
 </script>
 
 <div
-  class="text-sm text-center w-24 rounded {bgColors[
-    status
-  ]} {colors[status]}">
+  class="text-sm text-center w-24 rounded {bgColors[status]} {colors[status]}">
   {$t(`offer.status.${status}`)}
 </div>
