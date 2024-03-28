@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1711643271787,
+      "tag": "0000_panoramic_sprite",
+      "breakpoints": true
+    }
+  ]
+}
