@@ -1,16 +1,12 @@
 import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { nanoid } from 'nanoid';
-
-type OfferItem = {
-  name: string;
-  amount: number;
-  materialPrice: number;
-  workPrice: number;
-};
+import { OfferItem } from '../types';
 
 export const contacts = sqliteTable('contacts', {
-  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-  key: text('key').$defaultFn(() => nanoid()),
+  id: text('id')
+    .$defaultFn(() => nanoid())
+    .primaryKey()
+    .notNull(),
   person: text('person').notNull(),
   title: text('title').notNull(),
   subtitle: text('subtitle').notNull(),
@@ -23,8 +19,10 @@ export const contacts = sqliteTable('contacts', {
 });
 
 export const partners = sqliteTable('partners', {
-  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-  key: text('key').$defaultFn(() => nanoid()),
+  id: text('id')
+    .$defaultFn(() => nanoid())
+    .primaryKey()
+    .notNull(),
   name: text('name').notNull(),
   address: text('address').notNull(),
   companyNumber: text('company_number').notNull(),
@@ -32,8 +30,10 @@ export const partners = sqliteTable('partners', {
 });
 
 export const offers = sqliteTable('offers', {
-  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-  key: text('key').$defaultFn(() => nanoid()),
+  id: text('id')
+    .$defaultFn(() => nanoid())
+    .primaryKey()
+    .notNull(),
   createdAt: integer('created_at', { mode: 'timestamp_ms' }),
   sequence: integer('sequence').notNull(),
   projectName: text('project_name').notNull(),
@@ -42,9 +42,15 @@ export const offers = sqliteTable('offers', {
   offerPlace: text('offer_place').notNull(),
   validity: integer('validity').notNull(),
   productionTimeInDays: integer('production_time').notNull(),
-  currency: text('currency', { enum: ['HUF', 'EUR' ]}).notNull().default('HUF'),
+  currency: text('currency', { enum: ['HUF', 'EUR'] })
+    .notNull()
+    .default('HUF'),
   taxRate: real('tax_rate').notNull().default(27),
-  status: text('status', { enum: ['created', 'sent', 'accepted', 'rejected']}).notNull().default('created'),
-  partnerId: integer('partner_id').references(() => partners.id, { onDelete: 'set null' }),
-  items: text('items', { mode: 'json' }).$type<OfferItem>().notNull()
+  status: text('status', { enum: ['created', 'sent', 'accepted', 'rejected'] })
+    .notNull()
+    .default('created'),
+  partnerId: integer('partner_id').references(() => partners.id, {
+    onDelete: 'set null',
+  }),
+  items: text('items', { mode: 'json' }).$type<OfferItem>().notNull(),
 });
