@@ -1,9 +1,16 @@
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { nanoid } from 'nanoid';
 
-// TODO: finish schema
+type OfferItem = {
+  name: string;
+  amount: number;
+  materialPrice: number;
+  workPrice: number;
+};
 
 export const contacts = sqliteTable('contacts', {
-  id: integer('id').primaryKey(),
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  key: text('key').$defaultFn(() => nanoid()),
   person: text('person').notNull(),
   title: text('title').notNull(),
   subtitle: text('subtitle').notNull(),
@@ -16,7 +23,8 @@ export const contacts = sqliteTable('contacts', {
 });
 
 export const partners = sqliteTable('partners', {
-  id: integer('id').primaryKey(),
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  key: text('key').$defaultFn(() => nanoid()),
   name: text('name').notNull(),
   address: text('address').notNull(),
   companyNumber: text('company_number').notNull(),
@@ -24,12 +32,19 @@ export const partners = sqliteTable('partners', {
 });
 
 export const offers = sqliteTable('offers', {
-  id: integer('id').primaryKey(),
-});
-
-export const offerItems = sqliteTable('offer_items', {
-  id: integer('id').primaryKey(),
-  offerId: integer('offer_id')
-    .references(() => offers.id, { onDelete: 'cascade' })
-    .notNull(),
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  key: text('key').$defaultFn(() => nanoid()),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' }),
+  sequence: integer('sequence').notNull(),
+  projectName: text('project_name').notNull(),
+  offerNumber: text('offer_number').notNull(),
+  offerDate: integer('offer_date', { mode: 'timestamp_ms' }),
+  offerPlace: text('offer_place').notNull(),
+  validity: integer('validity').notNull(),
+  productionTimeInDays: integer('production_time').notNull(),
+  currency: text('currency', { enum: ['HUF', 'EUR' ]}).notNull().default('HUF'),
+  taxRate: real('tax_rate').notNull().default(27),
+  status: text('status', { enum: ['created', 'sent', 'accepted', 'rejected']}).notNull().default('created'),
+  partnerId: integer('partner_id').references(() => partners.id, { onDelete: 'set null' }),
+  items: text('items', { mode: 'json' }).$type<OfferItem>().notNull()
 });
