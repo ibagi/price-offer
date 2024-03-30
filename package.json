@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "prettier": "prettier . --write"
+    "prettier": "prettier . --write",
+    "generate-migrations": "drizzle-kit generate:sqlite"
   },
   "devDependencies": {
     "@clerk/types": "^3.62.0",
@@ -30,10 +31,13 @@
     "@clerk/clerk-js": "^4.70.0",
     "@libsql/client": "^0.5.6",
     "@tailwindcss/typography": "^0.5.10",
+    "@trpc/client": "11.0.0-next.327",
+    "@trpc/server": "11.0.0-next.327",
     "daisyui": "^4.6.0",
     "dayjs": "^1.11.10",
     "decimal.js": "^10.4.3",
     "drizzle-orm": "^0.30.5",
+    "drizzle-zod": "^0.5.1",
     "localforage": "^1.10.0",
     "lucide-svelte": "^0.317.0",
     "nanoid": "^5.0.6",

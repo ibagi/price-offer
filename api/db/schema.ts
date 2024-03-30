@@ -34,7 +34,12 @@ export const offers = sqliteTable('offers', {
     .$defaultFn(() => nanoid())
     .primaryKey()
     .notNull(),
-  createdAt: integer('created_at', { mode: 'timestamp_ms' }),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' }).$defaultFn(
+    () => new Date(),
+  ),
+  year: integer('year')
+    .$defaultFn(() => new Date().getFullYear())
+    .notNull(),
   sequence: integer('sequence').notNull(),
   projectName: text('project_name').notNull(),
   offerNumber: text('offer_number').notNull(),
@@ -49,8 +54,8 @@ export const offers = sqliteTable('offers', {
   status: text('status', { enum: ['created', 'sent', 'accepted', 'rejected'] })
     .notNull()
     .default('created'),
-  partnerId: integer('partner_id').references(() => partners.id, {
+  partnerId: text('partner_id').references(() => partners.id, {
     onDelete: 'set null',
   }),
-  items: text('items', { mode: 'json' }).$type<OfferItem>().notNull(),
+  items: text('items', { mode: 'json' }).$type<OfferItem[]>().notNull(),
 });

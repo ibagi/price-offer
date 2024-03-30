@@ -14,6 +14,12 @@ dependencies:
   '@tailwindcss/typography':
     specifier: ^0.5.10
     version: 0.5.10(tailwindcss@3.4.1)
+  '@trpc/client':
+    specifier: 11.0.0-next.327
+    version: 11.0.0-next.327(@trpc/server@11.0.0-next.327)
+  '@trpc/server':
+    specifier: 11.0.0-next.327
+    version: 11.0.0-next.327
   daisyui:
     specifier: ^4.6.0
     version: 4.6.0(postcss@8.4.33)
@@ -26,6 +32,9 @@ dependencies:
   drizzle-orm:
     specifier: ^0.30.5
     version: 0.30.5(@libsql/client@0.5.6)(react@18.2.0)
+  drizzle-zod:
+    specifier: ^0.5.1
+    version: 0.5.1(drizzle-orm@0.30.5)(zod@3.22.4)
   localforage:
     specifier: ^1.10.0
     version: 1.10.0
@@ -1436,6 +1445,24 @@ packages:
       tailwindcss: 3.4.1
     dev: false
 
+  /@trpc/client@11.0.0-next.327(@trpc/server@11.0.0-next.327):
+    resolution:
+      {
+        integrity: sha512-5Vhem/cavPizA0+CdGDWfJR0XSdljjf927BpKyRt6NfdQP539tP8s0wZsGq/+s9S79hucsDQkh0MoP0Ki3UO4g==,
+      }
+    peerDependencies:
+      '@trpc/server': 11.0.0-next.327+1c757e8d3
+    dependencies:
+      '@trpc/server': 11.0.0-next.327
+    dev: false
+
+  /@trpc/server@11.0.0-next.327:
+    resolution:
+      {
+        integrity: sha512-Lw4knzW1z0RpiGjur5gU/d67pl1NEkpIokTefuPqb63FlWCfwfHG3FHfvOaNoQ1lt3xMlw/A+pAMeU/q8YWp4Q==,
+      }
+    dev: false
+
   /@tsconfig/svelte@5.0.2:
     resolution:
       {
@@ -2245,6 +2272,19 @@ packages:
     dependencies:
       '@libsql/client': 0.5.6
       react: 18.2.0
+    dev: false
+
+  /drizzle-zod@0.5.1(drizzle-orm@0.30.5)(zod@3.22.4):
+    resolution:
+      {
+        integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==,
+      }
+    peerDependencies:
+      drizzle-orm: '>=0.23.13'
+      zod: '*'
+    dependencies:
+      drizzle-orm: 0.30.5(@libsql/client@0.5.6)(react@18.2.0)
+      zod: 3.22.4
     dev: false
 
   /eastasianwidth@0.2.0:
