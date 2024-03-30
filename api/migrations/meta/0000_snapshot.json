@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "ab6c9281-941f-44b7-852f-3cb71272bda6",
+  "id": "e90e7239-f559-472b-a1a6-e11a2a9d2b37",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "contacts": {
@@ -100,6 +100,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "year": {
+          "name": "year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "sequence": {
           "name": "sequence",
           "type": "integer",
@@ -175,7 +182,7 @@
         },
         "partner_id": {
           "name": "partner_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

@@ -14,6 +14,7 @@ CREATE TABLE `contacts` (
 CREATE TABLE `offers` (
 	`id` text PRIMARY KEY NOT NULL,
 	`created_at` integer,
+	`year` integer NOT NULL,
 	`sequence` integer NOT NULL,
 	`project_name` text NOT NULL,
 	`offer_number` text NOT NULL,
@@ -24,7 +25,7 @@ CREATE TABLE `offers` (
 	`currency` text DEFAULT 'HUF' NOT NULL,
 	`tax_rate` real DEFAULT 27 NOT NULL,
 	`status` text DEFAULT 'created' NOT NULL,
-	`partner_id` integer,
+	`partner_id` text,
 	`items` text NOT NULL,
 	FOREIGN KEY (`partner_id`) REFERENCES `partners`(`id`) ON UPDATE no action ON DELETE set null
 );
