@@ -39,6 +39,7 @@
     "drizzle-orm": "^0.30.5",
     "drizzle-zod": "^0.5.1",
     "fetch": "link:@trpc/server/adapters/fetch",
+    "jsonwebtoken": "^9.0.2",
     "localforage": "^1.10.0",
     "lucide-svelte": "^0.317.0",
     "nanoid": "^5.0.6",
