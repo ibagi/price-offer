@@ -35,6 +35,9 @@ dependencies:
   drizzle-zod:
     specifier: ^0.5.1
     version: 0.5.1(drizzle-orm@0.30.5)(zod@3.22.4)
+  fetch:
+    specifier: link:@trpc/server/adapters/fetch
+    version: link:@trpc/server/adapters/fetch
   localforage:
     specifier: ^1.10.0
     version: 1.10.0
