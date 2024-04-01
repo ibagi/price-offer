@@ -1,6 +1,6 @@
 import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { nanoid } from 'nanoid';
-import { OfferItem } from '../types';
+import { type OfferItem } from '../types';
 
 export const contacts = sqliteTable('contacts', {
   id: text('id')

@@ -9,6 +9,7 @@ import {
   partnerSchema,
 } from './types';
 import { TRPCError } from '@trpc/server';
+import { nanoid } from 'nanoid';
 
 export const appRouter = router({
   contact: apiProcedure.query(async ({ ctx }) => {
@@ -42,9 +43,12 @@ export const appRouter = router({
       .from(offers)
       .where(eq(offers.year, new Date().getFullYear()));
 
+    const sequence = offerCount[0].count + 1;
     const offer = {
       ...defaultOffer,
-      sequence: offerCount[0].count + 1,
+      id: nanoid(),
+      year: new Date().getFullYear(),
+      sequence,
     };
 
     await ctx.db.insert(offers).values({ ...offer });
