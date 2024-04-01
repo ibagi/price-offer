@@ -59,7 +59,7 @@ export const defaultOffer: OfferInput = {
   currency: 'HUF',
   taxRate: 27,
   status: 'created',
-  partnerId: '',
+  partnerId: null,
   items: [],
 };
 
