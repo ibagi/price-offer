@@ -10,6 +10,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "prettier": "prettier . --write",
     "generate-migrations": "drizzle-kit generate:sqlite",
+    "migrate": "tsx scripts/migrate.ts",
     "start:server": "tsx server/dev.ts",
     "playground": "tsx playground/index.ts"
   },

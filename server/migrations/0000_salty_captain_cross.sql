@@ -13,20 +13,20 @@ CREATE TABLE `contacts` (
 --> statement-breakpoint
 CREATE TABLE `offers` (
 	`id` text PRIMARY KEY NOT NULL,
-	`created_at` integer,
+	`created_at` integer NOT NULL,
 	`year` integer NOT NULL,
 	`sequence` integer NOT NULL,
-	`project_name` text NOT NULL,
-	`offer_number` text NOT NULL,
-	`offer_date` integer,
-	`offer_place` text NOT NULL,
-	`validity` integer NOT NULL,
-	`production_time` integer NOT NULL,
+	`project_name` text DEFAULT '' NOT NULL,
+	`offer_number` text DEFAULT '' NOT NULL,
+	`offer_date` integer NOT NULL,
+	`offer_place` text DEFAULT '' NOT NULL,
+	`validity` integer DEFAULT 30 NOT NULL,
+	`production_time` integer DEFAULT 1 NOT NULL,
 	`currency` text DEFAULT 'HUF' NOT NULL,
 	`tax_rate` real DEFAULT 27 NOT NULL,
 	`status` text DEFAULT 'created' NOT NULL,
 	`partner_id` text,
-	`items` text NOT NULL,
+	`items` text,
 	FOREIGN KEY (`partner_id`) REFERENCES `partners`(`id`) ON UPDATE no action ON DELETE set null
 );
 --> statement-breakpoint
@@ -37,3 +37,5 @@ CREATE TABLE `partners` (
 	`company_number` text NOT NULL,
 	`tax_number` text NOT NULL
 );
+--> statement-breakpoint
+CREATE INDEX `year_idx` ON `offers` (`year`);

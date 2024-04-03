@@ -1,6 +1,11 @@
 import { derived, writable, type Readable, type Writable } from 'svelte/store';
 import * as prices from '../lib/prices';
-import { defaultOffer, defaultOfferItem, type Offer, type OfferItem } from '../../server/types';
+import {
+  defaultOffer,
+  defaultOfferItem,
+  type Offer,
+  type OfferItem,
+} from '../../server/types';
 
 export class OfferState {
   offer: Writable<Offer>;
@@ -25,13 +30,16 @@ export class OfferState {
       [this.netto, this.tax],
       ([$netto, $tax]) => $netto + $tax,
     );
-    this.hasItem = derived(this.offer, ($offer) => ($offer.items?.length ?? 0) > 0);
+    this.hasItem = derived(
+      this.offer,
+      ($offer) => ($offer.items?.length ?? 0) > 0,
+    );
   }
 
   addItem = () => {
     this.offer.update(($offer) => ({
       ...$offer,
-      items: [...$offer.items ?? [], { ...defaultOfferItem }],
+      items: [...($offer.items ?? []), { ...defaultOfferItem }],
     }));
   };
 

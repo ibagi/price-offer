@@ -6,7 +6,6 @@ import { appRouter } from './router';
 import { db } from './db';
 import { initializeServices } from './services';
 
-
 const handler = createHTTPHandler({
   middleware: cors(),
   router: appRouter,
