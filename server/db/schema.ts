@@ -2,11 +2,14 @@ import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { nanoid } from 'nanoid';
 import { type OfferItem } from '../types';
 
-export const contacts = sqliteTable('contacts', {
-  id: text('id')
+const primaryKey = (columnName: string) =>
+  text(columnName)
     .$defaultFn(() => nanoid())
     .primaryKey()
-    .notNull(),
+    .notNull();
+
+export const contacts = sqliteTable('contacts', {
+  id: primaryKey('id'),
   person: text('person').notNull(),
   title: text('title').notNull(),
   subtitle: text('subtitle').notNull(),
@@ -19,10 +22,7 @@ export const contacts = sqliteTable('contacts', {
 });
 
 export const partners = sqliteTable('partners', {
-  id: text('id')
-    .$defaultFn(() => nanoid())
-    .primaryKey()
-    .notNull(),
+  id: primaryKey('id'),
   name: text('name').notNull(),
   address: text('address').notNull(),
   companyNumber: text('company_number').notNull(),
@@ -30,23 +30,24 @@ export const partners = sqliteTable('partners', {
 });
 
 export const offers = sqliteTable('offers', {
-  id: text('id')
-    .$defaultFn(() => nanoid())
-    .primaryKey()
+  id: primaryKey('id'),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' })
+    .$defaultFn(() => new Date())
+    .$type<Date>()
     .notNull(),
-  createdAt: integer('created_at', { mode: 'timestamp_ms' }).$defaultFn(
-    () => new Date(),
-  ),
   year: integer('year')
     .$defaultFn(() => new Date().getFullYear())
     .notNull(),
   sequence: integer('sequence').notNull(),
-  projectName: text('project_name').notNull(),
-  offerNumber: text('offer_number').notNull(),
-  offerDate: integer('offer_date', { mode: 'timestamp_ms' }),
-  offerPlace: text('offer_place').notNull(),
-  validity: integer('validity').notNull(),
-  productionTimeInDays: integer('production_time').notNull(),
+  projectName: text('project_name').notNull().default(''),
+  offerNumber: text('offer_number').notNull().default(''),
+  offerDate: integer('offer_date', { mode: 'timestamp_ms' })
+    .$defaultFn(() => new Date())
+    .$type<Date>()
+    .notNull(),
+  offerPlace: text('offer_place').notNull().default(''),
+  validity: integer('validity').notNull().default(30),
+  productionTimeInDays: integer('production_time').notNull().default(1),
   currency: text('currency', { enum: ['HUF', 'EUR'] })
     .notNull()
     .default('HUF'),
@@ -57,5 +58,5 @@ export const offers = sqliteTable('offers', {
   partnerId: text('partner_id').references(() => partners.id, {
     onDelete: 'set null',
   }),
-  items: text('items', { mode: 'json' }).$type<OfferItem[]>().notNull(),
+  items: text('items', { mode: 'json' }).$type<OfferItem[]>(),
 });
