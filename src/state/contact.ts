@@ -1,5 +1,5 @@
 import { writable, type Writable } from 'svelte/store';
-import { type Contact } from '../lib/types';
+import type { Contact } from '../../server/types';
 
 export class ContactState {
   contact: Writable<Contact>;

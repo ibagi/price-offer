@@ -25,6 +25,10 @@ export const appRouter = router({
   },
 
   offers: {
+    offerYears: apiProcedure.query(async ({ ctx }) => {
+      return await ctx.services.offer.getOfferYears();
+    }),
+
     byYear: apiProcedure.input(z.number()).query(async ({ ctx, input }) => {
       return await ctx.services.offer.getOffersByYear(input);
     }),

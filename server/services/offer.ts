@@ -7,6 +7,12 @@ import { type Offer, defaultOffer } from '../types';
 export class OfferService {
   constructor(private readonly db: Database) {}
 
+  async getOfferYears() {
+    return (
+      await this.db.selectDistinct({ year: offers.year }).from(offers)
+    )?.map((o) => o.year);
+  }
+
   async getOffersByYear(year: number) {
     return await this.db.select().from(offers).where(eq(offers.year, year));
   }

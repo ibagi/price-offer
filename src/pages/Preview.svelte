@@ -154,10 +154,10 @@
     </thead>
     <tbody>
       <tr>
-        <td class="table-cell" rowspan={$offer.items.length + 1}
+        <td class="table-cell" rowspan={($offer.items?.length ?? 0) + 1}
           >{$offer.offerNumber}</td>
       </tr>
-      {#each $offer.items as item}
+      {#each $offer.items ?? [] as item}
         <tr>
           <td class="table-cell">{item.name}</td>
           <td class="table-cell">{item.amount}</td>

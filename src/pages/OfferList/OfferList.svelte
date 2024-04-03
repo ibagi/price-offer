@@ -9,7 +9,6 @@
     User,
   } from 'lucide-svelte';
   import { t } from '../../lib/i18n';
-  import { type Offer } from '../../lib/types';
   import Layout from '../../layouts/Layout.svelte';
   import OfferStatusBadge from './OfferStatusBadge.svelte';
   import { partnerState } from '../../state';
@@ -21,6 +20,7 @@
     deleteOffer,
     copyOffer,
   } from '../../services/offer';
+  import type { Offer } from '../../../server/types';
 
   const dateFormat = new Intl.DateTimeFormat();
   const { partners } = partnerState;
