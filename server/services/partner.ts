@@ -12,17 +12,17 @@ export class PartnerService {
 
   async updatePartners(input: Partner[]) {
     for (const partner of input) {
-      const counts = await this.db
-        .select({ count: count() })
-        .from(partners)
-        .where(eq(partners.id, partner.id));
-      if (counts[0].count > 0) {
-        await this.db.insert(partners).values(partner);
-      } else {
+      const existingRecord = await this.db.query.partners.findFirst({
+        where: eq(partners.id, partner.id),
+      });
+
+      if (existingRecord) {
         await this.db
           .update(partners)
-          .set({ ...partner })
+          .set(partner)
           .where(eq(partners.id, partner.id));
+      } else {
+        await this.db.insert(partners).values(partner);
       }
     }
   }

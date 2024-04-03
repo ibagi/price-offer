@@ -33,7 +33,6 @@ export const offers = sqliteTable('offers', {
   id: primaryKey('id'),
   createdAt: integer('created_at', { mode: 'timestamp_ms' })
     .$defaultFn(() => new Date())
-    .$type<Date>()
     .notNull(),
   year: integer('year')
     .$defaultFn(() => new Date().getFullYear())
@@ -43,7 +42,6 @@ export const offers = sqliteTable('offers', {
   offerNumber: text('offer_number').notNull().default(''),
   offerDate: integer('offer_date', { mode: 'timestamp_ms' })
     .$defaultFn(() => new Date())
-    .$type<Date>()
     .notNull(),
   offerPlace: text('offer_place').notNull().default(''),
   validity: integer('validity').notNull().default(30),
