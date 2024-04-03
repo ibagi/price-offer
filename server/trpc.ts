@@ -1,30 +1,21 @@
-import jwt from 'jsonwebtoken';
+import superjson from 'superjson';
 import { TRPCError, initTRPC } from '@trpc/server';
 import { type FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch';
-import { createDbConnection } from './db';
+import { db } from './db';
+import { authorizeRequest } from './services/auth';
+import { initializeServices } from './services';
 
 export async function createContext({ req }: FetchCreateContextFnOptions) {
-  const db = createDbConnection();
-
-  if (!req.headers.has('authorization')) {
-    return { isAuthorized: false, db };
-  }
-
-  const headerParts = req.headers.get('authorization')?.split(' ');
-  if (headerParts?.length !== 2) {
-    return { isAuthorized: false, db};
-  }
-
-  try {
-    const token = headerParts[0];
-    const _ = jwt.verify(token, process.env.CLERK_PEM_PUBLIC_KEY!);
-    return { isAuthorized: true, db };
-  } catch {
-    return { isAuthorized: false, db };
-  }
+  const isAuthorized = authorizeRequest(req.headers);
+  return {
+    isAuthorized,
+    services: initializeServices(db),
+  };
 }
 
-const t = initTRPC.context<typeof createContext>().create();
+const t = initTRPC.context<typeof createContext>().create({
+  transformer: superjson,
+});
 
 export const router = t.router;
 export const publicProcedure = t.procedure;

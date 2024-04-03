@@ -11,15 +11,13 @@ export const offerItemSchema = z.object({
 
 export const contactSchema = createSelectSchema(contacts);
 export const partnerSchema = createSelectSchema(partners);
-export const offerSchema = createSelectSchema(offers);
-export const offerInputSchema = offerSchema.extend({
+export const offerSchema = createSelectSchema(offers, {
   items: z.array(offerItemSchema),
 });
 
 export type Contact = z.infer<typeof contactSchema>;
 export type Partner = z.infer<typeof partnerSchema>;
 export type Offer = z.infer<typeof offerSchema>;
-export type OfferInput = z.infer<typeof offerInputSchema>;
 export type OfferItem = z.infer<typeof offerItemSchema>;
 export type OfferStatus = Offer['status'];
 export type Currency = Offer['currency'];
@@ -45,7 +43,7 @@ export const defaultPartner: Partner = {
   taxNumber: '00000000-0-00',
 };
 
-export const defaultOffer: OfferInput = {
+export const defaultOffer: Offer = {
   id: '',
   sequence: 0,
   year: 0,
