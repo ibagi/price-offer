@@ -29,7 +29,7 @@ export const appRouter = router({
       return await ctx.services.offer.getOffersByYear(input);
     }),
 
-    getById: apiProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    byId: apiProcedure.input(z.string()).query(async ({ ctx, input }) => {
       return await ctx.services.offer.getById(input);
     }),
 
