@@ -1,14 +1,10 @@
-import { z } from 'zod';
-
-import { partnerSchema, type Partner } from '../lib/types';
-import * as db from './db';
-
-const StorageKey = 'partners';
+import { trpc } from '../client/trpc';
+import type { Partner } from '../../server/types';
 
 export async function getPartners() {
-  return await db.loadData<Partner[]>(StorageKey, z.array(partnerSchema), []);
+  return await trpc.partners.list.query();
 }
 
 export async function savePartners(partners: Partner[]) {
-  await db.saveData<Partner[]>(StorageKey, partners);
+  await trpc.partners.update.mutate(partners);
 }

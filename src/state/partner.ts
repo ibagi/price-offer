@@ -1,6 +1,6 @@
-import { derived, writable, type Readable, type Writable } from 'svelte/store';
-import { defaultPartner, type Offer, type Partner } from '../lib/types';
 import { nanoid } from 'nanoid';
+import { derived, writable, type Readable, type Writable } from 'svelte/store';
+import { defaultPartner, type Offer, type Partner } from '../../server/types';
 
 export class PartnerState {
   partners: Writable<Partner[]>;

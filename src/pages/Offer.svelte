@@ -6,10 +6,10 @@
   import { t } from '../lib/i18n';
   import { partnerState, OfferState } from '../state';
   import PriceInput from '../components/PriceInput.svelte';
-  import { currencies, offerStatuses, type Offer } from '../lib/types';
   import Money from '../components/Money.svelte';
   import { getDecimalPlaces } from '../lib/prices';
   import { updateOffer } from '../services/offer';
+  import { offerStatuses, type Offer, currencies } from '../../server/types';
 
   export let offerState: OfferState;
   const { partners } = partnerState;
@@ -189,7 +189,7 @@
             </tr>
           </thead>
           <tbody>
-            {#each $offer.items as item}
+            {#each $offer.items ?? [] as item}
               <tr>
                 <td class="min-w-24"
                   ><input

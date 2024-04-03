@@ -1,12 +1,6 @@
 import { derived, writable, type Readable, type Writable } from 'svelte/store';
-import {
-  defaultOffer,
-  defaultOfferItem,
-  type Offer,
-  type OfferItem,
-} from '../lib/types';
-
 import * as prices from '../lib/prices';
+import { defaultOffer, defaultOfferItem, type Offer, type OfferItem } from '../../server/types';
 
 export class OfferState {
   offer: Writable<Offer>;
@@ -20,7 +14,7 @@ export class OfferState {
     this.offer = writable(from ?? { ...defaultOffer });
 
     this.netto = derived([this.offer], ([$offer]) =>
-      prices.netto($offer.items.map(this.totalPrice), $offer.currency),
+      prices.netto(($offer.items ?? []).map(this.totalPrice), $offer.currency),
     );
 
     this.tax = derived([this.offer, this.netto], ([$offer, $netto]) =>
@@ -31,20 +25,20 @@ export class OfferState {
       [this.netto, this.tax],
       ([$netto, $tax]) => $netto + $tax,
     );
-    this.hasItem = derived(this.offer, ($offer) => $offer.items.length > 0);
+    this.hasItem = derived(this.offer, ($offer) => ($offer.items?.length ?? 0) > 0);
   }
 
   addItem = () => {
     this.offer.update(($offer) => ({
       ...$offer,
-      items: [...$offer.items, { ...defaultOfferItem }],
+      items: [...$offer.items ?? [], { ...defaultOfferItem }],
     }));
   };
 
   removeItem = (item: OfferItem) => {
     this.offer.update(($offer) => ({
       ...$offer,
-      items: $offer.items.filter((i) => i !== item),
+      items: $offer.items?.filter((i) => i !== item) ?? [],
     }));
   };
 

@@ -6,7 +6,6 @@
 
   import { user, mountUserButton } from '../lib/auth';
   import { t } from '../lib/i18n';
-  import { exportData } from '../services/db';
 
   let routes = [
     {
@@ -58,12 +57,6 @@
   </div>
 
   <div class="flex items-center gap-2">
-    <button
-      class="btn btn-small btn-outline border-0 text-white hover:bg-teal-800"
-      on:click={() => exportData()}
-      title={$t('navigation.actions.export')}>
-      <DownloadIcon />
-    </button>
     {#if user}
       <div class="font-medium text-white text-sm">
         {$user?.primaryEmailAddress}

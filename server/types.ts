@@ -67,3 +67,12 @@ export const defaultOfferItem: OfferItem = {
   workPrice: 1,
   materialPrice: 1,
 };
+
+export const offerStatuses: OfferStatus[] = [
+  'created',
+  'sent',
+  'accepted',
+  'rejected',
+];
+
+export const currencies: Currency[] = ['HUF', 'EUR'];

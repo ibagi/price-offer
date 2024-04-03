@@ -1,14 +1,10 @@
-import { contactSchema, type Contact, defaultContact } from '../lib/types';
-import * as db from './db';
-
-const StorageKey = 'contact';
+import type { Contact } from '../../server/types';
+import { trpc } from '../client/trpc';
 
 export async function getContact() {
-  return await db.loadData<Contact>(StorageKey, contactSchema, {
-    ...defaultContact,
-  });
+  return await trpc.contact.get.query();
 }
 
 export async function saveContact(contact: Contact) {
-  await db.saveData<Contact>(StorageKey, contact);
+  await trpc.contact.update.mutate(contact);
 }
