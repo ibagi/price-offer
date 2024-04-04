@@ -1,4 +1,4 @@
-import { count, eq } from 'drizzle-orm';
+import { eq, max } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import { type Database } from '../db';
 import { offers } from '../db/schema';
@@ -24,24 +24,22 @@ export class OfferService {
   }
 
   async createOffer() {
-    const offerCount = await this.db
-      .select({ count: count() })
-      .from(offers)
-      .where(eq(offers.year, new Date().getFullYear()));
+    return await this.insertOffer(defaultOffer);
+  }
 
-    const sequence = offerCount[0].count + 1;
+  async copyOffer(offerId: string) {
+    const offer = await this.db.query.offers.findFirst({
+      where: eq(offers.id, offerId),
+    });
 
-    const offer = {
-      ...defaultOffer,
-      id: nanoid(),
-      createdAt: new Date(),
-      year: new Date().getFullYear(),
-      offerNumber: this.generateOfferNumber(sequence),
-      sequence,
-    };
+    if (!offer) {
+      return;
+    }
 
-    await this.db.insert(offers).values(offer);
-    return offer;
+    return await this.insertOffer({
+      ...offer,
+      status: 'created'
+    });
   }
 
   async updateOffer(offer: Offer) {
@@ -59,6 +57,36 @@ export class OfferService {
       .where(eq(offers.id, offerId));
 
     return rowsAffected === 1;
+  }
+
+  private async insertOffer(offerProps: Offer) {
+    const [{ currentSequence }] = await this.db
+      .select({ currentSequence: max(offers.sequence) })
+      .from(offers)
+      .where(eq(offers.year, new Date().getFullYear()));
+
+    const sequence = (currentSequence ?? 0) + 1;
+    const offer = {
+      ...offerProps,
+      id: nanoid(),
+      createdAt: new Date(),
+      year: new Date().getFullYear(),
+      offerNumber: this.generateOfferNumber(sequence),
+      sequence,
+    };
+
+    await this.db
+      .insert(offers)
+      .values(offer)
+      .onConflictDoUpdate({
+        target: [offers.sequence, offers.year],
+        set: {
+          sequence: sequence + 1,
+          offerNumber: this.generateOfferNumber(sequence + 1),
+        },
+      });
+
+    return offer;
   }
 
   private generateOfferNumber(sequence: number) {

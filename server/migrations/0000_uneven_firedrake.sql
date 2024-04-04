@@ -38,4 +38,5 @@ CREATE TABLE `partners` (
 	`tax_number` text NOT NULL
 );
 --> statement-breakpoint
-CREATE INDEX `year_idx` ON `offers` (`year`);
+CREATE INDEX `year_idx` ON `offers` (`year`);--> statement-breakpoint
+CREATE UNIQUE INDEX `sequence_idx` ON `offers` (`sequence`,`year`);

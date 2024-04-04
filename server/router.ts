@@ -41,6 +41,10 @@ export const appRouter = router({
       return await ctx.services.offer.createOffer();
     }),
 
+    copy: apiProcedure.input(z.string()).mutation(async ({ ctx, input}) => {
+      return await ctx.services.offer.copyOffer(input);
+    }),
+
     update: apiProcedure.input(offerSchema).mutation(async ({ ctx, input }) => {
       await ctx.services.offer.updateOffer(input);
     }),

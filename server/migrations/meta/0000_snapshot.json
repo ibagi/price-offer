@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "e4d408b3-0e1a-4e97-8e75-719c97a6c1b2",
+  "id": "46cab62a-3020-4a6d-ab1d-a366a5e992a4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "contacts": {
@@ -203,10 +203,13 @@
       "indexes": {
         "year_idx": {
           "name": "year_idx",
-          "columns": [
-            "year"
-          ],
+          "columns": ["year"],
           "isUnique": false
+        },
+        "sequence_idx": {
+          "name": "sequence_idx",
+          "columns": ["sequence", "year"],
+          "isUnique": true
         }
       },
       "foreignKeys": {
@@ -214,12 +217,8 @@
           "name": "offers_partner_id_partners_id_fk",
           "tableFrom": "offers",
           "tableTo": "partners",
-          "columnsFrom": [
-            "partner_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["partner_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }

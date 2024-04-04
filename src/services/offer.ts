@@ -32,6 +32,6 @@ export async function deleteOffer(offerId: string) {
   await trpc.offers.delete.mutate(offerId);
 }
 
-export async function copyOffer(id: string) {
-  throw new Error('Not implemented');
+export async function copyOffer(offerId: string) {
+  await trpc.offers.copy.mutate(offerId);
 }
