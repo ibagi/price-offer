@@ -1,20 +1,15 @@
 import jwt from 'jsonwebtoken';
 
-export function authorizeRequest(headers: Headers) {
-  if (!headers.has('authorization')) {
-    return false;
-  }
-
-  const headerParts = headers.get('authorization')?.split(' ');
-  if (headerParts?.length !== 2) {
-    return false;
-  }
+export function authorizeRequest(sessionToken: string | undefined | null) {
+  const publicKey = process.env.CLERK_PEM_PUBLIC_KEY!.replace(/\\n/g, '\n');
 
   try {
-    const token = headerParts[0];
-    const _ = jwt.verify(token, process.env.CLERK_PEM_PUBLIC_KEY!);
+    const _ = jwt.verify(sessionToken ?? '', publicKey, {
+      algorithms: ['RS256'],
+    });
     return true;
-  } catch {
+  } catch (e) {
+    console.error(e);
     return false;
   }
 }

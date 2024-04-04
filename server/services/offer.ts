@@ -38,7 +38,7 @@ export class OfferService {
 
     return await this.insertOffer({
       ...offer,
-      status: 'created'
+      status: 'created',
     });
   }
 
