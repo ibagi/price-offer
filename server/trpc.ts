@@ -6,7 +6,7 @@ import { authorizeRequest } from './services/auth';
 import { initializeServices } from './services';
 
 export async function createContext({ req }: FetchCreateContextFnOptions) {
-  const isAuthorized = authorizeRequest(req.headers);
+  const isAuthorized = authorizeRequest(req.headers.get('Authorization'));
   return {
     isAuthorized,
     services: initializeServices(db),
