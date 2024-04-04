@@ -4,6 +4,7 @@ import {
   real,
   sqliteTable,
   text,
+  unique,
 } from 'drizzle-orm/sqlite-core';
 import { nanoid } from 'nanoid';
 import { type OfferItem } from '../types';
@@ -71,6 +72,7 @@ export const offers = sqliteTable(
   },
   (table) => ({
     yearIndex: index('year_idx').on(table.year),
+    sequenceIndex: unique('sequence_idx').on(table.sequence, table.year),
   }),
 );
 
