@@ -1,4 +1,4 @@
-import { count, eq } from 'drizzle-orm';
+import { eq, notInArray } from 'drizzle-orm';
 import { type Partner } from '../types';
 import { type Database } from '../db';
 import { partners } from '../db/schema';
@@ -25,5 +25,12 @@ export class PartnerService {
         await this.db.insert(partners).values(partner);
       }
     }
+
+    await this.db.delete(partners).where(
+      notInArray(
+        partners.id,
+        input.map((p) => p.id),
+      ),
+    );
   }
 }
