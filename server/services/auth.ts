@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt from '@tsndr/cloudflare-worker-jwt';
 
 export function authorizeRequest(
   sessionToken: string | undefined | null,
@@ -6,7 +6,7 @@ export function authorizeRequest(
 ) {
   try {
     const _ = jwt.verify(sessionToken ?? '', publicKey.replace(/\\n/g, '\n'), {
-      algorithms: ['RS256'],
+      algorithm: 'RS256',
     });
     return true;
   } catch (e) {
