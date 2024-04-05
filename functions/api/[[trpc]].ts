@@ -1,9 +1,9 @@
 import tRPCPlugin from 'cloudflare-pages-plugin-trpc';
-import { appRouter } from '../server/router';
+import { appRouter } from '../../server/router';
 import { type PagesFunction } from '@cloudflare/workers-types';
-import { createDbClient } from '../server/db';
-import { initializeServices } from '../server/services';
-import { authorizeRequest } from '../server/services/auth';
+import { createDbClient } from '../../server/db';
+import { initializeServices } from '../../server/services';
+import { authorizeRequest } from '../../server/services/auth';
 
 interface Env {
   TURSO_CONNECTION_URL: string;
