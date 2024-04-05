@@ -30,7 +30,7 @@
     "tslib": "^2.6.2",
     "tsx": "^4.7.1",
     "typescript": "^5.2.2",
-    "vite": "^5.0.12"
+    "vite": ">=5.0.13"
   },
   "dependencies": {
     "@clerk/clerk-js": "^4.70.0",
