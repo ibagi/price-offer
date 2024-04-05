@@ -26,6 +26,9 @@ dependencies:
   '@types/jsonwebtoken':
     specifier: ^9.0.6
     version: 9.0.6
+  cloudflare-pages-plugin-trpc:
+    specifier: ^0.3.2
+    version: 0.3.2(@trpc/server@11.0.0-next.327)
   cors:
     specifier: ^2.8.5
     version: 2.8.5
@@ -43,7 +46,7 @@ dependencies:
     version: 16.4.5
   drizzle-orm:
     specifier: ^0.30.5
-    version: 0.30.5(@libsql/client@0.5.6)(react@18.2.0)
+    version: 0.30.5(@cloudflare/workers-types@4.20240404.0)(@libsql/client@0.5.6)(react@18.2.0)
   drizzle-zod:
     specifier: ^0.5.1
     version: 0.5.1(drizzle-orm@0.30.5)(zod@3.22.4)
@@ -79,6 +82,9 @@ devDependencies:
   '@clerk/types':
     specifier: ^3.62.0
     version: 3.62.0
+  '@cloudflare/workers-types':
+    specifier: ^4.20240404.0
+    version: 4.20240404.0
   '@sveltejs/vite-plugin-svelte':
     specifier: ^3.0.1
     version: 3.0.1(svelte@4.2.8)(vite@5.0.12)
@@ -278,6 +284,12 @@ packages:
     engines: { node: '>=14' }
     dependencies:
       csstype: 3.1.1
+
+  /@cloudflare/workers-types@4.20240404.0:
+    resolution:
+      {
+        integrity: sha512-lfnYnjX4/65MrVeMF/k3C7BzaLoU1fEIdzCs04ofrx7J6rH7LK3DHRNcnuchoSxKuzG2xVf940MKZ1XieGRCLQ==,
+      }
 
   /@drizzle-team/studio@0.0.39:
     resolution:
@@ -1881,6 +1893,17 @@ packages:
       timers-ext: 0.1.7
     dev: true
 
+  /cloudflare-pages-plugin-trpc@0.3.2(@trpc/server@11.0.0-next.327):
+    resolution:
+      {
+        integrity: sha512-3vNL8MsQGA1q3+Y14IsOWYSuYX1NMSDf1fdqoQZEla+8kfiSYXJbiBfN3lE8Ui6F5sGNIgVTmi4mGX76PQaZeA==,
+      }
+    peerDependencies:
+      '@trpc/server': 10.16.0
+    dependencies:
+      '@trpc/server': 11.0.0-next.327
+    dev: false
+
   /code-red@1.0.4:
     resolution:
       {
@@ -2260,7 +2283,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.30.5(@libsql/client@0.5.6)(react@18.2.0):
+  /drizzle-orm@0.30.5(@cloudflare/workers-types@4.20240404.0)(@libsql/client@0.5.6)(react@18.2.0):
     resolution:
       {
         integrity: sha512-oImmwGpe1jTWvhPkpsnramZA8m/lE8krTj7Ws7KHSFCMshMXmcZWX2g2Ki793PQOBmwI50KYzWJ9yNKKhWYLyA==,
@@ -2340,6 +2363,7 @@ packages:
       sqlite3:
         optional: true
     dependencies:
+      '@cloudflare/workers-types': 4.20240404.0
       '@libsql/client': 0.5.6
       react: 18.2.0
     dev: false
@@ -2353,7 +2377,7 @@ packages:
       drizzle-orm: '>=0.23.13'
       zod: '*'
     dependencies:
-      drizzle-orm: 0.30.5(@libsql/client@0.5.6)(react@18.2.0)
+      drizzle-orm: 0.30.5(@cloudflare/workers-types@4.20240404.0)(@libsql/client@0.5.6)(react@18.2.0)
       zod: 3.22.4
     dev: false
 

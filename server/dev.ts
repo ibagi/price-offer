@@ -3,7 +3,7 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { createHTTPHandler } from '@trpc/server/adapters/standalone';
 import { appRouter } from './router';
-import { db } from './db';
+import { createDbClient } from './db';
 import { initializeServices } from './services';
 import { authorizeRequest } from './services/auth';
 
@@ -12,8 +12,16 @@ const handler = createHTTPHandler({
   router: appRouter,
   createContext: ({ req }) => {
     return {
-      isAuthorized: authorizeRequest(req.headers.authorization),
-      services: initializeServices(db),
+      isAuthorized: authorizeRequest(
+        req.headers.authorization,
+        process.env.CLERK_PEM_PUBLIC_KEY!,
+      ),
+      services: initializeServices(
+        createDbClient({
+          url: process.env.TURSO_CONNECTION_URL!,
+          authToken: process.env.TURSO_AUTH_TOKEN!,
+        }),
+      ),
     };
   },
 });
