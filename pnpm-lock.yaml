@@ -20,6 +20,9 @@ dependencies:
   '@trpc/server':
     specifier: 11.0.0-next.327
     version: 11.0.0-next.327
+  '@tsndr/cloudflare-worker-jwt':
+    specifier: ^2.5.3
+    version: 2.5.3
   '@types/cors':
     specifier: ^2.8.17
     version: 2.8.17
@@ -1369,6 +1372,10 @@ packages:
   /@tsconfig/svelte@5.0.2:
     resolution: {integrity: sha512-BRbo1fOtyVbhfLyuCWw6wAWp+U8UQle+ZXu84MYYWzYSEB28dyfnRBIE99eoG+qdAC0po6L2ScIEivcT07UaMA==}
     dev: true
+
+  /@tsndr/cloudflare-worker-jwt@2.5.3:
+    resolution: {integrity: sha512-zbdvjRG86y/ObiBgTJrzBC39t2FcaeGwB6AV7VO4LvHKJNyZvLYRbKT68eaoJhnJldyHhs7yZ69neRVdUd9knA==}
+    dev: false
 
   /@types/cors@2.8.17:
     resolution: {integrity: sha512-8CGDvrBj1zgo2qE+oS3pOCyYNqCPryMWY2bGfwA0dcfopWGgxs+78df0Rs3rc9THP4JkOhLsAa+15VdpAqkcUA==}
