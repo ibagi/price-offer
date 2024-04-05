@@ -1,19 +1,13 @@
 import superjson from 'superjson';
 import { TRPCError, initTRPC } from '@trpc/server';
-import { type FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch';
-import { db } from './db';
-import { authorizeRequest } from './services/auth';
 import { initializeServices } from './services';
 
-export async function createContext({ req }: FetchCreateContextFnOptions) {
-  const isAuthorized = authorizeRequest(req.headers.get('Authorization'));
-  return {
-    isAuthorized,
-    services: initializeServices(db),
-  };
-}
+export type Context = {
+  isAuthorized: boolean;
+  services: ReturnType<typeof initializeServices>;
+};
 
-const t = initTRPC.context<typeof createContext>().create({
+const t = initTRPC.context<Context>().create({
   transformer: superjson,
 });
 

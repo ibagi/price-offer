@@ -2,10 +2,14 @@ import { drizzle } from 'drizzle-orm/libsql';
 import { createClient } from '@libsql/client';
 import * as schema from './schema';
 
-const client = createClient({
-  url: process.env.TURSO_CONNECTION_URL!,
-  authToken: process.env.TURSO_AUTH_TOKEN!,
-});
+interface DbParams {
+  url: string;
+  authToken: string;
+}
 
-export const db = drizzle(client, { schema });
-export type Database = typeof db;
+export function createDbClient(params: DbParams) {
+  const client = createClient(params);
+  return drizzle(client, { schema });
+}
+
+export type Database = ReturnType<typeof createDbClient>;

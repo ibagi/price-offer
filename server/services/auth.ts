@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
 
-export function authorizeRequest(sessionToken: string | undefined | null) {
-  const publicKey = process.env.CLERK_PEM_PUBLIC_KEY!.replace(/\\n/g, '\n');
-
+export function authorizeRequest(
+  sessionToken: string | undefined | null,
+  publicKey: string,
+) {
   try {
-    const _ = jwt.verify(sessionToken ?? '', publicKey, {
+    const _ = jwt.verify(sessionToken ?? '', publicKey.replace(/\\n/g, '\n'), {
       algorithms: ['RS256'],
     });
     return true;
