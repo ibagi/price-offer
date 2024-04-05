@@ -10,9 +10,10 @@ interface Env {
   TURSO_AUTH_TOKEN: string;
   CLERK_PEM_PUBLIC_KEY: string;
 }
+
 export const onRequest: PagesFunction<Env> = tRPCPlugin<Env>({
   router: appRouter,
-  endpoint: '/api/trpc',
+  endpoint: "/api/trpc",
   createContext: ({ req, env }) => {
     const isAuthorized = authorizeRequest(
       req.headers.get('Authorization'),
