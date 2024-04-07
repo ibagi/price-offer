@@ -12,7 +12,7 @@ interface Env {
 
 function createContext({ req, env }) {
   const isAuthorized = authorizeRequest(
-    req.headers.get('Authorization'),
+    req.headers.get('authorization'),
     env.CLERK_PEM_PUBLIC_KEY,
   );
   return {
@@ -28,7 +28,7 @@ function createContext({ req, env }) {
 
 export const onRequest: PagesFunction<Env> = tRPCPlugin<Env>({
   router: appRouter,
-  endpoint: "/",
+  endpoint: "/api/trpc",
   createContext,
   onError({ error, path }) {
     console.error(`tRPC Error on '${path}'`, error);
