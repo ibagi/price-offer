@@ -29,5 +29,8 @@ function createContext({ req, env }) {
 export const onRequest: PagesFunction<Env> = tRPCPlugin<Env>({
   router: appRouter,
   endpoint: "/api/trpc",
-  createContext
+  createContext,
+  onError({ error, path }) {
+    console.error(`tRPC Error on '${path}'`, error);
+  },
 });
