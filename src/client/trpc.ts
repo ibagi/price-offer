@@ -6,7 +6,7 @@ export const trpc = createTRPCClient<AppRouter>({
   links: [
     httpBatchLink({
       url: import.meta.env.VITE_API_URL,
-      transformer: superjson,
+      // transformer: superjson,
       async headers() {
         return {
           authorization: getCookieValue('__session'),

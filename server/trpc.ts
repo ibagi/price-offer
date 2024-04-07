@@ -8,7 +8,7 @@ interface Context {
 }
 
 const t = initTRPC.context<Context>().create({
-  transformer: superjson
+  // transformer: superjson
 });
 
 export const router = t.router;
