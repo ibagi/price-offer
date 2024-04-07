@@ -1,7 +1,6 @@
 import superjson from 'superjson';
 import { TRPCError, initTRPC } from '@trpc/server';
 import { initializeServices } from './services';
-import { ZodError } from 'zod';
 
 interface Context {
   isAuthorized: boolean;
@@ -9,20 +8,7 @@ interface Context {
 }
 
 const t = initTRPC.context<Context>().create({
-  transformer: superjson,
-  errorFormatter(opts) {
-    const { shape, error } = opts;
-    return {
-      ...shape,
-      data: {
-        ...shape.data,
-        zodError:
-          error.code === 'BAD_REQUEST' && error.cause instanceof ZodError
-            ? error.cause.flatten()
-            : null,
-      },
-    };
-  },
+  transformer: superjson
 });
 
 export const router = t.router;
