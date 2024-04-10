@@ -10,8 +10,8 @@ interface Env {
   CLERK_PEM_PUBLIC_KEY: string;
 }
 
-function createContext({ req, env }) {
-  const isAuthorized = authorizeRequest(
+async function createContext({ req, env }) {
+  const isAuthorized = await authorizeRequest(
     req.headers.get('authorization'),
     env.CLERK_PEM_PUBLIC_KEY,
   );
