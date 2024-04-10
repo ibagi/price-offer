@@ -1,8 +1,8 @@
-import tRPCPlugin from 'cloudflare-pages-plugin-trpc';
 import { appRouter } from '../../server/router';
 import { createDbClient } from '../../server/db';
 import { initializeServices } from '../../server/services';
 import { authorizeRequest } from '../../server/services/auth';
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 
 interface Env {
   TURSO_CONNECTION_URL: string;
@@ -26,11 +26,14 @@ async function createContext({ req, env }) {
   };
 }
 
-export const onRequest: PagesFunction<Env> = tRPCPlugin<Env>({
-  router: appRouter,
-  endpoint: '/api/trpc',
-  createContext,
-  onError({ error, path }) {
-    console.error(`tRPC Error on '${path}'`, error);
-  },
-});
+export const onRequest: PagesFunction<Env> = (event) => {
+  return fetchRequestHandler({
+    router: appRouter,
+    endpoint: '/api/trpc',
+    req: event.request,
+    createContext: async ({ req }) => (await createContext({ req, env: event.env })),
+    onError({ error, path }) {
+      console.error(`tRPC Error on '${path}'`, error);
+    }
+  })
+}

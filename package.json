@@ -41,7 +41,6 @@
     "@tsndr/cloudflare-worker-jwt": "^2.5.3",
     "@types/cors": "^2.8.17",
     "@types/jsonwebtoken": "^9.0.6",
-    "cloudflare-pages-plugin-trpc": "^0.3.2",
     "cors": "^2.8.5",
     "daisyui": "^4.6.0",
     "dayjs": "^1.11.10",
