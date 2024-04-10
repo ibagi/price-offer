@@ -1,9 +1,27 @@
+import superjson from 'superjson';
 import { z } from 'zod';
-import { apiProcedure, router } from './trpc';
-import { TRPCError } from '@trpc/server';
+import { TRPCError, initTRPC } from '@trpc/server';
 import { contactSchema, offerSchema, partnerSchema } from './types';
+import { initializeServices } from './services';
 
-export const appRouter = router({
+interface Context {
+  isAuthorized: boolean;
+  services: ReturnType<typeof initializeServices>;
+}
+
+const t = initTRPC.context<Context>().create({
+  transformer: superjson
+});
+
+export const apiProcedure = t.procedure.use(({ ctx, next }) => {
+  if (!ctx.isAuthorized) {
+    throw new TRPCError({ code: 'UNAUTHORIZED' });
+  }
+
+  return next({ ctx });
+});
+
+export const appRouter = t.router({
   contact: {
     get: apiProcedure.query(async ({ ctx }) => {
       const contact = await ctx.services.contact.getContact();
