@@ -26,11 +26,9 @@ export class PartnerService {
       }
     }
 
-    await this.db.delete(partners).where(
-      notInArray(
-        partners.id,
-        input.map((p) => p.id),
-      ),
-    );
+    const partnerIds = input.map((p) => p.id).filter((id) => !!id);
+    if (partnerIds.length > 0) {
+      await this.db.delete(partners).where(notInArray(partners.id, partnerIds));
+    }
   }
 }

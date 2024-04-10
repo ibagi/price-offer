@@ -10,9 +10,9 @@ import { authorizeRequest } from './services/auth';
 const handler = createHTTPHandler({
   middleware: cors(),
   router: appRouter,
-  createContext: ({ req }) => {
+  createContext: async ({ req }) => {
     return {
-      isAuthorized: authorizeRequest(
+      isAuthorized: await authorizeRequest(
         req.headers.authorization,
         process.env.CLERK_PEM_PUBLIC_KEY!,
       ),
