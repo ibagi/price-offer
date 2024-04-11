@@ -30,7 +30,8 @@
     "tslib": "^2.6.2",
     "tsx": "^4.7.1",
     "typescript": "^5.2.2",
-    "vite": ">=5.0.13"
+    "vite": ">=5.0.13",
+    "@types/cors": "^2.8.17"
   },
   "dependencies": {
     "@clerk/clerk-js": "^4.70.0",
@@ -39,8 +40,6 @@
     "@trpc/client": "11.0.0-rc.329",
     "@trpc/server": "11.0.0-next.327",
     "@tsndr/cloudflare-worker-jwt": "^2.5.3",
-    "@types/cors": "^2.8.17",
-    "@types/jsonwebtoken": "^9.0.6",
     "cors": "^2.8.5",
     "daisyui": "^4.6.0",
     "dayjs": "^1.11.10",
@@ -49,8 +48,6 @@
     "drizzle-orm": "^0.30.5",
     "drizzle-zod": "^0.5.1",
     "fetch": "link:@trpc/server/adapters/fetch",
-    "jsonwebtoken": "^9.0.2",
-    "localforage": "^1.10.0",
     "lucide-svelte": "^0.317.0",
     "nanoid": "^5.0.6",
     "standalone": "link:@trpc/server/adapters/standalone",
