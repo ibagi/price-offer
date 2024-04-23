@@ -8,7 +8,10 @@
   import Preview from './pages/Preview.svelte';
   import Company from './pages/Company.svelte';
   import Partners from './pages/Partners.svelte';
-  import OfferLoader from './components/OfferLoader.svelte';
+  import Loader from './components/Loader.svelte';
+  import { getOffer } from './services/offer';
+  import { OfferState } from './state';
+  import PageLoadIndicator from './components/PageLoadIndicator.svelte';
 </script>
 
 <Auth>
@@ -17,14 +20,16 @@
       <OfferList />
     </Route>
     <Route path="/offer/:offerId" let:params>
-      <OfferLoader offerId={params.offerId} let:offerState>
-        <Offer {offerState} />
-      </OfferLoader>
+      <Loader params={params.offerId} loadFn={(id) => getOffer(id)} let:data>
+        <Offer offerState={new OfferState(data)} />
+        <PageLoadIndicator slot="pending" />
+      </Loader>
     </Route>
     <Route path="/preview/:offerId" let:params>
-      <OfferLoader offerId={params.offerId} let:offerState>
-        <Preview {offerState} />
-      </OfferLoader>
+      <Loader params={params.offerId} loadFn={(id) => getOffer(id)} let:data>
+        <Preview offerState={new OfferState(data)} />
+        <h1 slot="pending" class="sr-only">Loading...</h1>
+      </Loader>
     </Route>
     <Route path="/company">
       <Company />
