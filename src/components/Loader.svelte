@@ -6,7 +6,7 @@
 </script>
 
 {#await promise}
-  <slot name="pending"/>
+  <slot name="pending" />
 {:then data}
   <slot {data} />
 {/await}

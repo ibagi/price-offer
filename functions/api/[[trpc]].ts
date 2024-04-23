@@ -31,9 +31,10 @@ export const onRequest: PagesFunction<Env> = (event) => {
     router: appRouter,
     endpoint: '/api/trpc',
     req: event.request,
-    createContext: async ({ req }) => (await createContext({ req, env: event.env })),
+    createContext: async ({ req }) =>
+      await createContext({ req, env: event.env }),
     onError({ error, path }) {
       console.error(`tRPC Error on '${path}'`, error);
-    }
-  })
-}
+    },
+  });
+};

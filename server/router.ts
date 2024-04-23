@@ -64,15 +64,17 @@ const offerRouter = t.router({
     await ctx.services.offer.updateOffer(input);
   }),
 
-  delete: apiProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
-    const success = ctx.services.offer.deleteOffer(input);
-    if (!success) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Offer not found!',
-      });
-    }
-  }),
+  delete: apiProcedure
+    .input(z.object({ offerId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const success = ctx.services.offer.deleteOffer(input.offerId);
+      if (!success) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Offer not found!',
+        });
+      }
+    }),
 });
 
 const partnerRouter = t.router({
