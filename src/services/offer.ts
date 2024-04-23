@@ -29,7 +29,7 @@ export async function updateOffer(offer: Offer) {
 }
 
 export async function deleteOffer(offerId: string) {
-  await trpc.offers.delete.mutate(offerId);
+  await trpc.offers.delete.mutate({ offerId });
 }
 
 export async function copyOffer(offerId: string) {

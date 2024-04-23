@@ -52,16 +52,11 @@ export class OfferService {
   }
 
   async deleteOffer(offerId: string) {
-    const offer = await this.db.query.offers.findFirst({
-      where: eq(offers.id, offerId)
-    });
+    const { rowsAffected } = await this.db
+      .delete(offers)
+      .where(eq(offers.id, offerId));
 
-    if(!offer) {
-      return false;
-    }
-
-    await this.db.delete(offers).where(eq(offers.id, offer.id));
-    return true;
+    return rowsAffected === 1;
   }
 
   private async insertOffer(offerProps: Offer) {
