@@ -70,6 +70,7 @@ export class OfferService {
       ...offerProps,
       id: nanoid(),
       createdAt: new Date(),
+      offerDate: new Date(),
       year: new Date().getFullYear(),
       offerNumber: this.generateOfferNumber(sequence),
       sequence,
