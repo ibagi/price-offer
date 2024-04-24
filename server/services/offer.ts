@@ -52,11 +52,13 @@ export class OfferService {
   }
 
   async deleteOffer(offerId: string) {
-    const { rowsAffected } = await this.db
+    const deletedIds = await this.db
       .delete(offers)
-      .where(eq(offers.id, offerId));
+      .where(eq(offers.id, offerId))
+      .returning({ deletedId: offers.id });
 
-    return rowsAffected === 1;
+    console.log(`Deleted: ${deletedIds.join(' ')}`);
+    return deletedIds.length === 1;
   }
 
   private async insertOffer(offerProps: Offer) {
