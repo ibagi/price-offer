@@ -57,7 +57,6 @@ export class OfferService {
       .where(eq(offers.id, offerId))
       .returning({ deletedId: offers.id });
 
-    console.log(`Deleted: ${deletedIds.join(' ')}`);
     return deletedIds.length === 1;
   }
 
