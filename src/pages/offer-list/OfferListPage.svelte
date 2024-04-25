@@ -47,6 +47,7 @@
 
   async function handleDelete(offerId: string) {
     await deleteOffer(offerId);
+    await loadOffers(selectedYear);
   }
 
   function partnerName(partnerId: string) {

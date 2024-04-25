@@ -1,17 +1,17 @@
 <script lang="ts">
   import { Router, Route } from 'svelte-navigator';
+  import { getOffer } from './services/offer';
+  import { OfferState } from './state';
 
   import Auth from './components/Auth.svelte';
-
-  import OfferList from './pages/OfferList/OfferList.svelte';
-  import Offer from './pages/Offer.svelte';
+  import Loader from './components/Loader.svelte';
+  import PageLoadIndicator from './components/PageLoadIndicator.svelte';
+  
+  import OfferList from './pages/offer-list/OfferListPage.svelte';
+  import Offer from './pages/offer/OfferPage.svelte';
   import Preview from './pages/Preview.svelte';
   import Company from './pages/Company.svelte';
   import Partners from './pages/Partners.svelte';
-  import Loader from './components/Loader.svelte';
-  import { getOffer } from './services/offer';
-  import { OfferState } from './state';
-  import PageLoadIndicator from './components/PageLoadIndicator.svelte';
 </script>
 
 <Auth>

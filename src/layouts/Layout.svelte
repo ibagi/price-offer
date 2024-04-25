@@ -4,9 +4,9 @@
   const slots = $$props.$$slots;
 </script>
 
-<main class="flex flex-col w-screen h-screen overflow-hidden">
+<main class="flex flex-col w-screen h-screen">
   <NavBar />
-  <div class="flex w-full h-full bg-gray-200 p-8">
+  <div class="flex w-full h-full bg-gray-200 p-8 overflow-hidden">
     <div class="flex w-full gap-6">
       <!-- Left side -->
       {#if slots.left}
