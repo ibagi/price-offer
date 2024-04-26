@@ -67,7 +67,7 @@ const offerRouter = t.router({
   delete: apiProcedure
     .input(z.object({ offerId: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const success = ctx.services.offer.deleteOffer(input.offerId);
+      const success = await ctx.services.offer.deleteOffer(input.offerId);
       if (!success) {
         throw new TRPCError({
           code: 'NOT_FOUND',
