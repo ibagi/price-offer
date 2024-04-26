@@ -1,5 +1,5 @@
 import { appRouter } from '../../server/router';
-import { createDbClient } from '../../server/db';
+import { Database, createDbClient } from '../../server/db';
 import { initializeServices } from '../../server/services';
 import { authorizeRequest } from '../../server/services/auth';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
@@ -10,19 +10,24 @@ interface Env {
   CLERK_PEM_PUBLIC_KEY: string;
 }
 
+let db: Database;
+
 async function createContext({ req, env }) {
   const isAuthorized = await authorizeRequest(
     req.headers.get('authorization'),
     env.CLERK_PEM_PUBLIC_KEY,
   );
+
+  if (!db) {
+    db = createDbClient({
+      url: env.TURSO_CONNECTION_URL,
+      authToken: env.TURSO_AUTH_TOKEN,
+    })
+  }
+  
   return {
     isAuthorized,
-    services: initializeServices(
-      createDbClient({
-        url: env.TURSO_CONNECTION_URL,
-        authToken: env.TURSO_AUTH_TOKEN,
-      }),
-    ),
+    services: initializeServices(db),
   };
 }
 
