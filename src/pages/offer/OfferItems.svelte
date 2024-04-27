@@ -19,6 +19,7 @@
         <th class="w-4">{$t('priceOffer.tableColumns.amount')}</th>
         <th class="min-w-36">{$t('priceOffer.tableColumns.workPrice')}</th>
         <th class="min-w-36">{$t('priceOffer.tableColumns.materialPrice')}</th>
+        <th class="min-w-36">{$t('priceOffer.tableColumns.description')}</th>
         <th class="w-6"></th>
       </tr>
     </thead>
@@ -53,7 +54,11 @@
             <PriceInput
               bind:value={item.materialPrice}
               currency={$offer.currency} />
-          </td><td class="w-6">
+          </td>
+          <td>
+            <input class="input input-bordered input-sm" bind:value={item.description} />
+          </td>
+          <td class="w-6">
             <button
               title={$t('priceOffer.actions.delete')}
               class="btn btn-sm"
