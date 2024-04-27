@@ -84,10 +84,10 @@
       </div>
 
       <div class="flex justify-center">
-        <ul class="flex flex-1 h-full flex-col gap-3 py-2 px-4">
+        <ul class="flex flex-1 h-full flex-col py-2 px-4">
           {#each priceOffers as offer}
-            <li class="flex justify-between border-b-2 px-4 pb-2">
-              <div class="flex flex-col gap-1">
+            <li class="flex justify-between border-b-2 px-4 py-3 hover:bg-gray-100">
+              <Link to="/offer/{offer.id}" class="flex flex-col gap-1 w-full">
                 <div class="flex gap-3 items-center">
                   <div class="text-teal-600 font-medium">
                     {offer.offerNumber}
@@ -104,13 +104,8 @@
                     </span>
                   {/if}
                 </div>
-              </div>
+              </Link>
               <div class="flex gap-6 self-center text-sm">
-                <Link
-                  title={$t('offerList.actions.open')}
-                  to="/offer/{offer.id}">
-                  <ArrowUpLeftFromSquareIcon size={20} />
-                </Link>
                 <button
                   title={$t('offerList.actions.copy')}
                   on:click={() => handleCopy(offer.id)}>
