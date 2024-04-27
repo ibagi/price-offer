@@ -6,7 +6,7 @@
   import Auth from './components/Auth.svelte';
   import Loader from './components/Loader.svelte';
   import PageLoadIndicator from './components/PageLoadIndicator.svelte';
-  
+
   import OfferList from './pages/offer-list/OfferListPage.svelte';
   import Offer from './pages/offer/OfferPage.svelte';
   import Preview from './pages/Preview.svelte';

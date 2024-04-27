@@ -80,13 +80,6 @@
           <div class="w-36 font-bold">{$t('preview.labels.taxNumber')}</div>
           <div>{$contact.taxNumber}</div>
         </div>
-
-        <div class="flex">
-          <div class="w-36 font-bold">
-            {$t('preview.labels.bankAccountNumber')}
-          </div>
-          <div>{$contact.bankAccountNumber}</div>
-        </div>
       </div>
 
       <div class="flex flex-col mx-2">
@@ -137,26 +130,21 @@
   <table class="w-full">
     <thead>
       <tr>
-        <th class="table-header" rowspan="2"
-          >{$t('preview.table.offerNumber')}</th>
         <th class="table-header" rowspan="2">{$t('preview.table.itemName')}</th>
         <th class="table-header" rowspan="2">{$t('preview.table.amount')}</th>
         <th class="table-header" rowspan="2"
           >{$t('preview.table.unitPrice')}</th>
         <th class="table-header" rowspan="2">{$t('preview.table.price')}</th>
-        <th class="table-header" colspan="2"
+        <th class="table-header" colspan="3"
           >{$t('preview.table.description')}</th>
       </tr>
       <tr>
         <th class="table-header">{$t('preview.table.workPrice')}</th>
         <th class="table-header">{$t('preview.table.materialPrice')}</th>
+        <th class="table-header">{$t('preview.table.remark')}</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="table-cell" rowspan={($offer.items?.length ?? 0) + 1}
-          >{$offer.offerNumber}</td>
-      </tr>
       {#each $offer.items ?? [] as item}
         <tr>
           <td class="table-cell">{item.name}</td>
@@ -176,6 +164,9 @@
           </td>
           <td class="table-cell">
             <Money value={item.materialPrice} currency={$offer.currency} />
+          </td>
+          <td class="table-cell">
+            {item.description}
           </td>
         </tr>
       {/each}

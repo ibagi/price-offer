@@ -7,6 +7,7 @@ export const offerItemSchema = z.object({
   amount: z.number(),
   workPrice: z.number(),
   materialPrice: z.number(),
+  description: z.optional(z.string()),
 });
 
 export const contactSchema = createSelectSchema(contacts);
