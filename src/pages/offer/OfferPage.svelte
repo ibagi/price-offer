@@ -52,7 +52,7 @@
           </Link>
         </div>
       </div>
-  
+
       <div class="flex justify-start">
         <div role="tablist" class="tabs tabs-sm tabs-boxed">
           {#each tabs as tab}
@@ -80,12 +80,12 @@
   </section>
 
   <section slot="actions" class="flex gap-2 justify-end border-t-2 pt-2">
-        {#if activeTab === 'items'}
-        <button class="btn btn-sm" on:click={offerState.removeItems}
-          >{$t('priceOffer.actions.clearAll')}</button>
-        <button class="btn btn-neutral btn-sm" on:click={offerState.addItem}
-          >{$t('priceOffer.actions.add')}</button>
-          {/if}
+    {#if activeTab === 'items'}
+      <button class="btn btn-sm" on:click={offerState.removeItems}
+        >{$t('priceOffer.actions.clearAll')}</button>
+      <button class="btn btn-neutral btn-sm" on:click={offerState.addItem}
+        >{$t('priceOffer.actions.add')}</button>
+    {/if}
   </section>
 </Layout>
 

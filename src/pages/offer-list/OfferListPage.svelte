@@ -103,8 +103,11 @@
                 </div>
               </Link>
               <div class="flex gap-6 self-center text-sm">
-                <Link to="/preview/{offer.id}" class="btn btn-sm" title={$t('offerList.actions.preview')}>
-                  <PrinterIcon size={20}/>
+                <Link
+                  to="/preview/{offer.id}"
+                  class="btn btn-sm"
+                  title={$t('offerList.actions.preview')}>
+                  <PrinterIcon size={20} />
                 </Link>
                 <button
                   class="btn btn-sm"

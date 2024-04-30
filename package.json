@@ -12,14 +12,17 @@
     "generate-migrations": "drizzle-kit generate:sqlite",
     "migrate": "tsx scripts/migrate.ts",
     "server": "tsx server/dev.ts",
-    "playground": "tsx playground/index.ts"
+    "playground": "tsx playground/index.ts",
+    "local-env": "concurrently \"pnpm run server\" \"pnpm run dev\""
   },
   "devDependencies": {
     "@clerk/types": "^3.62.0",
     "@cloudflare/workers-types": "^4.20240404.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.1",
     "@tsconfig/svelte": "^5.0.2",
+    "@types/cors": "^2.8.17",
     "autoprefixer": "^10.4.17",
+    "concurrently": "^8.2.2",
     "drizzle-kit": "^0.20.14",
     "postcss": "^8.4.33",
     "prettier": "^3.2.4",
@@ -30,8 +33,7 @@
     "tslib": "^2.6.2",
     "tsx": "^4.7.1",
     "typescript": "^5.2.2",
-    "vite": ">=5.0.13",
-    "@types/cors": "^2.8.17"
+    "vite": ">=5.0.13"
   },
   "dependencies": {
     "@clerk/clerk-js": "^4.70.0",

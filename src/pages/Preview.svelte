@@ -28,7 +28,10 @@
     <h1 class="flex-1 font-bold text-4xl">
       {$t('preview.title')}
     </h1>
-    <button class="btn btn-sm btn-neutral" class:no-print={saving} on:click={() => history.back()}>
+    <button
+      class="btn btn-sm btn-neutral"
+      class:no-print={saving}
+      on:click={() => history.back()}>
       {$t('preview.actions.back')}
     </button>
     <button
