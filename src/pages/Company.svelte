@@ -23,7 +23,7 @@
 </script>
 
 <Layout>
-  <section class="flex flex-col" slot="right">
+  <section class="flex flex-col">
     <h1 class="font-bold text-lg pb-2">{$t('company.title')}</h1>
     <div class="flex flex-col gap-2 self-center">
       {#each fields as field}
