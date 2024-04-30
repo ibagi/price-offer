@@ -10,50 +10,87 @@
   import OfferSummary from './OfferSummary.svelte';
 
   export let offerState: OfferState;
-  const { offer, hasItem } = offerState;
+  const { offer } = offerState;
 
-  $: saveOffer($offer);
+  const tabs = ['form', 'items'];
+  let activeTab: (typeof tabs)[number] = tabs[0];
 
   function saveOffer(data: Offer) {
     updateOffer(data);
   }
+
+  $: saveOffer($offer);
 </script>
 
 <Layout>
-  <section slot="left">
-    <h1 class="font-bold text-lg pb-2" tabindex="-1">
-      {$t('priceOffer.title')}
-    </h1>
-
-    <OfferForm {offerState} />
-  </section>
-
-  <section class="flex flex-col h-full" slot="right">
-    <div class="flex gap-2">
-      <h2 class="card-title flex-1" tabindex="-1">
-        {$t('priceOffer.tableHeader')}
-      </h2>
-      <button class="btn btn-sm" on:click={offerState.removeItems}
-        >{$t('priceOffer.actions.clearAll')}</button>
-      <button class="btn btn-neutral btn-sm" on:click={offerState.addItem}
-        >{$t('priceOffer.actions.add')}</button>
-      <Link to="/preview/{$offer.id}" class="btn btn-sm btn-primary">
-        {$t('priceOffer.actions.preview')}
-      </Link>
+  <section class="flex flex-col h-full">
+    <div class="sticky top-0 bg-white z-10">
+      <div class="flex items-center justify-between pb-2">
+        <h1 class="sr-only">
+          {$t('priceOffer.title', { offerNumber: $offer.offerNumber })}
+        </h1>
+        <div class="font-bold text-lg pb-2 breadcrumbs">
+          <ul>
+            <li>
+              <Link to="/">
+                {$t('navigation.priceOfferList')}
+              </Link>
+            </li>
+            <li>
+              <Link class="font-bold text-teal-600" to="/offer/{$offer.id}">
+                {$offer.offerNumber}
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div class="flex gap-2">
+          <OfferSummary {offerState} />
+          <Link
+            to="/preview/{$offer.id}"
+            class="btn btn-sm btn-primary text-white">
+            {$t('priceOffer.actions.preview')}
+          </Link>
+        </div>
+      </div>
+  
+      <div class="flex justify-start">
+        <div role="tablist" class="tabs tabs-sm tabs-boxed">
+          {#each tabs as tab}
+            <button
+              role="tab"
+              class="tab font-semibold w-32"
+              class:tab-active={activeTab === tab}
+              on:click={() => (activeTab = tab)}>
+              {$t(`priceOffer.tabs.${tab}`)}
+            </button>
+          {/each}
+        </div>
+      </div>
     </div>
 
-    {#if $hasItem}
-      <OfferItems {offerState} />
-    {:else}
-      <p class="flex flex-1 justify-center items-center h-32">
-        {$t('priceOffer.hint')}
-      </p>
-    {/if}
+    <div class="p-2">
+      {#if activeTab === 'form'}
+        <OfferForm {offerState} />
+      {/if}
+
+      {#if activeTab === 'items'}
+        <OfferItems {offerState} />
+      {/if}
+    </div>
   </section>
 
-  <section slot="actions">
-    {#if $hasItem}
-      <OfferSummary {offerState} />
-    {/if}
+  <section slot="actions" class="flex gap-2 justify-end border-t-2 pt-2">
+        {#if activeTab === 'items'}
+        <button class="btn btn-sm" on:click={offerState.removeItems}
+          >{$t('priceOffer.actions.clearAll')}</button>
+        <button class="btn btn-neutral btn-sm" on:click={offerState.addItem}
+          >{$t('priceOffer.actions.add')}</button>
+          {/if}
   </section>
 </Layout>
+
+<style>
+  .tab-active {
+    color: #fff !important;
+  }
+</style>

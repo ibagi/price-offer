@@ -67,6 +67,7 @@ export const defaultOfferItem: OfferItem = {
   amount: 1,
   workPrice: 1,
   materialPrice: 1,
+  description: '',
 };
 
 export const offerStatuses: OfferStatus[] = [

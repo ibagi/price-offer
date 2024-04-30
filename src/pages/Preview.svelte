@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Link } from 'svelte-navigator';
   import { t } from '../lib/i18n';
   import Money from '../components/Money.svelte';
   import { contactState, partnerState, OfferState } from '../state';
@@ -29,11 +28,11 @@
     <h1 class="flex-1 font-bold text-4xl">
       {$t('preview.title')}
     </h1>
-    <button class="btn btn-sm btn-neutral" class:no-print={saving}>
-      <Link to="/offer/{$offer.id}">{$t('preview.actions.back')}</Link>
+    <button class="btn btn-sm btn-neutral" class:no-print={saving} on:click={() => history.back()}>
+      {$t('preview.actions.back')}
     </button>
     <button
-      class="btn btn-sm btn-primary"
+      class="btn btn-sm btn-primary text-white"
       class:no-print={saving}
       on:click={print}>
       {$t('preview.actions.print')}

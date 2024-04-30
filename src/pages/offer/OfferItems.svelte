@@ -6,68 +6,77 @@
   import type { OfferState } from '../../state';
 
   export let offerState: OfferState;
-  const { offer } = offerState;
+  const { offer, hasItem } = offerState;
 </script>
 
-<div class="overflow-x-auto w-full py-2">
-  <table class="table">
-    <thead>
-      <tr>
-        <th class="min-w-24">{$t('priceOffer.tableColumns.item')}</th>
-        <th class="max-w-32">{$t('priceOffer.tableColumns.unitPrice')}</th>
-        <th class="max-w-32">{$t('priceOffer.tableColumns.total')}</th>
-        <th class="w-4">{$t('priceOffer.tableColumns.amount')}</th>
-        <th class="min-w-36">{$t('priceOffer.tableColumns.workPrice')}</th>
-        <th class="min-w-36">{$t('priceOffer.tableColumns.materialPrice')}</th>
-        <th class="min-w-36">{$t('priceOffer.tableColumns.description')}</th>
-        <th class="w-6"></th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each $offer.items ?? [] as item}
+{#if $hasItem}
+  <div class="overflow-x-auto w-full py-2">
+    <table class="table">
+      <thead>
         <tr>
-          <td class="min-w-24"
-            ><input
-              class="input input-bordered input-sm w-full"
-              bind:value={item.name} /></td>
-          <td class="max-w-32">
-            <Money
-              value={item.workPrice + item.materialPrice}
-              currency={$offer.currency} />
-          </td>
-          <td class="max-w-32">
-            <Money
-              value={offerState.totalPrice(item)}
-              currency={$offer.currency} />
-          </td>
-          <td class="w-4"
-            ><input
-              type="number"
-              class="input input-bordered input-sm text-right w-24"
-              bind:value={item.amount} /></td>
-          <td>
-            <PriceInput
-              bind:value={item.workPrice}
-              currency={$offer.currency} />
-          </td>
-          <td>
-            <PriceInput
-              bind:value={item.materialPrice}
-              currency={$offer.currency} />
-          </td>
-          <td>
-            <input class="input input-bordered input-sm" bind:value={item.description} />
-          </td>
-          <td class="w-6">
-            <button
-              title={$t('priceOffer.actions.delete')}
-              class="btn btn-sm"
-              on:click={() => offerState.removeItem(item)}>
-              <Trash2 />
-            </button>
-          </td>
+          <th class="min-w-24">{$t('priceOffer.tableColumns.item')}</th>
+          <th class="max-w-32">{$t('priceOffer.tableColumns.unitPrice')}</th>
+          <th class="max-w-32">{$t('priceOffer.tableColumns.total')}</th>
+          <th class="w-4">{$t('priceOffer.tableColumns.amount')}</th>
+          <th class="min-w-36">{$t('priceOffer.tableColumns.workPrice')}</th>
+          <th class="min-w-36"
+            >{$t('priceOffer.tableColumns.materialPrice')}</th>
+          <th class="min-w-36">{$t('priceOffer.tableColumns.description')}</th>
+          <th class="w-6"></th>
         </tr>
-      {/each}
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        {#each $offer.items ?? [] as item}
+          <tr>
+            <td class="min-w-24"
+              ><input
+                class="input input-bordered input-sm w-full"
+                bind:value={item.name} /></td>
+            <td class="max-w-32">
+              <Money
+                value={item.workPrice + item.materialPrice}
+                currency={$offer.currency} />
+            </td>
+            <td class="max-w-32">
+              <Money
+                value={offerState.totalPrice(item)}
+                currency={$offer.currency} />
+            </td>
+            <td class="w-4"
+              ><input
+                type="number"
+                class="input input-bordered input-sm text-right w-24"
+                bind:value={item.amount} /></td>
+            <td>
+              <PriceInput
+                bind:value={item.workPrice}
+                currency={$offer.currency} />
+            </td>
+            <td>
+              <PriceInput
+                bind:value={item.materialPrice}
+                currency={$offer.currency} />
+            </td>
+            <td>
+              <input
+                class="input input-bordered input-sm"
+                bind:value={item.description} />
+            </td>
+            <td class="w-6">
+              <button
+                title={$t('priceOffer.actions.delete')}
+                class="btn btn-sm"
+                on:click={() => offerState.removeItem(item)}>
+                <Trash2 size={20} />
+              </button>
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
+{:else}
+  <p class="flex flex-1 justify-center items-center h-32">
+    {$t('priceOffer.hint')}
+  </p>
+{/if}

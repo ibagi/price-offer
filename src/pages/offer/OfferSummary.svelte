@@ -8,28 +8,28 @@
   const { offer, netto, tax, brutto } = offerState;
 </script>
 
-<div class="font-bold flex justify-end gap-8">
-  <div class="text-center">
-    <span>{$t('priceOffer.summary.netto')}</span>
-    <div>
+<div class="flex justify-end gap-3 items-center px-4">
+  <div class="stat pt-0 pb-0">
+    <div class="stat-title text-sm">{$t('priceOffer.summary.netto')}</div>
+    <div class="stat-value text-sm">
       <Money
         value={$netto}
         currency={$offer.currency}
         fractions={getDecimalPlaces($offer.currency)} />
     </div>
   </div>
-  <div class="text-center">
-    <span>{$t('priceOffer.summary.tax')}</span>
-    <div>
+  <div class="stat pt-0 pb-0">
+    <div class="stat-title text-sm">{$t('priceOffer.summary.tax')}</div>
+    <div class="stat-value text-sm">
       <Money
         value={$tax}
         currency={$offer.currency}
         fractions={getDecimalPlaces($offer.currency)} />
     </div>
   </div>
-  <div class="text-center">
-    <span>{$t('priceOffer.summary.brutto')}</span>
-    <div>
+  <div class="stat pt-0 pb-0">
+    <div class="stat-title text-sm">{$t('priceOffer.summary.brutto')}</div>
+    <div class="stat-value text-sm">
       <Money
         value={$brutto}
         currency={$offer.currency}

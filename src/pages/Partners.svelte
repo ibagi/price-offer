@@ -11,13 +11,14 @@
 </script>
 
 <Layout>
-  <section class="flex flex-col h-full" slot="right">
+  <section class="flex flex-col h-full">
     <div class="flex justify-between pb-2">
       <h1 class="font-bold text-lg pb-2">{$t('partners.title')}</h1>
       <div class="flex gap-2">
         {#if $partners.length > 0}
-          <button class="btn btn-neutral btn-sm self-end" on:click={addPartner}
-            >{$t('partners.actions.add')}</button>
+          <button
+            class="btn btn-primary btn-sm self-end text-white"
+            on:click={addPartner}>{$t('partners.actions.add')}</button>
         {/if}
       </div>
     </div>
