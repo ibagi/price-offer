@@ -33,5 +33,5 @@ export async function deleteOffer(offerId: string) {
 }
 
 export async function copyOffer(offerId: string) {
-  await trpc.offers.copy.mutate(offerId);
+  return await trpc.offers.copy.mutate(offerId);
 }
