@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Link } from 'svelte-navigator';
+  import { Link, useNavigate } from 'svelte-navigator';
   import { Clock, CopyPlus, PrinterIcon, Trash2, User } from 'lucide-svelte';
   import { t } from '../../lib/i18n';
   import Layout from '../../layouts/Layout.svelte';
@@ -18,6 +18,8 @@
   import Loader from '../../components/Loader.svelte';
   import PageLoadIndicator from '../../components/PageLoadIndicator.svelte';
 
+  const navigate = useNavigate();
+
   const dateFormat = new Intl.DateTimeFormat();
   const { partners } = partnerState;
 
@@ -30,13 +32,15 @@
   }
 
   async function newOffer() {
-    await createOffer();
-    await loadOffers(selectedYear);
+    const offer = await createOffer();
+    navigate(`/offer/${offer.id}`);
   }
 
   async function handleCopy(offerId: string) {
-    await copyOffer(offerId);
-    await loadOffers(selectedYear);
+    const offer = await copyOffer(offerId);
+    if(offer) {
+      navigate(`/offer/${offer.id}`);
+    }
   }
 
   async function handleDelete(offerId: string) {
