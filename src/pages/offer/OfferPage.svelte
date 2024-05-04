@@ -15,11 +15,9 @@
   const tabs = ['form', 'items'];
   let activeTab: (typeof tabs)[number] = tabs[0];
 
-  function saveOffer(data: Offer) {
-    updateOffer(data);
+  async function saveOffer() {
+    await updateOffer($offer);
   }
-
-  $: saveOffer($offer);
 </script>
 
 <Layout>
@@ -86,6 +84,8 @@
       <button class="btn btn-neutral btn-sm" on:click={offerState.addItem}
         >{$t('priceOffer.actions.add')}</button>
     {/if}
+    <button class="btn btn-neutral btn-sm" on:click={saveOffer}
+      >{$t('priceOffer.actions.save')}</button>
   </section>
 </Layout>
 

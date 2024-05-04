@@ -4,16 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "vite:dev": "vite",
+    "vite:build": "vite build",
+    "vite:preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "prettier": "prettier . --write",
+    "format": "prettier . --write",
     "generate-migrations": "drizzle-kit generate:sqlite",
     "migrate": "tsx scripts/migrate.ts",
     "server": "tsx server/dev.ts",
-    "playground": "tsx playground/index.ts",
-    "local-env": "concurrently \"pnpm run server\" \"pnpm run dev\""
+    "dev": "concurrently \"pnpm run server\" \"pnpm run vite:dev\""
   },
   "devDependencies": {
     "@clerk/types": "^3.62.0",

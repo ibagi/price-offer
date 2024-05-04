@@ -19,7 +19,10 @@
   ];
 
   const { contact } = contactState;
-  $: saveContact($contact);
+
+  async function save() {
+    await saveContact($contact);
+  }
 </script>
 
 <Layout>
@@ -40,5 +43,10 @@
         </div>
       {/each}
     </div>
+  </section>
+
+  <section slot="actions" class="flex gap-2 justify-end border-t-2 pt-2">
+    <button class="btn btn-neutral btn-sm" on:click={save}
+      >{$t('company.actions.save')}</button>
   </section>
 </Layout>
