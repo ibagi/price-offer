@@ -14,38 +14,37 @@
     <table class="table">
       <thead>
         <tr>
-          <th class="min-w-24">{$t('priceOffer.tableColumns.item')}</th>
-          <th class="max-w-32">{$t('priceOffer.tableColumns.unitPrice')}</th>
-          <th class="max-w-32">{$t('priceOffer.tableColumns.total')}</th>
-          <th class="w-4">{$t('priceOffer.tableColumns.amount')}</th>
-          <th class="min-w-36">{$t('priceOffer.tableColumns.workPrice')}</th>
-          <th class="min-w-36"
-            >{$t('priceOffer.tableColumns.materialPrice')}</th>
-          <th class="min-w-36">{$t('priceOffer.tableColumns.description')}</th>
-          <th class="w-6"></th>
+          <th>{$t('priceOffer.tableColumns.item')}</th>
+          <th class="w-32">{$t('priceOffer.tableColumns.unitPrice')}</th>
+          <th class="w-32">{$t('priceOffer.tableColumns.total')}</th>
+          <th class="w-36">{$t('priceOffer.tableColumns.amount')}</th>
+          <th class="w-48">{$t('priceOffer.tableColumns.workPrice')}</th>
+          <th class="w-48">{$t('priceOffer.tableColumns.materialPrice')}</th>
+          <th>{$t('priceOffer.tableColumns.description')}</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         {#each $offer.items ?? [] as item}
           <tr>
-            <td class="min-w-24"
+            <td
               ><input
                 class="input input-bordered input-sm w-full"
                 bind:value={item.name} /></td>
-            <td class="max-w-32">
+            <td>
               <Money
                 value={item.workPrice + item.materialPrice}
                 currency={$offer.currency} />
             </td>
-            <td class="max-w-32">
+            <td>
               <Money
                 value={offerState.totalPrice(item)}
                 currency={$offer.currency} />
             </td>
-            <td class="w-4"
+            <td
               ><input
                 type="number"
-                class="input input-bordered input-sm text-right w-24"
+                class="input input-bordered input-sm text-right w-full"
                 bind:value={item.amount} /></td>
             <td>
               <PriceInput
@@ -59,10 +58,10 @@
             </td>
             <td>
               <input
-                class="input input-bordered input-sm"
+                class="input input-bordered input-sm w-full"
                 bind:value={item.description} />
             </td>
-            <td class="w-6">
+            <td class="p-0 w-4">
               <button
                 title={$t('priceOffer.actions.delete')}
                 class="btn btn-sm"
