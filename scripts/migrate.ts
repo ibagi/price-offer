@@ -3,9 +3,14 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { nanoid } from 'nanoid';
 import { migrate } from 'drizzle-orm/libsql/migrator';
-import { db } from '../server/db/';
+import { createDbClient } from '../server/db/';
 import { contacts } from '../server/db/schema';
 import { defaultContact } from '../server/types';
+
+const db = createDbClient({
+  authToken: process.env.TURSO_AUTH_TOKEN!,
+  url: process.env.TURSO_CONNECTION_URL!
+});
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
