@@ -7,7 +7,10 @@
   import { partnerState } from '../state';
 
   const { partners, addPartner, removePartner } = partnerState;
-  $: savePartners($partners);
+
+  async function save() {
+    await savePartners($partners);
+  }
 </script>
 
 <Layout>
@@ -90,5 +93,10 @@
         </table>
       </div>
     {/if}
+  </section>
+
+  <section slot="actions" class="flex gap-2 justify-end border-t-2 pt-2">
+    <button class="btn btn-neutral btn-sm" on:click={save}
+      >{$t('partners.actions.save')}</button>
   </section>
 </Layout>

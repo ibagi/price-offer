@@ -38,7 +38,7 @@
 
   async function handleCopy(offerId: string) {
     const offer = await copyOffer(offerId);
-    if(offer) {
+    if (offer) {
       navigate(`/offer/${offer.id}`);
     }
   }
