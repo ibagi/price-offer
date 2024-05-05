@@ -8,9 +8,15 @@ export class OfferService {
   constructor(private readonly db: Database) {}
 
   async getOfferYears() {
-    return (
+    const years = (
       await this.db.selectDistinct({ year: offers.year }).from(offers)
     )?.map((o) => o.year);
+
+    if(years.length === 0) {
+      years.push(new Date().getFullYear());
+    }
+
+    return years;
   }
 
   async getOffersByYear(year: number) {
