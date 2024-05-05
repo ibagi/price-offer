@@ -28,7 +28,7 @@ export class PartnerService {
 
     const partnerIds = input.map((p) => p.id).filter((id) => !!id);
     partnerIds.push('');
-    
+
     await this.db.delete(partners).where(notInArray(partners.id, partnerIds));
   }
 }

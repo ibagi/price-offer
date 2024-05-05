@@ -14,9 +14,10 @@
     deleteOffer,
     copyOffer,
   } from '../../services/offer';
-  import type { Offer } from '../../../server/types';
+  import type { Offer } from '../../lib/types';
   import Loader from '../../components/Loader.svelte';
   import PageLoadIndicator from '../../components/PageLoadIndicator.svelte';
+  import Confirmation from '../../components/Confirmation.svelte';
 
   const navigate = useNavigate();
 
@@ -26,6 +27,8 @@
   let priceOffers: Offer[] = [];
   let years: number[] = [];
   let selectedYear: number = 0;
+
+  let confirmationRef: Confirmation;
 
   async function loadOffers(year: number) {
     priceOffers = await getOffers(year);
@@ -43,9 +46,16 @@
     }
   }
 
-  async function handleDelete(offerId: string) {
-    await deleteOffer(offerId);
-    await loadOffers(selectedYear);
+  async function handleDelete(offer: Offer) {
+    const confirmed = await confirmationRef.show({
+      title: 'Megerősítés',
+      message: `Biztosan törli a '${offer.offerNumber}' árajánlatot?`,
+    });
+
+    if (confirmed) {
+      await deleteOffer(offer.id);
+      await loadOffers(selectedYear);
+    }
   }
 
   function partnerName(partnerId: string) {
@@ -123,7 +133,7 @@
                   <button
                     class="btn btn-sm"
                     title={$t('offerList.actions.delete')}
-                    on:click={() => handleDelete(offer.id)}>
+                    on:click={() => handleDelete(offer)}>
                     <Trash2 size={20} />
                   </button>
                 </div>
@@ -139,5 +149,6 @@
         </div>
       {/if}
     </section>
+    <Confirmation bind:this={confirmationRef} />
   </Layout>
 </Loader>

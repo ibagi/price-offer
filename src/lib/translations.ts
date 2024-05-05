@@ -109,6 +109,8 @@ const translations: Translations = {
     'offer.status.sent': 'Elküldve',
     'offer.status.accepted': 'Elfogadva',
     'offer.status.rejected': 'Elutasítva',
+    'confirmation.yes': 'Igen',
+    'confirmation.cancel': 'Mégsem',
   },
 };
 
