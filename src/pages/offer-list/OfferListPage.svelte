@@ -71,7 +71,7 @@
                 title={$t('offerList.labels.yearButton', { year })}
                 aria-pressed={selectedYear === year}
                 class="btn btn-sm ml-2"
-                class:btn-primary={year === selectedYear}
+                class:btn-neutral={year === selectedYear}
                 on:click={() => (selectedYear = year)}>{year}</button>
             {/each}
           {/if}
