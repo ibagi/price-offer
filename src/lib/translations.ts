@@ -14,6 +14,8 @@ const translations: Translations = {
     'offerList.actions.open': 'Ajánlat megtekintése',
     'offerList.actions.copy': 'Ajánlat másolása',
     'offerList.actions.delete': 'Ájanlat törlése',
+    'offerList.actions.delete.confirmation':
+      'Biztosan törli a "{{offerNumber}}" árajánlatot?',
     'offerList.actions.preview': 'Nyomtatási kép',
     'priceOffer.title': 'Árjánlat {{ offerNumber }}',
     'priceOffer.tableHeader': 'Ajánlat tételei',
@@ -111,6 +113,7 @@ const translations: Translations = {
     'offer.status.rejected': 'Elutasítva',
     'confirmation.yes': 'Igen',
     'confirmation.cancel': 'Mégsem',
+    'confirmation.title': 'Megerősítés',
   },
 };
 

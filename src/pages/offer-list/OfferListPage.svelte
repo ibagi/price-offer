@@ -48,8 +48,10 @@
 
   async function handleDelete(offer: Offer) {
     const confirmed = await confirmationRef.show({
-      title: 'Megerősítés',
-      message: `Biztosan törli a '${offer.offerNumber}' árajánlatot?`,
+      title: $t('confirmation.title'),
+      message: $t('offerList.actions.delete.confirmation', {
+        offerNumber: offer.offerNumber,
+      }),
     });
 
     if (confirmed) {
