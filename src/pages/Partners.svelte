@@ -19,11 +19,9 @@
     <div class="flex justify-between pb-2">
       <h1 class="font-bold text-lg pb-2">{$t('partners.title')}</h1>
       <div class="flex gap-2">
-        {#if $partners.length > 0}
-          <button
-            class="btn btn-primary btn-sm self-end text-white"
-            on:click={addPartner}>{$t('partners.actions.add')}</button>
-        {/if}
+        <button
+          class="btn btn-primary btn-sm self-end text-white"
+          on:click={addPartner}>{$t('partners.actions.add')}</button>
       </div>
     </div>
 
@@ -31,8 +29,6 @@
       <div class="flex h-full justify-center items-center">
         <div class="flex flex-col items-center gap-4">
           <p class="text-lg">{$t('partners.hint')}</p>
-          <button class="btn btn-neutral btn-lg" on:click={addPartner}
-            >{$t('partners.actions.addPartner')}</button>
         </div>
       </div>
     {/if}

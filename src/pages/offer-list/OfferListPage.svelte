@@ -61,7 +61,7 @@
 <Loader params={selectedYear} loadFn={(year) => loadOffers(year)}>
   <PageLoadIndicator slot="pending" />
   <Layout>
-    <section>
+    <section class="h-full">
       <div class="flex justify-between pr-2 sticky top-0 bg-white">
         <h1 class="font-bold text-lg pb-2">{$t('offerList.title')}</h1>
         <div>
@@ -83,53 +83,61 @@
         </div>
       </div>
 
-      <div class="flex justify-center">
-        <ul class="flex flex-1 h-full flex-col py-2 px-4">
-          {#each priceOffers as offer}
-            <li
-              class="flex justify-between border-b-2 px-4 py-3 hover:bg-gray-100">
-              <Link to="/offer/{offer.id}" class="flex flex-col gap-1 w-full">
-                <div class="flex gap-3 items-center">
-                  <div class="text-teal-600 font-medium">
-                    {offer.offerNumber}
+      {#if priceOffers.length > 0}
+        <div class="flex justify-center">
+          <ul class="flex flex-1 h-full flex-col py-2 px-4">
+            {#each priceOffers as offer}
+              <li
+                class="flex justify-between border-b-2 px-4 py-3 hover:bg-gray-100">
+                <Link to="/offer/{offer.id}" class="flex flex-col gap-1 w-full">
+                  <div class="flex gap-3 items-center">
+                    <div class="text-teal-600 font-medium">
+                      {offer.offerNumber}
+                    </div>
+                    <OfferStatusBadge status={offer.status} />
                   </div>
-                  <OfferStatusBadge status={offer.status} />
-                </div>
-                <div class="text-sm text-gray-500 flex items-center gap-1">
-                  <span><Clock size={14} /></span>
-                  <span>{dateFormat.format(offer.offerDate)}</span>
-                  {#if offer.partnerId}
-                    <span class="ml-1"><User size={14} /></span>
-                    <span class="font-medium">
-                      {partnerName(offer.partnerId)}
-                    </span>
-                  {/if}
-                </div>
-              </Link>
-              <div class="flex gap-6 self-center text-sm">
-                <Link
-                  to="/preview/{offer.id}"
-                  class="btn btn-sm"
-                  title={$t('offerList.actions.preview')}>
-                  <PrinterIcon size={20} />
+                  <div class="text-sm text-gray-500 flex items-center gap-1">
+                    <span><Clock size={14} /></span>
+                    <span>{dateFormat.format(offer.offerDate)}</span>
+                    {#if offer.partnerId}
+                      <span class="ml-1"><User size={14} /></span>
+                      <span class="font-medium">
+                        {partnerName(offer.partnerId)}
+                      </span>
+                    {/if}
+                  </div>
                 </Link>
-                <button
-                  class="btn btn-sm"
-                  title={$t('offerList.actions.copy')}
-                  on:click={() => handleCopy(offer.id)}>
-                  <CopyPlus size={20} />
-                </button>
-                <button
-                  class="btn btn-sm"
-                  title={$t('offerList.actions.delete')}
-                  on:click={() => handleDelete(offer.id)}>
-                  <Trash2 size={20} />
-                </button>
-              </div>
-            </li>
-          {/each}
-        </ul>
-      </div>
+                <div class="flex gap-6 self-center text-sm">
+                  <Link
+                    to="/preview/{offer.id}"
+                    class="btn btn-sm"
+                    title={$t('offerList.actions.preview')}>
+                    <PrinterIcon size={20} />
+                  </Link>
+                  <button
+                    class="btn btn-sm"
+                    title={$t('offerList.actions.copy')}
+                    on:click={() => handleCopy(offer.id)}>
+                    <CopyPlus size={20} />
+                  </button>
+                  <button
+                    class="btn btn-sm"
+                    title={$t('offerList.actions.delete')}
+                    on:click={() => handleDelete(offer.id)}>
+                    <Trash2 size={20} />
+                  </button>
+                </div>
+              </li>
+            {/each}
+          </ul>
+        </div>
+      {:else}
+        <div class="flex h-full justify-center items-center">
+          <div class="flex flex-col items-center gap-4">
+            <p class="text-lg">{$t('offerList.hint')}</p>
+          </div>
+        </div>
+      {/if}
     </section>
   </Layout>
 </Loader>
