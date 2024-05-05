@@ -27,10 +27,6 @@ export class PartnerService {
     }
 
     const partnerIds = input.map((p) => p.id).filter((id) => !!id);
-    if (partnerIds.length > 0) {
-      await this.db.delete(partners).where(notInArray(partners.id, partnerIds));
-    } else {
-      await this.db.delete(partners);
-    }
+    await this.db.delete(partners).where(notInArray(partners.id, partnerIds));
   }
 }

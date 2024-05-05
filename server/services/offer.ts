@@ -12,7 +12,7 @@ export class OfferService {
       await this.db.selectDistinct({ year: offers.year }).from(offers)
     )?.map((o) => o.year);
 
-    if(years.length === 0) {
+    if (years.length === 0) {
       years.push(new Date().getFullYear());
     }
 

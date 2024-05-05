@@ -85,7 +85,8 @@ const translations: Translations = {
     'partners.title': 'Partnerek',
     'partners.actions.add': 'Új partner',
     'partners.actions.back': 'Vissza az ajánlathoz',
-    'partners.hint': 'Itt rögzíthet partnereket melyeket kiválaszthat az ajánlat készítés során.',
+    'partners.hint':
+      'Itt rögzíthet partnereket melyeket kiválaszthat az ajánlat készítés során.',
     'partners.actions.addPartner': 'Partner rögzítése',
     'partners.actions.delete': 'Törlés',
     'partners.actions.save': 'Mentés',
