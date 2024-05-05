@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { LoaderIcon } from "lucide-svelte";
+  import { LoaderIcon } from 'lucide-svelte';
 
   export let onSave: () => Promise<void>;
   let pending = false;

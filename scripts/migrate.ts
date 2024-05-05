@@ -9,7 +9,7 @@ import { defaultContact } from '../server/types';
 
 const db = createDbClient({
   authToken: process.env.TURSO_AUTH_TOKEN!,
-  url: process.env.TURSO_CONNECTION_URL!
+  url: process.env.TURSO_CONNECTION_URL!,
 });
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

@@ -13,7 +13,7 @@
   const { offer } = offerState;
 
   const tabs = ['form', 'items'];
-  
+
   let activeTab: (typeof tabs)[number] = tabs[0];
 
   async function saveOffer() {

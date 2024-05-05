@@ -46,7 +46,8 @@
                 type="number"
                 class="input input-bordered input-sm text-right w-full"
                 value={item.amount}
-                on:change={(e) => (item.amount = e.currentTarget.valueAsNumber)}/></td>
+                on:change={(e) =>
+                  (item.amount = e.currentTarget.valueAsNumber)} /></td>
             <td>
               <PriceInput
                 bind:value={item.workPrice}
