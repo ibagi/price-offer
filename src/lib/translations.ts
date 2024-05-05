@@ -8,7 +8,7 @@ const translations: Translations = {
     'navigation.preview': 'Előnézet',
     'navigation.actions.export': 'Adatok exportálása',
     'offerList.title': 'Ajánlatok',
-    'offerList.labels.yearButton': '{{ year }} év ajánlatai',
+    'offerList.labels.yearButton': '{{year}} év ajánlatai',
     'offerList.actions.add': 'Új ajánlat',
     'offerList.actions.open': 'Ajánlat megtekintése',
     'offerList.actions.copy': 'Ajánlat másolása',
