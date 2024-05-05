@@ -14,7 +14,6 @@
     'address',
     'companyNumber',
     'taxNumber',
-    'bankAccountNumber',
     'person',
   ];
 
