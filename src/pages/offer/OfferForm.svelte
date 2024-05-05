@@ -15,7 +15,7 @@
 <section class="flex justify-around pt-8">
   <div>
     <div class="flex gap-2 py-2">
-      <label class="font-medium label text-sm w-32" for="partner">
+      <label class="font-medium label text-sm w-28" for="partner">
         {$t('priceOffer.labels.partner')}
       </label>
       <select
@@ -39,7 +39,7 @@
     </div>
 
     <div class="flex gap-2 py-2">
-      <label class="font-medium label text-sm w-32" for="offerNumber">
+      <label class="font-medium label text-sm w-28" for="offerNumber">
         {$t('priceOffer.labels.offerNumber')}
       </label>
       <input
@@ -52,7 +52,7 @@
     </div>
 
     <div class="flex gap-2 py-2">
-      <label class="font-medium label text-sm w-32" for="projectName"
+      <label class="font-medium label text-sm w-28" for="projectName"
         >{$t('priceOffer.labels.project')}
       </label>
       <input
@@ -65,7 +65,7 @@
     </div>
 
     <div class="flex gap-2 py-2">
-      <label class="font-medium label text-sm w-32" for="offerPlace">
+      <label class="font-medium label text-sm w-28" for="offerPlace">
         {$t('priceOffer.labels.offerPlace')}
       </label>
       <input
@@ -77,7 +77,7 @@
     </div>
 
     <div class="flex gap-2 py-2">
-      <label class="font-medium label text-sm w-32" for="status">
+      <label class="font-medium label text-sm w-28" for="status">
         {$t('priceOffer.labels.status')}
       </label>
       <select
@@ -95,10 +95,10 @@
 
   <div>
     <div class="flex gap-2 py-2">
-      <label class="font-medium label text-sm w-44" for="offerDate">
+      <label class="font-medium label text-sm w-36" for="offerDate">
         {$t('priceOffer.labels.offerDate')}
       </label>
-      <div class="w-64">
+      <div class="w-48">
         <DateInput
           id="offerDate"
           placeholder={$t('priceOffer.labels.offerDate')}
@@ -108,7 +108,7 @@
     </div>
 
     <div class="flex gap-2 py-2">
-      <label class="font-medium label text-sm w-44" for="validity">
+      <label class="font-medium label text-sm w-36" for="validity">
         {$t('priceOffer.labels.validity')}
       </label>
       <input
@@ -121,7 +121,7 @@
     </div>
 
     <div class="flex gap-2 py-2">
-      <label class="font-medium label text-sm w-44" for="taxRate">
+      <label class="font-medium label text-sm w-36" for="taxRate">
         {$t('priceOffer.labels.taxRate')}
       </label>
       <input
@@ -134,7 +134,7 @@
     </div>
 
     <div class="flex gap-2 py-2">
-      <label class="font-medium label text-sm w-44" for="productionTime">
+      <label class="font-medium label text-sm w-36" for="productionTime">
         {$t('priceOffer.labels.productionTime')}
       </label>
       <input
@@ -147,7 +147,7 @@
     </div>
 
     <div class="flex gap-2 py-2">
-      <label class="font-medium label text-sm w-44" for="currency">
+      <label class="font-medium label text-sm w-36" for="currency">
         {$t('priceOffer.labels.currency')}
       </label>
       <select
