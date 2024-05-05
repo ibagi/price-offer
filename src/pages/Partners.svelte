@@ -5,6 +5,7 @@
   import { t } from '../lib/i18n';
   import { savePartners } from '../services/partner';
   import { partnerState } from '../state';
+  import SaveButton from '../components/SaveButton.svelte';
 
   const { partners, addPartner, removePartner } = partnerState;
 
@@ -96,7 +97,8 @@
   </section>
 
   <section slot="actions" class="flex gap-2 justify-end border-t-2 pt-2">
-    <button class="btn btn-neutral btn-sm" on:click={save}
-      >{$t('partners.actions.save')}</button>
+    <SaveButton class="btn btn-neutral btn-sm" onSave={save}
+      >{$t('partners.actions.save')}
+    </SaveButton>
   </section>
 </Layout>

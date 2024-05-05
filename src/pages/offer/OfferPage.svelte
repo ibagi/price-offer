@@ -4,15 +4,16 @@
   import { t } from '../../lib/i18n';
   import { OfferState } from '../../state';
   import { updateOffer } from '../../services/offer';
-  import { type Offer } from '../../lib/types';
   import OfferItems from './OfferItems.svelte';
   import OfferForm from './OfferForm.svelte';
   import OfferSummary from './OfferSummary.svelte';
+  import SaveButton from '../../components/SaveButton.svelte';
 
   export let offerState: OfferState;
   const { offer } = offerState;
 
   const tabs = ['form', 'items'];
+  
   let activeTab: (typeof tabs)[number] = tabs[0];
 
   async function saveOffer() {
@@ -84,8 +85,9 @@
       <button class="btn btn-neutral btn-sm" on:click={offerState.addItem}
         >{$t('priceOffer.actions.add')}</button>
     {/if}
-    <button class="btn btn-neutral btn-sm" on:click={saveOffer}
-      >{$t('priceOffer.actions.save')}</button>
+    <SaveButton class="btn btn-neutral btn-sm" onSave={saveOffer}>
+      {$t('priceOffer.actions.save')}
+    </SaveButton>
   </section>
 </Layout>
 
