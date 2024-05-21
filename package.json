@@ -44,6 +44,7 @@
     "cors": "^2.8.5",
     "daisyui": "^4.6.0",
     "dayjs": "^1.11.10",
+    "debounce": "^2.0.0",
     "decimal.js": "^10.4.3",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.30.5",

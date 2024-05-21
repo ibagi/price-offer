@@ -4,7 +4,6 @@
   import { saveContact } from '../services/contact';
   import Layout from '../layouts/Layout.svelte';
   import type { Contact } from '../../server/types';
-  import SaveButton from '../components/SaveButton.svelte';
 
   type Field = keyof Contact;
   const fields: Field[] = [
@@ -20,9 +19,7 @@
 
   const { contact } = contactState;
 
-  async function save() {
-    await saveContact($contact);
-  }
+  $: saveContact($contact);
 </script>
 
 <Layout>
@@ -43,11 +40,5 @@
         </div>
       {/each}
     </div>
-  </section>
-
-  <section slot="actions" class="flex gap-2 justify-end border-t-2 pt-2">
-    <SaveButton class="btn btn-neutral btn-sm" onSave={save}
-      >{$t('company.actions.save')}
-    </SaveButton>
   </section>
 </Layout>

@@ -1,4 +1,5 @@
-import { trpc } from '../client/trpc';
+import debounce from 'debounce';
+import { ApiCallDebounceMilis, trpc } from '../client/trpc';
 import type { Offer } from '../../server/types';
 
 export async function getOfferYears() {
@@ -24,14 +25,14 @@ export async function createOffer() {
   return await trpc.offers.create.mutate();
 }
 
-export async function updateOffer(offer: Offer) {
+export const updateOffer = debounce(async (offer: Offer) => {
   await trpc.offers.update.mutate(offer);
-}
+}, ApiCallDebounceMilis);
 
-export async function deleteOffer(offerId: string) {
+export const deleteOffer = debounce(async (offerId: string) => {
   await trpc.offers.delete.mutate({ offerId });
-}
+}, ApiCallDebounceMilis);
 
-export async function copyOffer(offerId: string) {
+export const copyOffer = debounce(async (offerId: string) => {
   return await trpc.offers.copy.mutate(offerId);
-}
+}, ApiCallDebounceMilis);

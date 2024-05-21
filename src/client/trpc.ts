@@ -2,6 +2,8 @@ import superjson from 'superjson';
 import type { AppRouter } from '../../server/router';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 
+export const ApiCallDebounceMilis = 2500;
+
 export const trpc = createTRPCClient<AppRouter>({
   links: [
     httpBatchLink({

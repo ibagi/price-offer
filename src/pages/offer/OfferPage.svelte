@@ -7,7 +7,6 @@
   import OfferItems from './OfferItems.svelte';
   import OfferForm from './OfferForm.svelte';
   import OfferSummary from './OfferSummary.svelte';
-  import SaveButton from '../../components/SaveButton.svelte';
 
   export let offerState: OfferState;
   const { offer } = offerState;
@@ -16,9 +15,7 @@
 
   let activeTab: (typeof tabs)[number] = tabs[0];
 
-  async function saveOffer() {
-    await updateOffer($offer);
-  }
+  $: updateOffer($offer);
 </script>
 
 <Layout>
@@ -85,9 +82,6 @@
       <button class="btn btn-neutral btn-sm" on:click={offerState.addItem}
         >{$t('priceOffer.actions.add')}</button>
     {/if}
-    <SaveButton class="btn btn-neutral btn-sm" onSave={saveOffer}>
-      {$t('priceOffer.actions.save')}
-    </SaveButton>
   </section>
 </Layout>
 
