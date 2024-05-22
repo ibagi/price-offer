@@ -1,12 +1,15 @@
 import { nanoid } from 'nanoid';
-import { derived, writable, type Readable, type Writable } from 'svelte/store';
+import { derived, type Readable } from 'svelte/store';
 import { defaultPartner, type Offer, type Partner } from '../../server/types';
+import { State } from '../lib/state';
 
-export class PartnerState {
-  partners: Writable<Partner[]>;
+export class PartnerState extends State<Partner[]> {
+  get partners() {
+    return this.state;
+  }
 
   constructor(from: Partner[]) {
-    this.partners = writable<Partner[]>(from);
+    super({ initialState: from });
   }
 
   addPartner = () => {

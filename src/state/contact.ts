@@ -1,10 +1,12 @@
-import { writable, type Writable } from 'svelte/store';
-import type { Contact } from '../../server/types';
+import type { Contact } from '../lib/types';
+import { State } from '../lib/state';
 
-export class ContactState {
-  contact: Writable<Contact>;
+export class ContactState extends State<Contact> {
+  get contact() {
+    return this.state;
+  }
 
   constructor(from: Contact) {
-    this.contact = writable<Contact>(from);
+    super({ initialState: from });
   }
 }

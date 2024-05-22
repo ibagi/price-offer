@@ -1,4 +1,4 @@
-import { derived, writable, type Readable, type Writable } from 'svelte/store';
+import { derived, type Readable } from 'svelte/store';
 import * as prices from '../lib/prices';
 import {
   defaultOffer,
@@ -6,17 +6,22 @@ import {
   type Offer,
   type OfferItem,
 } from '../../server/types';
+import { State } from '../lib/state';
 
-export class OfferState {
-  offer: Writable<Offer>;
-
+export class OfferState extends State<Offer> {
   hasItem: Readable<boolean>;
   netto: Readable<number>;
   tax: Readable<number>;
   brutto: Readable<number>;
 
+  get offer() {
+    return this.state;
+  }
+
   constructor(from: Offer | null = null) {
-    this.offer = writable(from ?? { ...defaultOffer });
+    super({
+      initialState: from ?? { ...defaultOffer },
+    });
 
     this.netto = derived([this.offer], ([$offer]) =>
       prices.netto(($offer.items ?? []).map(this.totalPrice), $offer.currency),

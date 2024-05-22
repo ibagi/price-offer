@@ -5,13 +5,17 @@ import { getContact } from '../services/contact';
 import { OfferState } from './offer';
 import { defaultContact } from '../../server/types';
 
-export const contactState = new ContactState({ ...defaultContact });
-export const partnerState = new PartnerState([]);
+export let contactState = new ContactState({ ...defaultContact });
+export let partnerState = new PartnerState([]);
 
 export async function restoreState() {
   return Promise.all([
-    getPartners().then(partnerState.partners.set),
-    getContact().then(contactState.contact.set),
+    getPartners().then((partners) => {
+      partnerState = new PartnerState(partners);
+    }),
+    getContact().then((contact) => {
+      contactState = new ContactState(contact);
+    }),
   ]);
 }
 

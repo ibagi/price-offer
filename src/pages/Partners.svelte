@@ -6,9 +6,9 @@
   import { savePartners } from '../services/partner';
   import { partnerState } from '../state';
 
-  const { partners, addPartner, removePartner } = partnerState;
+  const { isDirty, partners, addPartner, removePartner } = partnerState;
 
-  $: savePartners($partners);
+  $: $isDirty && savePartners($partners);
 </script>
 
 <Layout>

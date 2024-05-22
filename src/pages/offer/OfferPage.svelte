@@ -9,13 +9,13 @@
   import OfferSummary from './OfferSummary.svelte';
 
   export let offerState: OfferState;
-  const { offer } = offerState;
+  const { isDirty, offer } = offerState;
 
   const tabs = ['form', 'items'];
 
   let activeTab: (typeof tabs)[number] = tabs[0];
 
-  $: updateOffer($offer);
+  $: $isDirty && updateOffer($offer);
 </script>
 
 <Layout>

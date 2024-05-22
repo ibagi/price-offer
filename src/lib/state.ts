@@ -1,25 +1,52 @@
-import { derived, writable, type Readable, type Writable } from 'svelte/store';
+import {
+  derived,
+  writable,
+  type Readable,
+  type Unsubscriber,
+  type Writable,
+} from 'svelte/store';
 
-export abstract class ResetableState<T> {
+function compareAsJsons<T>(a: T, b: T) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
+interface StateOptions<T> {
+  initialState: T;
+  comparator?: (a: T, b: T) => boolean;
+}
+
+export abstract class State<T> {
   private readonly _memo: T;
-  private readonly _isDirty: Writable<boolean>;
+  private _edited = false;
 
   state: Writable<T>;
   isDirty: Readable<boolean>;
 
-  constructor(initialState: T) {
-    this._memo = initialState;
-    this.state = writable(structuredClone(initialState));
+  isDirtySubscription: Unsubscriber;
 
-    this._isDirty = writable(false);
-    this.isDirty = derived(this._isDirty, (value) => value);
+  constructor(options: StateOptions<T>) {
+    this._memo = options.initialState;
+    this.state = writable(structuredClone(options.initialState));
 
-    // TODO: unsubscribe
-    this.state.subscribe((_) => this._isDirty.set(true));
+    this.isDirty = derived(this.state, (value) => {
+      if (this._edited) {
+        return true;
+      }
+
+      const comparator = options.comparator ?? compareAsJsons;
+      return !comparator(this._memo, value);
+    });
+
+    this.isDirtySubscription = this.isDirty.subscribe((dirty) => {
+      if (dirty && !this._edited) {
+        this._edited = true;
+      }
+    });
   }
 
-  reset() {
-    this.state.set(structuredClone(this._memo));
-    this._isDirty.set(false);
+  cleanup() {
+    if (this.isDirtySubscription) {
+      this.isDirtySubscription();
+    }
   }
 }

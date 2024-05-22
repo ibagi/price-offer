@@ -29,9 +29,9 @@ export const updateOffer = debounce(async (offer: Offer) => {
   await trpc.offers.update.mutate(offer);
 }, ApiCallDebounceMilis);
 
-export const deleteOffer = debounce(async (offerId: string) => {
+export async function deleteOffer(offerId: string) {
   await trpc.offers.delete.mutate({ offerId });
-}, ApiCallDebounceMilis);
+}
 
 export const copyOffer = debounce(async (offerId: string) => {
   return await trpc.offers.copy.mutate(offerId);

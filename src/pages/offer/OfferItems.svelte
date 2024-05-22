@@ -30,7 +30,8 @@
             <td
               ><input
                 class="input input-bordered input-sm w-full"
-                bind:value={item.name} /></td>
+                value={item.name}
+                on:input={e => (item.name = e.currentTarget.value)}/></td>
             <td>
               <Money
                 value={item.workPrice + item.materialPrice}
@@ -61,7 +62,8 @@
             <td>
               <input
                 class="input input-bordered input-sm w-full"
-                bind:value={item.description} />
+                value={item.description}
+                on:input={(e) => (item.description = e.currentTarget.value)} />
             </td>
             <td class="p-0 w-4">
               <button

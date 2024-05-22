@@ -17,9 +17,9 @@
     'person',
   ];
 
-  const { contact } = contactState;
+  const { isDirty, contact } = contactState;
 
-  $: saveContact($contact);
+  $: $isDirty && saveContact($contact);
 </script>
 
 <Layout>
