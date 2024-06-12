@@ -3,6 +3,7 @@
   import Money from '../components/Money.svelte';
   import { contactState, partnerState, OfferState } from '../state';
   import { getDecimalPlaces } from '../lib/prices';
+  import { usePrintFileName } from '../lib/printing';
 
   export let offerState = new OfferState();
   let saving = false;
@@ -20,6 +21,10 @@
       saving = false;
     });
   }
+
+  const setFileName = usePrintFileName();
+
+  $: setFileName($offer.offerNumber);
 </script>
 
 <main class="max-w-7xl mx-auto">

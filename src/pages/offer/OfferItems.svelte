@@ -31,7 +31,7 @@
               ><input
                 class="input input-bordered input-sm w-full"
                 value={item.name}
-                on:input={e => (item.name = e.currentTarget.value)}/></td>
+                on:input={(e) => (item.name = e.currentTarget.value)} /></td>
             <td>
               <Money
                 value={item.workPrice + item.materialPrice}
