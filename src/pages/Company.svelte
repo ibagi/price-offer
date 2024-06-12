@@ -3,7 +3,7 @@
   import { contactState } from '../state';
   import { saveContact } from '../services/contact';
   import Layout from '../layouts/Layout.svelte';
-  import type { Contact } from '../../server/types';
+  import type { Contact } from '../lib/types';
 
   type Field = keyof Contact;
   const fields: Field[] = [

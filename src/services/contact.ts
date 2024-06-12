@@ -1,5 +1,5 @@
 import debounce from 'debounce';
-import type { Contact } from '../../server/types';
+import type { Contact } from '../lib/types';
 import { ApiCallDebounceMilis, trpc } from '../client/trpc';
 
 export async function getContact() {

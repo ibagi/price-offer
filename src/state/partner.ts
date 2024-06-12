@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { derived, type Readable } from 'svelte/store';
-import { defaultPartner, type Offer, type Partner } from '../../server/types';
+import { defaultPartner, type Offer, type Partner } from '../lib/types';
 import { State } from '../lib/state';
 
 export class PartnerState extends State<Partner[]> {

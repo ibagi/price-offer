@@ -1,5 +1,5 @@
 import superjson from 'superjson';
-import type { AppRouter } from '../../server/router';
+import type { AppRouter } from 'server/router';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 
 export const ApiCallDebounceMilis = 1500;

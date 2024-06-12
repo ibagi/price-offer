@@ -9,20 +9,16 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "format": "prettier . --write",
-    "generate-migrations": "drizzle-kit generate:sqlite",
-    "migrate": "tsx scripts/migrate.ts",
-    "server": "tsx server/dev.ts",
+    "server": "pnpm --filter=server run dev",
     "dev": "concurrently \"pnpm run server\" \"pnpm run vite:dev\""
   },
   "devDependencies": {
     "@clerk/types": "^3.62.0",
-    "@cloudflare/workers-types": "^4.20240404.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.1",
     "@tsconfig/svelte": "^5.0.2",
-    "@types/cors": "^2.8.17",
     "autoprefixer": "^10.4.17",
     "concurrently": "^8.2.2",
-    "drizzle-kit": "^0.20.14",
+    "fetch": "link:@trpc/server/adapters/fetch",
     "postcss": "^8.4.33",
     "prettier": "^3.2.4",
     "prettier-plugin-svelte": "^3.1.2",
@@ -30,31 +26,26 @@
     "svelte-check": "^3.6.2",
     "tailwindcss": "^3.4.1",
     "tslib": "^2.6.2",
-    "tsx": "^4.7.1",
     "typescript": "^5.2.2",
     "vite": ">=5.0.13"
   },
   "dependencies": {
     "@clerk/clerk-js": "^4.70.0",
-    "@libsql/client": "^0.5.6",
     "@tailwindcss/typography": "^0.5.10",
     "@trpc/client": "11.0.0-rc.329",
-    "@trpc/server": "11.0.0-next.327",
-    "@tsndr/cloudflare-worker-jwt": "^2.5.3",
-    "cors": "^2.8.5",
     "daisyui": "^4.6.0",
     "dayjs": "^1.11.10",
     "debounce": "^2.0.0",
     "decimal.js": "^10.4.3",
     "dotenv": "^16.4.5",
-    "drizzle-orm": "^0.30.5",
-    "drizzle-zod": "^0.5.1",
-    "fetch": "link:@trpc/server/adapters/fetch",
     "lucide-svelte": "^0.317.0",
     "nanoid": "^5.0.6",
-    "standalone": "link:@trpc/server/adapters/standalone",
+    "server": "workspace:*",
     "superjson": "^2.2.1",
     "svelte-navigator": "^3.2.2",
     "zod": "^3.22.4"
-  }
+  },
+  "workspaces": [
+    "packages/server"
+  ]
 }

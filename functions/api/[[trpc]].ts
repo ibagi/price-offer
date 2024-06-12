@@ -1,7 +1,7 @@
-import { appRouter } from '../../server/router';
-import { createDbClient } from '../../server/db';
-import { initializeServices } from '../../server/services';
-import { authorizeRequest } from '../../server/services/auth';
+import { appRouter } from 'server/router';
+import { createDbClient } from 'server/db';
+import { initializeServices } from 'server/services';
+import { authorizeRequest } from 'server/services/auth';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 
 interface Env {

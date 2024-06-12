@@ -1,6 +1,6 @@
 import debounce from 'debounce';
 import { ApiCallDebounceMilis, trpc } from '../client/trpc';
-import type { Offer } from '../../server/types';
+import type { Offer } from '../lib/types';
 
 export async function getOfferYears() {
   const years = await trpc.offers.offerYears.query();

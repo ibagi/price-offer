@@ -5,7 +5,7 @@ import {
   defaultOfferItem,
   type Offer,
   type OfferItem,
-} from '../../server/types';
+} from '../lib/types';
 import { State } from '../lib/state';
 
 export class OfferState extends State<Offer> {

@@ -3,7 +3,7 @@ import { PartnerState } from './partner';
 import { getPartners } from '../services/partner';
 import { getContact } from '../services/contact';
 import { OfferState } from './offer';
-import { defaultContact } from '../../server/types';
+import { defaultContact } from '../lib/types';
 
 export let contactState = new ContactState({ ...defaultContact });
 export let partnerState = new PartnerState([]);
