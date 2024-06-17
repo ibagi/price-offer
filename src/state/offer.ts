@@ -62,6 +62,13 @@ export class OfferState extends State<Offer> {
     }));
   };
 
+  update = (update: Partial<Offer>) => {
+    this.offer.update(($offer) => ({
+      ...$offer,
+      ...update,
+    }));
+  };
+
   totalPrice(item: OfferItem) {
     return (item.materialPrice + item.workPrice) * item.amount;
   }

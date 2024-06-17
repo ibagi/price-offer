@@ -3,7 +3,7 @@
   import Layout from '../../layouts/Layout.svelte';
   import { t } from '../../lib/i18n';
   import { OfferState } from '../../state';
-  import { updateOffer } from '../../services/offer';
+  import { autoUpdateOffer } from '../../services/offer';
   import OfferItems from './OfferItems.svelte';
   import OfferForm from './OfferForm.svelte';
   import OfferSummary from './OfferSummary.svelte';
@@ -15,7 +15,7 @@
 
   let activeTab: (typeof tabs)[number] = tabs[0];
 
-  $: $isDirty && updateOffer($offer);
+  $: $isDirty && autoUpdateOffer($offer);
 </script>
 
 <Layout>

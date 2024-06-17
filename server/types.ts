@@ -23,6 +23,14 @@ export type OfferItem = z.infer<typeof offerItemSchema>;
 export type OfferStatus = Offer['status'];
 export type Currency = Offer['currency'];
 
+export const offerUpdateSchema = offerSchema.omit({
+  sequence: true,
+  year: true,
+  createdAt: true,
+});
+
+export type OfferUpdate = z.infer<typeof offerUpdateSchema>;
+
 export const defaultContact: Contact = {
   id: '',
   person: '-',
@@ -78,3 +86,14 @@ export const offerStatuses: OfferStatus[] = [
 ];
 
 export const currencies: Currency[] = ['HUF', 'EUR'];
+
+export function offerNumberPrefix(date: Date) {
+  const shortYear = date.getFullYear().toString().slice(2, 4);
+  return `AJ-PT-${shortYear}-`;
+}
+
+export function generateOfferNumber(sequence: number) {
+  const prefix = offerNumberPrefix(new Date());
+  const sequenceString = String(sequence).padStart(3, '0');
+  return `${prefix}${sequenceString}`;
+}

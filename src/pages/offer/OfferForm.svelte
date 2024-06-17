@@ -2,14 +2,20 @@
   import { Link } from 'svelte-navigator';
   import { t } from '../../lib/i18n';
   import { OfferState, partnerState } from '../../state';
-  import { Edit } from 'lucide-svelte';
+  import { EditIcon, PencilIcon } from 'lucide-svelte';
   import { currencies, offerStatuses } from '../../lib/types';
   import DateInput from '../../components/DateInput.svelte';
+  import OfferNumberDialog from './OfferNumberDialog.svelte';
 
   export let offerState: OfferState;
+  let offerNumberDialogRef: OfferNumberDialog;
 
   const { partners } = partnerState;
   const { offer } = offerState;
+
+  function editOfferNumber(offerDate: Date, sequence: number) {
+    offerNumberDialogRef.show(offerDate, sequence);
+  }
 </script>
 
 <section class="flex justify-around pt-8">
@@ -31,10 +37,10 @@
       </select>
       <Link
         as="a"
-        class="btn btn-sm btn-neutral p-0 px-1"
+        class="btn btn-sm p-0 px-1"
         title={$t('priceOffer.tooltips.partner')}
         to="/partners">
-        <Edit />
+        <EditIcon size={18} />
       </Link>
     </div>
 
@@ -48,7 +54,14 @@
         class="input input-sm input-bordered w-96"
         type="text"
         name="offerNumber"
+        disabled
         bind:value={$offer.offerNumber} />
+      <button
+        class="btn btn-sm btn-neutral p-0 px-1"
+        title={$t('priceOffer.actions.modifyOfferNumber')}
+        on:click={() => editOfferNumber($offer.offerDate, $offer.sequence)}>
+        <PencilIcon size={18} />
+      </button>
     </div>
 
     <div class="flex gap-2 py-2">
@@ -162,4 +175,6 @@
       </select>
     </div>
   </div>
+
+  <OfferNumberDialog bind:this={offerNumberDialogRef} {offerState} />
 </section>

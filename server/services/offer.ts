@@ -1,8 +1,25 @@
-import { eq, max } from 'drizzle-orm';
+import { and, count, eq, max, ne } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import { type Database } from '../db';
 import { offers } from '../db/schema';
-import { type Offer, defaultOffer } from '../types';
+import {
+  type Offer,
+  defaultOffer,
+  generateOfferNumber,
+  type OfferUpdate,
+} from '../types';
+import { ValidationError, errors } from '../errors';
+
+export function parseSequenceNumber(offerNumber: string) {
+  const regex = /^AJ-PT-\d{2}-(\d{3})$/;
+  const matches = offerNumber.match(regex);
+
+  if (matches?.length === 2) {
+    return Number(matches[1]);
+  }
+
+  return null;
+}
 
 export class OfferService {
   constructor(private readonly db: Database) {}
@@ -48,13 +65,33 @@ export class OfferService {
     });
   }
 
-  async updateOffer(offer: Offer) {
-    if (offer.id) {
-      await this.db
-        .update(offers)
-        .set({ ...offer })
-        .where(eq(offers.id, offer.id));
+  async updateOffer(update: OfferUpdate) {
+    const sequenceNumber = parseSequenceNumber(update.offerNumber);
+    if (!sequenceNumber) {
+      throw new ValidationError(errors.InvalidOfferNumber);
     }
+
+    const [{ matchCount }] = await this.db
+      .select({ matchCount: count() })
+      .from(offers)
+      .where(
+        and(
+          eq(offers.offerNumber, update.offerNumber),
+          ne(offers.id, update.id),
+        ),
+      );
+
+    if (matchCount > 0) {
+      throw new ValidationError(errors.OfferNumberAlreadyExists);
+    }
+
+    await this.db
+      .update(offers)
+      .set({
+        ...update,
+        sequence: sequenceNumber,
+      })
+      .where(eq(offers.id, update.id));
   }
 
   async deleteOffer(offerId: string) {
@@ -79,7 +116,7 @@ export class OfferService {
       createdAt: new Date(),
       offerDate: new Date(),
       year: new Date().getFullYear(),
-      offerNumber: this.generateOfferNumber(sequence),
+      offerNumber: generateOfferNumber(sequence),
       sequence,
     };
 
@@ -90,16 +127,10 @@ export class OfferService {
         target: [offers.sequence, offers.year],
         set: {
           sequence: sequence + 1,
-          offerNumber: this.generateOfferNumber(sequence + 1),
+          offerNumber: generateOfferNumber(sequence + 1),
         },
       });
 
     return offer;
-  }
-
-  private generateOfferNumber(sequence: number) {
-    const sequenceString = String(sequence).padStart(3, '0');
-    const shortYear = new Date().getFullYear().toString().slice(2, 4);
-    return `AJ-PT-${shortYear}-${sequenceString}`;
   }
 }

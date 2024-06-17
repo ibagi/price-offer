@@ -36,6 +36,7 @@ const translations: Translations = {
     'priceOffer.actions.delete': 'Törlés',
     'priceOffer.actions.preview': 'Előnézet',
     'priceOffer.actions.save': 'Mentés',
+    'priceOffer.actions.modifyOfferNumber': 'Ajánlat szám módosítása',
     'priceOffer.tableColumns.item': 'Munka megnevezése',
     'priceOffer.tableColumns.unitPrice': 'Ár/db',
     'priceOffer.tableColumns.amount': 'Darab',
@@ -48,6 +49,7 @@ const translations: Translations = {
     'priceOffer.summary.brutto': 'Bruttó:',
     'priceOffer.tabs.form': 'Adatok',
     'priceOffer.tabs.items': 'Tételek',
+    'priceOffer.offerNumberDialog.title': 'Ajánlat szám megadása',
     'preview.title': 'Árajánlat',
     'preview.actions.back': 'Vissza',
     'preview.actions.print': 'Nyomtatás',
@@ -114,6 +116,9 @@ const translations: Translations = {
     'confirmation.yes': 'Igen',
     'confirmation.cancel': 'Mégsem',
     'confirmation.title': 'Megerősítés',
+    'errors.offer_not_found': 'Ajánlat nem található',
+    'errors.invalid_offer_number': 'Hibás ajánlat szám formátum',
+    'errors.offer_number_already_exists': 'Foglalt ajánlat szám',
   },
 };
 

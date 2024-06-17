@@ -1,8 +1,9 @@
 import superjson from 'superjson';
 import { z } from 'zod';
 import { TRPCError, initTRPC } from '@trpc/server';
-import { contactSchema, offerSchema, partnerSchema } from './types';
+import { contactSchema, offerUpdateSchema, partnerSchema } from './types';
 import { initializeServices } from './services';
+import { ValidationError } from './errors';
 
 interface Context {
   isAuthorized: boolean;
@@ -60,9 +61,21 @@ const offerRouter = t.router({
     return await ctx.services.offer.copyOffer(input);
   }),
 
-  update: apiProcedure.input(offerSchema).mutation(async ({ ctx, input }) => {
-    await ctx.services.offer.updateOffer(input);
-  }),
+  update: apiProcedure
+    .input(offerUpdateSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        await ctx.services.offer.updateOffer(input);
+      } catch (err) {
+        throw new TRPCError({
+          cause: err,
+          code:
+            err instanceof ValidationError
+              ? 'BAD_REQUEST'
+              : 'INTERNAL_SERVER_ERROR',
+        });
+      }
+    }),
 
   delete: apiProcedure
     .input(z.object({ offerId: z.string() }))
