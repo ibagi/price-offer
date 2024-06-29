@@ -11,12 +11,12 @@ interface Env {
 }
 
 async function createContext({ req, env }) {
-  const isAuthorized = await authorizeRequest(
+  const userContext = await authorizeRequest(
     req.headers.get('authorization'),
     env.CLERK_PEM_PUBLIC_KEY,
   );
   return {
-    isAuthorized,
+    userContext,
     services: initializeServices(
       createDbClient({
         url: env.TURSO_CONNECTION_URL,

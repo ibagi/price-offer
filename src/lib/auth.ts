@@ -3,6 +3,7 @@ import type { UserResource } from '@clerk/types';
 import { writable } from 'svelte/store';
 
 import { localization } from './translations.clerk';
+import { trpc } from '../client/trpc';
 
 type User = UserResource | null | undefined;
 
@@ -41,4 +42,8 @@ export async function signOut() {
 
 export function mountUserButton(el: HTMLDivElement) {
   clerk.mountUserButton(el);
+}
+
+export async function initializeUser() {
+  await trpc.user.initialize.mutate();
 }

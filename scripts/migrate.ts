@@ -2,9 +2,9 @@ import 'dotenv/config';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { nanoid } from 'nanoid';
+import { contacts } from '../server/db/schema';
 import { migrate } from 'drizzle-orm/libsql/migrator';
 import { createDbClient } from '../server/db/';
-import { contacts } from '../server/db/schema';
 import { defaultContact } from '../server/types';
 
 const db = createDbClient({

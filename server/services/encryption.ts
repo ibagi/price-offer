@@ -1,65 +1,17 @@
 import crypto from 'node:crypto';
 import bcrypt from 'bcrypt';
-
-type EncryptionKeyRecord = {
-  userId: string;
-  salt: string;
-  encryptedKey: string;
-};
+import type { Database } from '../db';
+import { encryptionKeys } from '../db/schema';
+import { eq } from 'drizzle-orm';
 
 type EncryptionCredentials = {
   userId: string;
-  userToken: string;
+  pin: string;
 };
 
 type BuiltInError = {
   code: string;
 };
-
-const encryptionKeys: EncryptionKeyRecord[] = [];
-
-export async function register(request: EncryptionCredentials) {
-  const salt = await bcrypt.genSalt();
-  const derivedKey = await createDerivedKey(request.userToken, salt);
-
-  const encryptionKey = crypto.randomBytes(16).toString('hex');
-  const encryptedKey = encrypt(encryptionKey, derivedKey, 'hex');
-
-  encryptionKeys.push({
-    userId: request.userId,
-    salt,
-    encryptedKey,
-  });
-}
-
-export async function getEncryptionKey(request: EncryptionCredentials) {
-  const encryptionRecord = encryptionKeys.find(
-    (k) => k.userId === request.userId,
-  );
-
-  if (!encryptionRecord) {
-    throw new Error('User not found!');
-  }
-
-  try {
-    const derivedKey = await createDerivedKey(
-      request.userToken,
-      encryptionRecord.salt,
-    );
-
-    const encryptionKey = decrypt(
-      encryptionRecord.encryptedKey,
-      derivedKey,
-      'hex',
-    );
-
-    return encryptionKey;
-  } catch (e) {
-    if ((e as BuiltInError).code === 'ERR_OSSL_BAD_DECRYPT') {
-      throw new Error('Invalid user token!');
-    }
-  }
-}
 
 function createDerivedKey(userToken: string, salt: string): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -98,4 +50,52 @@ export function decrypt(
   decryptedData += decipher.final(encoding);
 
   return decryptedData;
+}
+
+export class EncryptionService {
+  constructor(private readonly db: Database) {}
+
+  async register(request: EncryptionCredentials) {
+    const salt = await bcrypt.genSalt();
+    const pinHash = await bcrypt.hash(request.pin, salt);
+    const derivedKey = await createDerivedKey(pinHash, salt);
+
+    const encryptionKey = crypto.randomBytes(16).toString('hex');
+    const encryptedKey = encrypt(encryptionKey, derivedKey, 'hex');
+
+    await this.db.insert(encryptionKeys).values({
+      userId: request.userId,
+      salt: salt,
+      encryptedKey: encryptedKey,
+    });
+
+    return pinHash;
+  }
+
+  async getEncryptionKey(request: EncryptionCredentials) {
+    const encryptionRecord = await this.db.query.encryptionKeys.findFirst({
+      where: eq(encryptionKeys.userId, request.userId),
+    });
+
+    if (!encryptionRecord) {
+      throw new Error('User not found!');
+    }
+
+    try {
+      const pinHash = await bcrypt.hash(request.pin, encryptionRecord.salt);
+      const derivedKey = await createDerivedKey(pinHash, encryptionRecord.salt);
+
+      const encryptionKey = decrypt(
+        encryptionRecord.encryptedKey,
+        derivedKey,
+        'hex',
+      );
+
+      return encryptionKey;
+    } catch (e) {
+      if ((e as BuiltInError).code === 'ERR_OSSL_BAD_DECRYPT') {
+        throw new Error('Invalid user token!');
+      }
+    }
+  }
 }

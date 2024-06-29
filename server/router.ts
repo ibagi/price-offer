@@ -4,9 +4,10 @@ import { TRPCError, initTRPC } from '@trpc/server';
 import { contactSchema, offerUpdateSchema, partnerSchema } from './types';
 import { initializeServices } from './services';
 import { ValidationError } from './errors';
+import type { UserContext } from './services/auth';
 
 interface Context {
-  isAuthorized: boolean;
+  userContext: UserContext;
   services: ReturnType<typeof initializeServices>;
 }
 
@@ -15,11 +16,35 @@ const t = initTRPC.context<Context>().create({
 });
 
 export const apiProcedure = t.procedure.use(({ ctx, next }) => {
-  if (!ctx.isAuthorized) {
+  if (!ctx.userContext.isAuthenticated) {
     throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
 
   return next({ ctx });
+});
+
+const userRouter = t.router({
+  initialize: apiProcedure.mutation(async ({ ctx }) => {
+    const userId = ctx.userContext.userId;
+    const services = ctx.services;
+
+    if (!userId) {
+      return;
+    }
+
+    const metadata = await services.auth.getPrivateMetadata(userId);
+
+    if (!metadata.pinHash) {
+      const pinHash = await services.encryption.register({
+        userId,
+        pin: process.env.DEFAULT_PIN!,
+      });
+
+      await services.auth.setPrivateMetadata(userId, {
+        pinHash,
+      });
+    }
+  }),
 });
 
 const contactRouter = t.router({
@@ -103,6 +128,7 @@ const partnerRouter = t.router({
 });
 
 export const appRouter = t.router({
+  user: userRouter,
   contact: contactRouter,
   offers: offerRouter,
   partners: partnerRouter,

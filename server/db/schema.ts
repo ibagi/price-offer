@@ -76,6 +76,12 @@ export const offers = sqliteTable(
   }),
 );
 
+export const encryptionKeys = sqliteTable('encryption_keys', {
+  userId: text('user_id').primaryKey(),
+  salt: text('salt').notNull(),
+  encryptedKey: text('encrypted_key').notNull(),
+});
+
 export const offerRelations = relations(offers, ({ one }) => ({
   partner: one(partners, {
     fields: [offers.partnerId],

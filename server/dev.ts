@@ -12,7 +12,7 @@ const handler = createHTTPHandler({
   router: appRouter,
   createContext: async ({ req }) => {
     return {
-      isAuthorized: await authorizeRequest(
+      userContext: await authorizeRequest(
         req.headers.authorization,
         process.env.CLERK_PEM_PUBLIC_KEY!,
       ),
