@@ -154,25 +154,29 @@
     <tbody>
       {#each $offer.items ?? [] as item}
         <tr>
-          <td class="table-cell">{item.name}</td>
-          <td class="table-cell">{item.amount}</td>
-          <td class="table-cell">
+          <td class="table-cell text-left">{item.name}</td>
+          <td class="table-cell text-center">{item.amount}</td>
+          <td class="table-cell text-right">
             <Money
               value={item.workPrice + item.materialPrice}
               currency={$offer.currency} />
           </td>
-          <td class="table-cell">
+          <td class="table-cell text-right">
             <Money
               value={offerState.totalPrice(item)}
               currency={$offer.currency} />
           </td>
-          <td class="table-cell">
-            <Money value={item.workPrice} currency={$offer.currency} />
+          <td class="table-cell text-right">
+            {#if item.workPrice > 0}
+              <Money value={item.workPrice} currency={$offer.currency} />
+            {/if}
           </td>
-          <td class="table-cell">
-            <Money value={item.materialPrice} currency={$offer.currency} />
+          <td class="table-cell text-right">
+            {#if item.materialPrice > 0}
+              <Money value={item.materialPrice} currency={$offer.currency} />
+            {/if}
           </td>
-          <td class="table-cell">
+          <td class="table-cell text-center">
             {item.description}
           </td>
         </tr>
@@ -268,7 +272,6 @@
 
   .table-cell {
     font-weight: bold;
-    text-align: center;
     padding: 0.25rem;
     border: 3px solid black;
     background-color: #f2f2f2;

@@ -73,8 +73,8 @@ export const defaultOffer: Offer = {
 export const defaultOfferItem: OfferItem = {
   name: '',
   amount: 1,
-  workPrice: 1,
-  materialPrice: 1,
+  workPrice: 0,
+  materialPrice: 0,
   description: '',
 };
 

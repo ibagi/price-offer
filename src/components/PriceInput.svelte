@@ -21,7 +21,7 @@
     min="0.01"
     step="any"
     class="input input-bordered input-sm text-right w-full pr-12"
-    {value}
+    value={value === 0 ? undefined : value}
     on:change={(e) => handleChange(e.currentTarget.valueAsNumber)} />
   <span style="margin-left: -3rem;">
     {currency}
