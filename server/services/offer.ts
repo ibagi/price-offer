@@ -33,7 +33,7 @@ export class OfferService {
       years.push(new Date().getFullYear());
     }
 
-    return years;
+    return years.toSorted((a, b) => b - a);
   }
 
   async getOffersByYear(year: number) {
