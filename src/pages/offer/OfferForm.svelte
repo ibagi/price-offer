@@ -7,8 +7,12 @@
   import DateInput from '../../components/DateInput.svelte';
   import OfferNumberDialog from './OfferNumberDialog.svelte';
 
-  export let offerState: OfferState;
-  let offerNumberDialogRef: OfferNumberDialog;
+  interface Props {
+    offerState: OfferState;
+  }
+
+  let { offerState }: Props = $props();
+  let offerNumberDialogRef: OfferNumberDialog = $state();
 
   const { partners } = partnerState;
   const { offer } = offerState;
@@ -59,7 +63,7 @@
       <button
         class="btn btn-sm btn-neutral p-0 px-1"
         title={$t('priceOffer.actions.modifyOfferNumber')}
-        on:click={() => editOfferNumber($offer.offerDate, $offer.sequence)}>
+        onclick={() => editOfferNumber($offer.offerDate, $offer.sequence)}>
         <PencilIcon size={18} />
       </button>
     </div>

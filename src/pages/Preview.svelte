@@ -1,12 +1,14 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { t } from '../lib/i18n';
   import Money from '../components/Money.svelte';
   import { contactState, partnerState, OfferState } from '../state';
   import { getDecimalPlaces } from '../lib/prices';
   import { usePrintFileName } from '../lib/printing';
 
-  export let offerState = new OfferState();
-  let saving = false;
+  let { offerState = new OfferState() } = $props();
+  let saving = $state(false);
 
   const { contact } = contactState;
   const { offer, netto, tax, brutto } = offerState;
@@ -24,7 +26,9 @@
 
   const setFileName = usePrintFileName();
 
-  $: setFileName($offer.offerNumber);
+  run(() => {
+    setFileName($offer.offerNumber);
+  });
 </script>
 
 <main class="max-w-7xl mx-auto">
@@ -36,13 +40,13 @@
     <button
       class="btn btn-sm btn-neutral"
       class:no-print={saving}
-      on:click={() => history.back()}>
+      onclick={() => history.back()}>
       {$t('preview.actions.back')}
     </button>
     <button
       class="btn btn-sm btn-primary text-white"
       class:no-print={saving}
-      on:click={print}>
+      onclick={print}>
       {$t('preview.actions.print')}
     </button>
   </div>

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { t } from '../lib/i18n';
   import { contactState } from '../state';
   import { saveContact } from '../services/contact';
@@ -19,7 +21,9 @@
 
   const { isDirty, contact } = contactState;
 
-  $: $isDirty && saveContact($contact);
+  run(() => {
+    $isDirty && saveContact($contact);
+  });
 </script>
 
 <Layout>

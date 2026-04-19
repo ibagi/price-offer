@@ -4,7 +4,11 @@
   import Money from '../../components/Money.svelte';
   import { getDecimalPlaces } from '../../lib/prices';
 
-  export let offerState: OfferState;
+  interface Props {
+    offerState: OfferState;
+  }
+
+  let { offerState }: Props = $props();
   const { offer, netto, tax, brutto } = offerState;
 </script>
 

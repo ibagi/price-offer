@@ -24,11 +24,11 @@
   const dateFormat = new Intl.DateTimeFormat();
   const { partners } = partnerState;
 
-  let priceOffers: Offer[] = [];
-  let years: number[] = [];
-  let selectedYear: number = 0;
+  let priceOffers: Offer[] = $state([]);
+  let years: number[] = $state([]);
+  let selectedYear: number = $state(0);
 
-  let confirmationRef: Confirmation;
+  let confirmationRef: Confirmation = $state();
 
   async function loadOffers(year: number) {
     priceOffers = await getOffers(year);
@@ -71,7 +71,9 @@
 </script>
 
 <Loader params={selectedYear} loadFn={(year) => loadOffers(year)}>
-  <PageLoadIndicator slot="pending" />
+  {#snippet pending()}
+    <PageLoadIndicator  />
+  {/snippet}
   <Layout>
     <section class="h-full">
       <div class="flex justify-between pr-2 sticky top-0 bg-white">
@@ -84,12 +86,12 @@
                 aria-pressed={selectedYear === year}
                 class="btn btn-sm ml-2"
                 class:btn-neutral={year === selectedYear}
-                on:click={() => (selectedYear = year)}>{year}</button>
+                onclick={() => (selectedYear = year)}>{year}</button>
             {/each}
           {/if}
           <button
             class="ml-2 btn btn-sm btn-primary text-white"
-            on:click={newOffer}>
+            onclick={newOffer}>
             {$t('offerList.actions.add')}
           </button>
         </div>
@@ -129,13 +131,13 @@
                   <button
                     class="btn btn-sm"
                     title={$t('offerList.actions.copy')}
-                    on:click={() => handleCopy(offer.id)}>
+                    onclick={() => handleCopy(offer.id)}>
                     <CopyPlus size={20} />
                   </button>
                   <button
                     class="btn btn-sm"
                     title={$t('offerList.actions.delete')}
-                    on:click={() => handleDelete(offer)}>
+                    onclick={() => handleDelete(offer)}>
                     <Trash2 size={20} />
                   </button>
                 </div>

@@ -1,12 +1,23 @@
 <script lang="ts" generics="TParams, TData">
-  export let params: TParams;
-  export let loadFn: (p: TParams) => Promise<TData>;
+  interface Props {
+    params: TParams;
+    loadFn: (p: TParams) => Promise<TData>;
+    pending?: import('svelte').Snippet;
+    children?: import('svelte').Snippet<[any]>;
+  }
 
-  $: promise = loadFn(params);
+  let {
+    params,
+    loadFn,
+    pending,
+    children
+  }: Props = $props();
+
+  let promise = $derived(loadFn(params));
 </script>
 
 {#await promise}
-  <slot name="pending" />
+  {@render pending?.()}
 {:then data}
-  <slot {data} />
+  {@render children?.({ data, })}
 {/await}

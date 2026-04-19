@@ -2,7 +2,11 @@
   import type { OfferStatus } from '../../lib/types';
   import { t } from '../../lib/i18n';
 
-  export let status: OfferStatus;
+  interface Props {
+    status: OfferStatus;
+  }
+
+  let { status }: Props = $props();
 
   type ClassMap = Record<OfferStatus, string>;
 

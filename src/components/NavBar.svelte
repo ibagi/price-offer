@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { onMount } from 'svelte';
   import { Link, useLocation, type NavigatorLocation } from 'svelte-navigator';
   import type AnyObject from 'svelte-navigator/types/AnyObject';
@@ -7,7 +9,7 @@
   import { user, mountUserButton } from '../lib/auth';
   import { t } from '../lib/i18n';
 
-  let routes = [
+  let routes = $state([
     {
       to: '/company',
       title: $t('navigation.company'),
@@ -23,9 +25,9 @@
       title: $t('navigation.priceOfferList'),
       isActive: false,
     },
-  ];
+  ]);
 
-  let userButtonElement: HTMLDivElement;
+  let userButtonElement: HTMLDivElement = $state();
   const location = useLocation();
 
   function setActiveRoute(loc: NavigatorLocation<AnyObject>) {
@@ -34,7 +36,9 @@
 
   onMount(() => mountUserButton(userButtonElement));
 
-  $: setActiveRoute($location);
+  run(() => {
+    setActiveRoute($location);
+  });
 </script>
 
 <nav class="flex bg-teal-600 justify-between px-8">

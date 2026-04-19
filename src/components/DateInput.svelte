@@ -1,22 +1,37 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import dayjs from 'dayjs';
 
   const FORMAT = 'YYYY-MM-DD';
 
-  let internal: string | undefined;
+  let internal: string | undefined = $state();
 
-  export let id = '';
-  export let placeholder = '';
-  export let name = '';
-  export let value = new Date();
+  interface Props {
+    id?: string;
+    placeholder?: string;
+    name?: string;
+    value?: any;
+  }
+
+  let {
+    id = '',
+    placeholder = '',
+    name = '',
+    value = $bindable(new Date())
+  }: Props = $props();
 
   const input = (v: Date) => (internal = dayjs(v).format(FORMAT));
   const output = (v: string) => (value = dayjs(v, FORMAT).toDate());
 
-  $: input(value);
-  $: if (internal) {
-    output(internal);
-  }
+  run(() => {
+    input(value);
+  });
+  run(() => {
+    if (internal) {
+      output(internal);
+    }
+  });
 </script>
 
 <input

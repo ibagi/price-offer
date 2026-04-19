@@ -9,14 +9,18 @@
   import { updateOffer } from '../../services/offer';
   import type { OfferState } from '../../state';
 
-  export let offerState: OfferState;
+  interface Props {
+    offerState: OfferState;
+  }
+
+  let { offerState }: Props = $props();
   const { offer } = offerState;
 
-  let dialogRef: HTMLDialogElement;
+  let dialogRef: HTMLDialogElement = $state();
   let offerDate = new Date();
-  let sequence: number;
+  let sequence: number = $state();
 
-  let error: TRPCClientError<any> | null;
+  let error: TRPCClientError<any> | null = $state();
 
   async function save(e: Event, offer: Offer) {
     e.preventDefault();
@@ -64,9 +68,9 @@
             {$t(`errors.${error.message}`)}
           </div>
         {/if}
-        <button class="btn btn-neutral" on:click={(e) => save(e, $offer)}
+        <button class="btn btn-neutral" onclick={(e) => save(e, $offer)}
           >{$t('priceOffer.actions.save')}</button>
-        <button class="btn" on:click={cancel}>
+        <button class="btn" onclick={cancel}>
           {$t('confirmation.cancel')}
         </button>
       </div>
