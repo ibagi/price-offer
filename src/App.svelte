@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { Router, Route } from 'svelte-navigator';
+  import {
+    Router as NavigatorRouter,
+    Route as NavigatorRoute,
+  } from 'svelte-navigator';
   import { getOffer } from './services/offer';
   import { OfferState } from './state';
 
@@ -12,6 +15,9 @@
   import Preview from './pages/Preview.svelte';
   import Company from './pages/Company.svelte';
   import Partners from './pages/Partners.svelte';
+
+  const Router = NavigatorRouter as any;
+  const Route = NavigatorRoute as any;
 </script>
 
 <Auth>
@@ -19,17 +25,29 @@
     <Route path="/">
       <OfferList />
     </Route>
-    <Route path="/offer/:offerId" let:params>
-      <Loader params={params.offerId} loadFn={(id) => getOffer(id)} let:data>
-        <Offer offerState={new OfferState(data)} />
-        <PageLoadIndicator slot="pending" />
-      </Loader>
+    <Route path="/offer/:offerId">
+      {#snippet children({ params }: { params: { offerId: string } })}
+        <Loader params={params.offerId} loadFn={(id) => getOffer(id)}>
+          {#snippet children({ data })}
+            <Offer offerState={new OfferState(data)} />
+          {/snippet}
+          {#snippet pending()}
+            <PageLoadIndicator />
+          {/snippet}
+        </Loader>
+      {/snippet}
     </Route>
-    <Route path="/preview/:offerId" let:params>
-      <Loader params={params.offerId} loadFn={(id) => getOffer(id)} let:data>
-        <Preview offerState={new OfferState(data)} />
-        <h1 slot="pending" class="sr-only">Loading...</h1>
-      </Loader>
+    <Route path="/preview/:offerId">
+      {#snippet children({ params }: { params: { offerId: string } })}
+        <Loader params={params.offerId} loadFn={(id) => getOffer(id)}>
+          {#snippet children({ data })}
+            <Preview offerState={new OfferState(data)} />
+          {/snippet}
+          {#snippet pending()}
+            <h1 class="sr-only">Loading...</h1>
+          {/snippet}
+        </Loader>
+      {/snippet}
     </Route>
     <Route path="/company">
       <Company />

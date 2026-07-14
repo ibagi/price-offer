@@ -5,8 +5,13 @@
   import { t } from '../../lib/i18n';
   import type { OfferState } from '../../state';
 
-  export let offerState: OfferState;
-  const { offer, hasItem } = offerState;
+  interface Props {
+    offerState: OfferState;
+  }
+
+  let { offerState }: Props = $props();
+  let offer = $derived(offerState.offer);
+  let hasItem = $derived(offerState.hasItem);
 </script>
 
 {#if $hasItem}
@@ -31,7 +36,7 @@
               ><input
                 class="input input-bordered input-sm w-full"
                 value={item.name}
-                on:input={(e) => (item.name = e.currentTarget.value)} /></td>
+                oninput={(e) => (item.name = e.currentTarget.value)} /></td>
             <td>
               <Money
                 value={item.workPrice + item.materialPrice}
@@ -47,7 +52,7 @@
                 type="number"
                 class="input input-bordered input-sm text-right w-full"
                 value={item.amount}
-                on:change={(e) =>
+                onchange={(e) =>
                   (item.amount = e.currentTarget.valueAsNumber)} /></td>
             <td>
               <PriceInput
@@ -63,13 +68,13 @@
               <input
                 class="input input-bordered input-sm w-full"
                 value={item.description}
-                on:input={(e) => (item.description = e.currentTarget.value)} />
+                oninput={(e) => (item.description = e.currentTarget.value)} />
             </td>
             <td class="p-0 w-4">
               <button
                 title={$t('priceOffer.actions.delete')}
                 class="btn btn-sm"
-                on:click={() => offerState.removeItem(item)}>
+                onclick={() => offerState.removeItem(item)}>
                 <Trash2 size={20} />
               </button>
             </td>

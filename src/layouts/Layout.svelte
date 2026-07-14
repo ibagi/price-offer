@@ -1,5 +1,11 @@
 <script lang="ts">
   import NavBar from '../components/NavBar.svelte';
+  interface Props {
+    children?: import('svelte').Snippet;
+    actions?: import('svelte').Snippet;
+  }
+
+  let { children, actions }: Props = $props();
 </script>
 
 <main class="flex flex-col w-screen h-screen">
@@ -8,11 +14,11 @@
     <div class="flex w-full gap-6">
       <div class="w-full h-full flex flex-col bg-white rounded shadow-xl p-4">
         <div class="overflow-y-auto overflow-x-hidden flex-1">
-          <slot />
+          {@render children?.()}
         </div>
 
         <div class="justify-end shrink-0">
-          <slot name="actions" />
+          {@render actions?.()}
         </div>
       </div>
     </div>

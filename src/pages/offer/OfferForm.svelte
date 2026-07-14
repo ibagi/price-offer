@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Link } from 'svelte-navigator';
+  import { Link as NavigatorLink } from 'svelte-navigator';
   import { t } from '../../lib/i18n';
   import { OfferState, partnerState } from '../../state';
   import { EditIcon, PencilIcon } from 'lucide-svelte';
@@ -7,14 +7,19 @@
   import DateInput from '../../components/DateInput.svelte';
   import OfferNumberDialog from './OfferNumberDialog.svelte';
 
-  export let offerState: OfferState;
-  let offerNumberDialogRef: OfferNumberDialog;
+  interface Props {
+    offerState: OfferState;
+  }
+
+  let { offerState }: Props = $props();
+  let offerNumberDialogRef: OfferNumberDialog | undefined = $state();
+  const Link = NavigatorLink as any;
 
   const { partners } = partnerState;
-  const { offer } = offerState;
+  let offer = $derived(offerState.offer);
 
   function editOfferNumber(offerDate: Date, sequence: number) {
-    offerNumberDialogRef.show(offerDate, sequence);
+    offerNumberDialogRef?.show(offerDate, sequence);
   }
 </script>
 
@@ -59,7 +64,7 @@
       <button
         class="btn btn-sm btn-neutral p-0 px-1"
         title={$t('priceOffer.actions.modifyOfferNumber')}
-        on:click={() => editOfferNumber($offer.offerDate, $offer.sequence)}>
+        onclick={() => editOfferNumber($offer.offerDate, $offer.sequence)}>
         <PencilIcon size={18} />
       </button>
     </div>

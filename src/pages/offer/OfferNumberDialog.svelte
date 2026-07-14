@@ -9,14 +9,18 @@
   import { updateOffer } from '../../services/offer';
   import type { OfferState } from '../../state';
 
-  export let offerState: OfferState;
-  const { offer } = offerState;
+  interface Props {
+    offerState: OfferState;
+  }
 
-  let dialogRef: HTMLDialogElement;
-  let offerDate = new Date();
-  let sequence: number;
+  let { offerState }: Props = $props();
+  let offer = $derived(offerState.offer);
 
-  let error: TRPCClientError<any> | null;
+  let dialogRef: HTMLDialogElement | undefined = $state();
+  let offerDate = $state(new Date());
+  let sequence = $state(0);
+
+  let error: TRPCClientError<any> | null = $state(null);
 
   async function save(e: Event, offer: Offer) {
     e.preventDefault();
@@ -35,8 +39,8 @@
     dialogRef?.close();
   }
 
-  export function show(offerDate: Date, seq: number) {
-    offerDate = offerDate;
+  export function show(date: Date, seq: number) {
+    offerDate = date;
     sequence = seq;
     dialogRef?.showModal();
   }
@@ -64,9 +68,9 @@
             {$t(`errors.${error.message}`)}
           </div>
         {/if}
-        <button class="btn btn-neutral" on:click={(e) => save(e, $offer)}
+        <button class="btn btn-neutral" onclick={(e) => save(e, $offer)}
           >{$t('priceOffer.actions.save')}</button>
-        <button class="btn" on:click={cancel}>
+        <button class="btn" onclick={cancel}>
           {$t('confirmation.cancel')}
         </button>
       </div>

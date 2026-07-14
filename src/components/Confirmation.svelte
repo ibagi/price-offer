@@ -3,10 +3,10 @@
 
   type OnConfirmFn = (value: boolean) => () => void;
 
-  let dialogRef: HTMLDialogElement;
-  let title = '';
-  let message = '';
-  let onConfirm: OnConfirmFn;
+  let dialogRef: HTMLDialogElement | undefined = $state();
+  let title = $state('');
+  let message = $state('');
+  let onConfirm: OnConfirmFn = $state(() => () => {});
 
   export function show(props: { title: string; message: string }) {
     title = props.title;
@@ -28,10 +28,10 @@
     <p class="py-4">{message}</p>
     <div class="modal-action">
       <form method="dialog">
-        <button class="btn btn-neutral" on:click={onConfirm(true)}>
+        <button class="btn btn-neutral" onclick={onConfirm(true)}>
           {$t('confirmation.yes')}
         </button>
-        <button class="btn" on:click={onConfirm(false)}>
+        <button class="btn" onclick={onConfirm(false)}>
           {$t('confirmation.cancel')}
         </button>
       </form>

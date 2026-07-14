@@ -1,13 +1,19 @@
 <script lang="ts">
   import { LoaderIcon } from 'lucide-svelte';
 
-  export let onSave: () => Promise<void>;
-  let pending = false;
+  interface Props {
+    onSave: () => Promise<void>;
+    children?: import('svelte').Snippet;
+    [key: string]: any
+  }
+
+  let { ...props }: Props = $props();
+  let pending = $state(false);
 
   async function handleSave() {
     pending = true;
     try {
-      await onSave();
+      await props.onSave();
     } catch (err) {
     } finally {
       pending = false;
@@ -15,10 +21,10 @@
   }
 </script>
 
-<button {...$$props} disabled={pending} on:click={handleSave}>
+<button {...props} disabled={pending} onclick={handleSave}>
   {#if pending}
     <LoaderIcon />
   {:else}
-    <slot />
+    {@render props.children?.()}
   {/if}
 </button>

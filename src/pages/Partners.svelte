@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import Layout from '../layouts/Layout.svelte';
   import { Trash2 } from 'lucide-svelte';
 
@@ -8,7 +10,9 @@
 
   const { isDirty, partners, addPartner, removePartner } = partnerState;
 
-  $: $isDirty && savePartners($partners);
+  run(() => {
+    $isDirty && savePartners($partners);
+  });
 </script>
 
 <Layout>
@@ -18,7 +22,7 @@
       <div class="flex gap-2">
         <button
           class="btn btn-primary btn-sm self-end text-white"
-          on:click={addPartner}>{$t('partners.actions.add')}</button>
+          onclick={addPartner}>{$t('partners.actions.add')}</button>
       </div>
     </div>
 
@@ -77,7 +81,7 @@
                   <button
                     title={$t('partners.actions.delete')}
                     class="btn btn-sm"
-                    on:click={() => removePartner(partner)}>
+                    onclick={() => removePartner(partner)}>
                     <Trash2 />
                   </button>
                 </td>

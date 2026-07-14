@@ -1,12 +1,18 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { Currency } from '../lib/types';
   import { locale } from '../lib/i18n';
 
-  export let value = 0;
-  export let currency: Currency;
-  export let fractions = 0;
+  interface Props {
+    value?: number;
+    currency: Currency;
+    fractions?: number;
+  }
 
-  let text = '';
+  let { value = 0, currency, fractions = 0 }: Props = $props();
+
+  let text = $state('');
 
   function formatNumber(val: number, loc: string, curr: string) {
     const formatter = new Intl.NumberFormat(loc, {
@@ -19,7 +25,9 @@
     text = formatter.format(val);
   }
 
-  $: formatNumber(value, $locale, currency);
+  run(() => {
+    formatNumber(value, $locale, currency);
+  });
 </script>
 
 <span>{text}</span>
