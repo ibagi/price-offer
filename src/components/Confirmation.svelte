@@ -3,10 +3,10 @@
 
   type OnConfirmFn = (value: boolean) => () => void;
 
-  let dialogRef: HTMLDialogElement = $state();
+  let dialogRef: HTMLDialogElement | undefined = $state();
   let title = $state('');
   let message = $state('');
-  let onConfirm: OnConfirmFn = $state();
+  let onConfirm: OnConfirmFn = $state(() => () => {});
 
   export function show(props: { title: string; message: string }) {
     title = props.title;

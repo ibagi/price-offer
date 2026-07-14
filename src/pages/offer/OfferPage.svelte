@@ -1,7 +1,7 @@
 <script lang="ts">
   import { run } from 'svelte/legacy';
 
-  import { Link } from 'svelte-navigator';
+  import { Link as NavigatorLink } from 'svelte-navigator';
   import Layout from '../../layouts/Layout.svelte';
   import { t } from '../../lib/i18n';
   import { OfferState } from '../../state';
@@ -15,7 +15,9 @@
   }
 
   let { offerState }: Props = $props();
-  const { isDirty, offer } = offerState;
+  const Link = NavigatorLink as any;
+  let isDirty = $derived(offerState.isDirty);
+  let offer = $derived(offerState.offer);
 
   const tabs = ['form', 'items'];
 
@@ -84,7 +86,7 @@
   </section>
 
   {#snippet actions()}
-    <section  class="flex gap-2 justify-end border-t-2 pt-2">
+    <section class="flex gap-2 justify-end border-t-2 pt-2">
       {#if activeTab === 'items'}
         <button class="btn btn-sm" onclick={offerState.removeItems}
           >{$t('priceOffer.actions.clearAll')}</button>

@@ -11,8 +11,11 @@
   let saving = $state(false);
 
   const { contact } = contactState;
-  const { offer, netto, tax, brutto } = offerState;
-  const selectedPartner = partnerState.selectBy(offer);
+  let offer = $derived(offerState.offer);
+  let netto = $derived(offerState.netto);
+  let tax = $derived(offerState.tax);
+  let brutto = $derived(offerState.brutto);
+  let selectedPartner = $derived(partnerState.selectBy(offerState.offer));
 
   function print(e: MouseEvent) {
     e.preventDefault();

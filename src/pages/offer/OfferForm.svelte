@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Link } from 'svelte-navigator';
+  import { Link as NavigatorLink } from 'svelte-navigator';
   import { t } from '../../lib/i18n';
   import { OfferState, partnerState } from '../../state';
   import { EditIcon, PencilIcon } from 'lucide-svelte';
@@ -12,13 +12,14 @@
   }
 
   let { offerState }: Props = $props();
-  let offerNumberDialogRef: OfferNumberDialog = $state();
+  let offerNumberDialogRef: OfferNumberDialog | undefined = $state();
+  const Link = NavigatorLink as any;
 
   const { partners } = partnerState;
-  const { offer } = offerState;
+  let offer = $derived(offerState.offer);
 
   function editOfferNumber(offerDate: Date, sequence: number) {
-    offerNumberDialogRef.show(offerDate, sequence);
+    offerNumberDialogRef?.show(offerDate, sequence);
   }
 </script>
 

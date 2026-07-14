@@ -10,7 +10,8 @@
   }
 
   let { offerState }: Props = $props();
-  const { offer, hasItem } = offerState;
+  let offer = $derived(offerState.offer);
+  let hasItem = $derived(offerState.hasItem);
 </script>
 
 {#if $hasItem}

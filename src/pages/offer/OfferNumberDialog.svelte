@@ -14,13 +14,13 @@
   }
 
   let { offerState }: Props = $props();
-  const { offer } = offerState;
+  let offer = $derived(offerState.offer);
 
-  let dialogRef: HTMLDialogElement = $state();
-  let offerDate = new Date();
-  let sequence: number = $state();
+  let dialogRef: HTMLDialogElement | undefined = $state();
+  let offerDate = $state(new Date());
+  let sequence = $state(0);
 
-  let error: TRPCClientError<any> | null = $state();
+  let error: TRPCClientError<any> | null = $state(null);
 
   async function save(e: Event, offer: Offer) {
     e.preventDefault();
@@ -39,8 +39,8 @@
     dialogRef?.close();
   }
 
-  export function show(offerDate: Date, seq: number) {
-    offerDate = offerDate;
+  export function show(date: Date, seq: number) {
+    offerDate = date;
     sequence = seq;
     dialogRef?.showModal();
   }

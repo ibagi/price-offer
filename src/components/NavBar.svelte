@@ -2,7 +2,11 @@
   import { run } from 'svelte/legacy';
 
   import { onMount } from 'svelte';
-  import { Link, useLocation, type NavigatorLocation } from 'svelte-navigator';
+  import {
+    Link as NavigatorLink,
+    useLocation,
+    type NavigatorLocation,
+  } from 'svelte-navigator';
   import type AnyObject from 'svelte-navigator/types/AnyObject';
   import { DownloadIcon } from 'lucide-svelte';
 
@@ -27,14 +31,20 @@
     },
   ]);
 
-  let userButtonElement: HTMLDivElement = $state();
+  const Link = NavigatorLink as any;
+
+  let userButtonElement: HTMLDivElement | undefined = $state();
   const location = useLocation();
 
   function setActiveRoute(loc: NavigatorLocation<AnyObject>) {
     routes = routes.map((r) => ({ ...r, isActive: loc.pathname === r.to }));
   }
 
-  onMount(() => mountUserButton(userButtonElement));
+  onMount(() => {
+    if (userButtonElement) {
+      mountUserButton(userButtonElement);
+    }
+  });
 
   run(() => {
     setActiveRoute($location);

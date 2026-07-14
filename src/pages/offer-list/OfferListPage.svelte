@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Link, useNavigate } from 'svelte-navigator';
+  import { Link as NavigatorLink, useNavigate } from 'svelte-navigator';
   import { Clock, CopyPlus, PrinterIcon, Trash2, User } from 'lucide-svelte';
   import { t } from '../../lib/i18n';
   import Layout from '../../layouts/Layout.svelte';
@@ -20,6 +20,7 @@
   import Confirmation from '../../components/Confirmation.svelte';
 
   const navigate = useNavigate();
+  const Link = NavigatorLink as any;
 
   const dateFormat = new Intl.DateTimeFormat();
   const { partners } = partnerState;
@@ -28,7 +29,7 @@
   let years: number[] = $state([]);
   let selectedYear: number = $state(0);
 
-  let confirmationRef: Confirmation = $state();
+  let confirmationRef: Confirmation | undefined = $state();
 
   async function loadOffers(year: number) {
     priceOffers = await getOffers(year);
@@ -47,7 +48,7 @@
   }
 
   async function handleDelete(offer: Offer) {
-    const confirmed = await confirmationRef.show({
+    const confirmed = await confirmationRef?.show({
       title: $t('confirmation.title'),
       message: $t('offerList.actions.delete.confirmation', {
         offerNumber: offer.offerNumber,
@@ -72,7 +73,7 @@
 
 <Loader params={selectedYear} loadFn={(year) => loadOffers(year)}>
   {#snippet pending()}
-    <PageLoadIndicator  />
+    <PageLoadIndicator />
   {/snippet}
   <Layout>
     <section class="h-full">
